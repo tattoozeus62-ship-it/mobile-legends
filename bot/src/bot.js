@@ -171,7 +171,7 @@ function createBot() {
   // ---------- /heroes — لیست هیروها بر اساس نقش ----------
   function heroesRoleKeyboard() {
     const groups = sd.heroesByRole();
-    const rows = groups.map((g) => [Markup.button.callback(`${g.emoji} ${g.fa} (${faNum(g.count)})`, `heroes_role:${g.en}`)]);
+    const rows = groups.map((g) => [Markup.button.callback(`${g.emoji} ${g.en} (${faNum(g.count)})`, `heroes_role:${g.en}`)]);
     return Markup.inlineKeyboard(rows);
   }
 
@@ -188,7 +188,7 @@ function createBot() {
     const g = sd.heroesByRole().find((x) => x.en === role);
     if (!g) return ctx.answerCbQuery('نقش پیدا نشد');
     await ctx.answerCbQuery();
-    let t = `${g.emoji} <b>${g.fa} (${faNum(g.count)})</b>\n`;
+    let t = `${g.emoji} <b>${g.en} (${faNum(g.count)})</b>\n`;
     for (const h of g.heroes) {
       t += `\n• <b>${esc(h.name)}</b> — ${laneFa(h.laning)}`;
     }
