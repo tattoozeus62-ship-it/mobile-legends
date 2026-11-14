@@ -120,6 +120,7 @@ async function loadStatic() {
       const newsFile = await loadOptional('news.json');
       const tierFile = await loadOptional('tierlist.json');
       const discFile = await loadOptional('discussions.json');
+      const evFile = await loadOptional('events.json');
       FA = {
         heroSkills: faFile.heroSkills || {},
         items: faFile.items || {},
@@ -140,6 +141,7 @@ async function loadStatic() {
         news: { patchNotes: newsFile.patch_notes || [], wikiRecent: newsFile.wiki_recent || [] },
         tierlist: { month: tierFile.month || null, tiers: tierFile.tiers || {}, counts: tierFile.counts || {} },
         discussions: discFile.threads || [],
+        events: evFile.events || [],
       };
     })();
   }
@@ -820,12 +822,21 @@ async function loadNews() {
     const pn = (sd.news && sd.news.patchNotes) || [];
     const wr = (sd.news && sd.news.wikiRecent) || [];
     const dc = sd.discussions || [];
+    const ev = sd.events || [];
     const tl = sd.tierlist || {};
+    const evStatusFa = { current: 'در حال اجرا', upcoming: 'به‌زودی', unknown: 'تاریخ مشخص نیست', ended: 'تمام‌شده' };
+    const thumb = (u) => u ? `<img class="news-thumb" src="${esc(u)}" alt="" loading="lazy" onerror="this.style.display='none'">` : '';
     const order = ['SS', 'S', 'A', 'B', 'C', 'D'];
     const nameToId = new Map((sd.heroes || []).map((h) => [normStr(h.hero_name), String(h.mlid)]));
     box.innerHTML =
-      (pn.length ? '<h2>📝 پچ‌نوت‌ها</h2>' + pn.slice(0, 10).map((p) => `<div class="item-card"><b>${esc(p.title_fa || p.title)}</b><br><span class="sub">${esc(dateFa(p.updated))} — ${esc(p.title)}</span></div>`).join('') : '') +
-      (wr.length ? '<h2>📚 تازه‌ها</h2>' + wr.slice(0, 10).map((w) => `<div class="item-card"><b>${esc(w.title)}</b><br><span class="sub">${esc(dateFa(w.timestamp))}${w.comment ? ' — ' + esc(w.comment) : ''}</span></div>`).join('') : '') +
+      (pn.length ? '<h2>📝 پچ‌نوت‌ها</h2>' + pn.slice(0, 10).map((p) => `<div class="item-card">${thumb(p.image_url)}<b>${esc(p.title_fa || p.title)}</b><br><span class="sub">${esc(dateFa(p.updated))} — ${esc(p.title)}</span></div>`).join('') : '') +
+      (ev.length ? '<h2>🎉 ایونت‌ها</h2>' + ev.slice(0, 10).map((e) => {
+        const d1 = e.start_date ? dateFa(e.start_date) : '';
+        const d2 = e.end_date ? dateFa(e.end_date) : '';
+        const dates = [d1, d2].filter(Boolean).join(' تا ');
+        return `<div class="item-card">${thumb(e.image_url)}<b>${esc(e.title)}</b> <span class="sub">${evStatusFa[e.status] || ''}${dates ? ' — ' + esc(dates) : ''}</span>${e.summary ? `<br><span class="sub">${esc(e.summary.slice(0, 160))}${e.summary.length > 160 ? '…' : ''}</span>` : ''}</div>`;
+      }).join('') : '') +
+      (wr.length ? '<h2>📚 تازه‌ها</h2>' + wr.slice(0, 10).map((w) => `<div class="item-card">${thumb(w.image_url)}<b>${esc(w.title)}</b><br><span class="sub">${esc(dateFa(w.timestamp))}${w.comment ? ' — ' + esc(w.comment) : ''}</span></div>`).join('') : '') +
       (dc.length ? '<h2>💬 گفتگوها</h2>' + dc.slice(0, 10).map((d) => `<div class="item-card"><b>${esc(d.title)}</b><br><span class="sub">${esc(dateFa(d.date_iso))}${d.category_fa ? ' — ' + esc(d.category_fa) : ''}</span></div>`).join('') : '') ||
       '<p class="hint">خبری پیدا نشد.</p>';
     tb.innerHTML =
