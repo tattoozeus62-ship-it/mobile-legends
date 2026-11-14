@@ -245,7 +245,17 @@ app.listen(PORT, () => {
 // را با onLaunch می‌گیریم که بعد از getMe و قبل از شروع polling صدا می‌شود.
 const bot = createBot();
 if (bot) {
-  bot.launch({}, () => console.log('[bot] polling started')).catch((e) => console.error('[bot] launch failed:', e.message));
+  bot.launch({}, async () => {
+    console.log('[bot] polling started');
+    // دکمهٔ «Open App» پایین چت (کنار جای تایپ) — مستقیم مینی‌اپ را باز می‌کند
+    if (process.env.MINIAPP_URL) {
+      try {
+        await bot.telegram.setChatMenuButton({ type: 'web_app', text: 'Open App', web_app: { url: process.env.MINIAPP_URL } });
+        const cur = await bot.telegram.getChatMenuButton();
+        console.log('[bot] menu button:', JSON.stringify(cur));
+      } catch (e) { console.error('[bot] menu button failed:', e.message); }
+    }
+  }).catch((e) => console.error('[bot] launch failed:', e.message));
 }
 
 process.once('SIGINT', () => { bot?.stop('SIGINT'); process.exit(0); });
