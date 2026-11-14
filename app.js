@@ -92,6 +92,8 @@ async function ronePost(path, body, headers = {}) {
 
 // ---------- دیتای استاتیک (data/*.json — همان فایل‌های p3hndrx/MLBB-API) ----------
 let staticPromise = null;
+// ترجمهٔ فارسی توضیحات (data/fa-overrides.json) — اگر نباشد، متن انگلیسی نشان داده می‌شود
+let FA = { heroSkills: {}, items: {}, talents: {}, spells: {} };
 async function loadStatic() {
   if (!staticPromise) {
     staticPromise = (async () => {
@@ -100,12 +102,26 @@ async function loadStatic() {
         if (!r.ok) throw new Error('خطا در خواندن ' + file);
         return r.json();
       };
+      const loadOptional = async (file) => {
+        try {
+          const r = await fetch(STATIC_BASE + file);
+          if (!r.ok) return {};
+          return r.json();
+        } catch { return {}; }
+      };
       const [heroFile, itemFile, emblemFile, talentFile] = await Promise.all([
         load('hero-meta-final.json'),
         load('item-meta-final.json'),
         load('emblem-meta-final.json'),
         load('talent-meta-final.json'),
       ]);
+      const faFile = await loadOptional('fa-overrides.json');
+      FA = {
+        heroSkills: faFile.heroSkills || {},
+        items: faFile.items || {},
+        talents: faFile.talents || {},
+        spells: faFile.spells || {},
+      };
       const heroes = (heroFile.data || []).filter((h) => h && h.hero_name && h.hero_name !== 'None');
       const heroByMlid = new Map();
       for (const h of heroes) if (h.mlid) heroByMlid.set(String(h.mlid), h);
@@ -123,6 +139,11 @@ async function loadStatic() {
 }
 
 function normStr(s) { return String(s || '').toLowerCase().replace(/[^a-z0-9]/g, ''); }
+
+function faSkill(heroId, skillName) { return FA.heroSkills[`${heroId}|${normStr(skillName)}`] || null; }
+function faItem(itemId, name) { return FA.items[`${itemId}|${normStr(name)}`] || null; }
+function faTalent(id) { return FA.talents[String(id)] || null; }
+function faSpell(name) { return FA.spells[normStr(name)] || null; }
 
 function levenshtein(a, b) {
   const m = a.length, n = b.length;
@@ -151,7 +172,7 @@ function heroPublic(h) {
       type: s.type,
       cooldown: s.cooldown,
       manacost: s.manacost,
-      description: s.description,
+      description: faSkill(h.mlid, s.skill_name) || s.description,
       icon: s.skill_icon,
       tags: s.tags || [],
     })),
@@ -163,10 +184,10 @@ function itemPublic(it) {
   const mods = {};
   for (const m of d0.modifiers || []) Object.assign(mods, m);
   const passives = [
-    ...((d0.passive || []).filter((p) => p.passive_name && p.passive_name !== 'null').map((p) => ({ name: p.passive_name, desc: p.description }))),
-    ...((d0.unique_passive || []).filter((p) => p.unique_passive_name && p.unique_passive_name !== 'null').map((p) => ({ name: p.unique_passive_name, desc: p.description }))),
+    ...((d0.passive || []).filter((p) => p.passive_name && p.passive_name !== 'null').map((p) => ({ name: p.passive_name, desc: faItem(it.id, p.passive_name) || p.description }))),
+    ...((d0.unique_passive || []).filter((p) => p.unique_passive_name && p.unique_passive_name !== 'null').map((p) => ({ name: p.unique_passive_name, desc: faItem(it.id, p.unique_passive_name) || p.description }))),
   ];
-  const actives = (d0.active || []).filter((a) => a.active_name && a.active_name !== 'null').map((a) => ({ name: a.active_name, desc: a.description }));
+  const actives = (d0.active || []).filter((a) => a.active_name && a.active_name !== 'null').map((a) => ({ name: a.active_name, desc: faItem(it.id, a.active_name) || a.description }));
   return {
     id: it.id,
     name: it.item_name,
@@ -428,12 +449,21 @@ async function emblemsAdapter() {
   const spellsRes = await roneGet('/academy/spells?size=20&index=1');
   const spells = spellsRes.ok ? spellsRes.records.map((rec) => {
     const d = rec?.data?.__data || rec?.data || {};
-    return { name: d.skillname || d.name || '', desc: (d.skilldesc || '').replace(/<[^>]+>/g, ''), icon: rec?.data?.skillicon || null };
+    const name = d.skillname || d.name || '';
+    const desc = (d.skilldesc || '').replace(/<[^>]+>/g, '');
+    return { name, desc: faSpell(name) || desc, icon: rec?.data?.skillicon || null };
   }).filter((s) => s.name) : [];
+  const mapTalents = (tiers) => {
+    const out = {};
+    for (const [k, arr] of Object.entries(tiers || {})) {
+      out[k] = (arr || []).map((t) => ({ ...t, description: faTalent(t.id) || t.description }));
+    }
+    return out;
+  };
   return {
     ok: true,
     emblems: sd.emblems,
-    talents: sd.talents,
+    talents: mapTalents(sd.talents),
     spells,
     spells_error: spellsRes.ok ? null : spellsRes.error,
   };
