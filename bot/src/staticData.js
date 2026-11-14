@@ -32,6 +32,18 @@ const eventsFile = loadJson('events.json');
 const news = { patchNotes: (newsFile && newsFile.patch_notes) || [], wikiRecent: (newsFile && newsFile.wiki_recent) || [] };
 const discussions = (discussionsFile && discussionsFile.threads) || [];
 const events = (eventsFile && eventsFile.events) || [];
+const faContentFile = loadJson('fa-content.json');
+const faContent = (faContentFile && faContentFile.version) ? faContentFile : { lore: {}, matchups: {}, patches: {}, events: {}, stats: { heroes: {} }, guide: {}, comps: {} };
+const heroStatsFile = loadJson('hero-stats.json');
+const heroStats = (heroStatsFile && heroStatsFile.heroes) || [];
+const teamCompsFile = loadJson('team-comps.json');
+const teamComps = (teamCompsFile && teamCompsFile.comps) || [];
+const teamCompGuideFile = loadJson('team-comp-guide.json');
+const teamCompGuide = teamCompGuideFile || { faqs: [], how_it_works: '' };
+const patchFullFile = loadJson('patch-notes-full.json');
+const patchFull = (patchFullFile && patchFullFile.patches) || [];
+const matchupsFile = loadJson('matchups.json');
+const matchups = (matchupsFile && matchupsFile.heroes) || {};
 const tierlist = {
   month: (tierlistFile && tierlistFile.month) || null,
   tiers: (tierlistFile && tierlistFile.tiers) || {},
@@ -47,13 +59,38 @@ function faSkill(heroId, skillName) { return FA.heroSkills[`${heroId}|${norm(ski
 function faItem(itemId, name) { return FA.items[`${itemId}|${norm(name)}`] || null; }
 function faTalent(id) { return FA.talents[String(id)] || null; }
 function faSpell(name) { return FA.spells[norm(name)] || null; }
+function loreById(id) { return (faContent.lore || {})[String(id)] || null; }
+function statByName(name) {
+  const s = heroStats.find((x) => norm(x.name) === norm(name));
+  if (!s) return null;
+  const f = ((faContent.stats || {}).heroes || {})[s.slug] || {};
+  return { ...s, win_label_fa: f.win_label_fa || s.win_label, pick_label_fa: f.pick_label_fa || s.pick_label, ban_label_fa: f.ban_label_fa || s.ban_label, specialities_fa: f.specialities_fa || s.specialities || [] };
+}
+function matchupById(id) {
+  const m = matchups[String(id)];
+  if (!m) return null;
+  const f = (faContent.matchups || {})[String(id)] || {};
+  const cbFa = f.countered_by_fa || {};
+  const rnFa = f.rank_notes_fa || {};
+  return {
+    ...m,
+    countered_by: (m.countered_by || []).map((c) => ({ ...c, reason_fa: (cbFa[c.slug] || {}).reason_fa || c.reason, strength_fa: (cbFa[c.slug] || {}).strength_fa || c.strength })),
+    rank_notes: (m.rank_notes || []).map((r) => ({ ...r, text_fa: (rnFa[r.slug] || {}).text_fa || r.text })),
+  };
+}
+function patchByTitle(title) {
+  const f = (faContent.patches || {})[title];
+  if (!f) return null;
+  const src = patchFull.find((p) => p.title === title) || {};
+  return { ...src, ...f };
+}
 
 const heroes = (heroFile.data || []).filter((h) => h && h.hero_name && h.hero_name !== 'None');
 const items = itemFile.data || [];
 const emblems = emblemFile.data || [];
 const talents = talentFile.data || {}; // { tier1: [...], tier2: [...], tier3: [...] }
 
-console.log(`[static] heroes=${heroes.length} items=${items.length} emblems=${emblems.length} news=${news.patchNotes.length + news.wikiRecent.length} tierlist=${Object.values(tierlist.counts).reduce((a, b) => a + b, 0)} discussions=${discussions.length} events=${events.length} revdate=${heroFile.revdate || '?'}`);
+console.log(`[static] heroes=${heroes.length} items=${items.length} emblems=${emblems.length} news=${news.patchNotes.length + news.wikiRecent.length} tierlist=${Object.values(tierlist.counts).reduce((a, b) => a + b, 0)} discussions=${discussions.length} events=${events.length} facontent=${Object.keys(faContent.lore || {}).length}/${Object.keys(faContent.matchups || {}).length}/${Object.keys(faContent.patches || {}).length}/${Object.keys(faContent.events || {}).length} stats=${heroStats.length} comps=${teamComps.length} revdate=${heroFile.revdate || '?'}`);
 
 function norm(s) {
   return String(s || '').toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -183,6 +220,8 @@ function heroesByRole() {
 
 module.exports = {
   heroes, items, emblems, talents, fullBuilds, news, tierlist, discussions, events,
+  faContent, heroStats, teamComps, teamCompGuide, patchFull, matchups,
+  loreById, statByName, matchupById, patchByTitle,
   heroRevdate: heroFile.revdate || null,
   itemRevdate: itemFile.revdate || null,
   searchHeroes, findHero, heroById,

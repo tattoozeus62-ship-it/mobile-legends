@@ -156,6 +156,8 @@ function createBot() {
 /mpl — جدول لیگ‌های MPL (ID / PH / MY / KH)
 /player — اتصال پروفایل بازی (با کد تایید داخل بازی)
 /news — اخبار و پچ‌نوت‌های بازی
+/patch [نسخه] — متن کامل پچ‌نوت (فارسی)؛ بدون نسخه، تازه‌ترین پچ
+/comps — ترکیب‌های تیمی پیشنهادی + راهنما
 /tier — تیرلیست هیروها
 /version — نسخهٔ فعلی بازی
 /admin — پنل مدیریت (فقط مدیر)
@@ -217,10 +219,27 @@ function createBot() {
         if (s.description) t += `\n  ${esc(truncate(cleanText(s.description), 220))}`;
       }
     }
+    const st = sd.statByName(hero.hero_name);
+    if (st) t += `\n\n📊 آمار ۷ روز اخیر: رتبهٔ ${faNum(st.position)} از ۱۳۳ — وین‌ریت ${pct(st.win_rate)} (${esc(st.win_label_fa || '')}) — تخصص: ${esc((st.specialities_fa || []).join('، '))}`;
+    const lore = sd.loreById(id);
+    if (lore && lore.bio_short_fa) t += `\n\n📖 ${esc(truncate(lore.bio_short_fa, 170))}`;
+    const mu = sd.matchupById(id);
+    if (mu && mu.countered_by && mu.countered_by.length) {
+      t += '\n\n⚔️ سخت‌ترین حریف‌ها:';
+      mu.countered_by.slice(0, 2).forEach((c) => {
+        t += `\n• <b>${esc(c.name)}</b>${c.strength_fa ? ` (${esc(c.strength_fa)})` : ''} — ${esc(truncate(c.reason_fa || '', 110))}`;
+      });
+    }
     t += `\n\nبرای کانتر: <code>/counter ${esc(hero.hero_name)}</code>\nبرای بیلد: <code>/build ${esc(hero.hero_name)}</code>`;
     t += FOOTER;
     if (head) {
-      try { return await ctx.replyWithPhoto(head, { caption: t, parse_mode: 'HTML' }); } catch { /* بدون عکس ادامه بده */ }
+      try {
+        if (t.length <= 1000) return await ctx.replyWithPhoto(head, { caption: t, parse_mode: 'HTML' });
+        // کپشن عکس حداکثر ۱۰۲۴ کاراکتر است؛ برای هیروهای شلوغ عکس با خلاصه می‌آید و متن کامل پیام بعد است
+        const cap = `🦸 <b>${esc(hero.hero_name)}</b>` + (hero.class ? ` — ${roleFa(hero.class)}` : '') + (hero.laning?.length ? `\n🛤️ لین: ${laneFa(hero.laning)}` : '') + (rank ? `\n\n📊 <b>آمار زنده (۷ روز اخیر)</b>\nوین‌ریت: ${pct(rank.win)}\nبن‌ریت: ${pct(rank.ban)}\nپیک‌ریت: ${pct(rank.pick)}` : '') + (skills.length ? '\n\n✨ <b>اسکیل‌ها:</b>' + skills.map((sk) => `\n• <b>${esc(sk.name)}</b>`).join('') : '') + FOOTER;
+        await ctx.replyWithPhoto(head, { caption: cap, parse_mode: 'HTML' });
+        return await ctx.replyWithHTML(t);
+      } catch { /* بدون عکس ادامه بده */ }
     }
     return ctx.replyWithHTML(t);
   });
@@ -378,7 +397,8 @@ function createBot() {
         const d1 = e.start_date ? dateFa(e.start_date) : '';
         const d2 = e.end_date ? dateFa(e.end_date) : '';
         const dates = [d1, d2].filter(Boolean).join(' تا ');
-        t += `\n• <b>${esc(e.title)}</b> — ${stFa[e.status] || ''}` + (dates ? ` — ${dates}` : '');
+        const fev = ((sd.faContent || {}).events || {})[e.title] || {};
+        t += `\n• <b>${esc(fev.title_fa || e.title)}</b> — ${esc(fev.status_fa || stFa[e.status] || '')}` + (dates ? ` — ${dates}` : '');
       });
     }
     if (wikiRecent && wikiRecent.length) {
@@ -392,6 +412,54 @@ function createBot() {
       disc.slice(0, 5).forEach((d) => {
         t += `\n• <b>${esc(d.title)}</b>` + (d.category_fa ? ` — ${esc(d.category_fa)}` : '') + (dateFa(d.date_iso) ? ` — ${dateFa(d.date_iso)}` : '');
       });
+    }
+    t += FOOTER;
+    return ctx.replyWithHTML(t);
+  });
+
+  // ---------- /patch — متن کامل پچ‌نوت (فارسی) ----------
+  bot.command('patch', async (ctx) => {
+    const q = ctx.message.text.replace(/^\/patch(@\S+)?\s*/i, '').trim();
+    const patches = (sd.faContent || {}).patches || {};
+    const titles = Object.keys(patches);
+    if (!titles.length) return ctx.replyWithHTML('پچ‌نوتی فعلاً در دسترس نیست.' + FOOTER);
+    let key = titles[0];
+    if (q) {
+      const normQ = q.replace(/[۰-۹]/g, (d) => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[^0-9.]/g, '');
+      key = titles.find((t) => t.toLowerCase().includes(normQ.toLowerCase())) || null;
+      if (!key) return ctx.replyWithHTML('پچی با این نسخه پیدا نشد؛ مثلاً: <code>/patch 2.2.16</code>' + FOOTER);
+    }
+    const p = sd.patchByTitle(key);
+    if (!p) return ctx.replyWithHTML('جزئیات این پچ پیدا نشد.' + FOOTER);
+    let t = `📝 <b>${esc(p.title_fa || key)}</b>` + (p.release_date ? ` — ${esc(p.release_date)}` : '');
+    if ((p.new_heroes_fa || []).length) {
+      t += '\n\n🆕 <b>هیروهای تازه:</b>';
+      for (const nh of p.new_heroes_fa) t += `\n• <b>${esc(nh.hero)}</b>${nh.feature_fa ? ` — ${esc(truncate(nh.feature_fa, 120))}` : ''}`;
+    }
+    const adj = p.hero_adjustments_fa || [];
+    if (adj.length) {
+      t += `\n\n⚖️ <b>تغییرات هیروها (${faNum(adj.length)}):</b>`;
+      for (const a of adj.slice(0, 5)) {
+        t += `\n• <b>${esc(a.hero)}</b>${a.type_fa ? ` (${esc(a.type_fa)})` : ''}${a.note_fa ? ` — ${esc(truncate(a.note_fa, 110))}` : ''}`;
+        const ch = ((a.skills_fa || []).flatMap((sk) => sk.changes_fa || [])).slice(0, 2);
+        for (const c of ch) t += `\n  ◦ ${esc(truncate(c, 100))}`;
+      }
+    }
+    const eq = p.equipment_adjustments_fa || [];
+    if (eq.length) t += `\n\n🛡️ تغییرات آیتم: ${faNum(eq.length)} مورد`;
+    t += FOOTER;
+    return ctx.replyWithHTML(t);
+  });
+
+  // ---------- /comps — ترکیب‌های تیمی ----------
+  bot.command('comps', async (ctx) => {
+    const comps = sd.teamComps || [];
+    if (!comps.length) return ctx.replyWithHTML('ترکیب تیمی فعلاً در دسترس نیست.' + FOOTER);
+    let t = '👥 <b>ترکیب‌های تیمی پیشنهادی</b>';
+    for (const c of comps) {
+      const titleFa = (((sd.faContent || {}).comps || {})[c.id] || {}).title_fa || c.title_fa || c.title;
+      t += `\n\n<b>${esc(titleFa)}</b> — میانگین وین‌ریت ${pct(c.avg_win_rate)}`;
+      for (const h of c.heroes) t += `\n• <b>${esc(h.name)}</b> — ${laneFa([h.lane])} (وین ${pct(h.win_rate)})`;
     }
     t += FOOTER;
     return ctx.replyWithHTML(t);
