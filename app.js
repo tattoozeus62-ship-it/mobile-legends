@@ -7,7 +7,7 @@
 // ======= DATA LAYER START (standalone: Rone direct + static JSON) =======
 const RONE_BASE = 'https://arena.rone.dev/api';
 const STATIC_BASE = 'data/';
-const DATA_VERSION = '20261114-14'; // با هر انتشار، همراه با ?v= اسکریپت بالا می‌رود تا دیتا کهنه نماند
+const DATA_VERSION = '20261114-15'; // با هر انتشار، همراه با ?v= اسکریپت بالا می‌رود تا دیتا کهنه نماند
 const TTL_MS = 5 * 60 * 1000; // کش ۵ دقیقه‌ای، مثل سرور پراکسی
 const cache = new Map();
 
@@ -93,6 +93,7 @@ async function ronePost(path, body, headers = {}) {
 
 // ---------- دیتای استاتیک (data/*.json — همان فایل‌های p3hndrx/MLBB-API) ----------
 let staticPromise = null;
+let tierByName = {}; // نام هیرو → حرف تیر (SS/S/A/B/C/D)
 // ترجمهٔ فارسی توضیحات (data/fa-overrides.json) — اگر نباشد، متن انگلیسی نشان داده می‌شود
 let FA = { heroSkills: {}, items: {}, talents: {}, spells: {} };
 async function loadStatic() {
@@ -137,6 +138,10 @@ async function loadStatic() {
       const heroes = (heroFile.data || []).filter((h) => h && h.hero_name && h.hero_name !== 'None');
       const heroByMlid = new Map();
       for (const h of heroes) if (h.mlid) heroByMlid.set(String(h.mlid), h);
+      tierByName = {};
+      for (const [letter, names] of Object.entries(tierFile.tiers || {})) {
+        for (const n of names || []) if (n && n.name) tierByName[n.name] = letter;
+      }
       return {
         heroes,
         heroByMlid,
@@ -649,12 +654,18 @@ let allHeroesCache = null;
 
 function heroCard(h) {
   const img = h.portrait || h.head;
+  const tier = tierByName[h.name] || '';
+  const tierCls = tier === 'SS' ? 'ss' : tier === 'S' ? 's' : tier === 'A' ? 'a' : tier === 'B' ? 'b' : '';
+  const lane = laneFa(h.laning);
   return `
       <div class="hero-card" data-id="${h.id}" data-name="${esc(h.name)}">
-        ${img ? `<img src="${esc(img)}" alt="${esc(h.name)}" loading="lazy">` : '<div style="height:100px">🦸</div>'}
+        <div class="hero-img-wrap">
+          ${img ? `<img src="${esc(img)}" alt="${esc(h.name)}" loading="lazy">` : '<div style="height:100px">🦸</div>'}
+          ${tier ? `<span class="tier-badge ${tierCls}">${esc(tier)}</span>` : ''}
+          ${lane ? `<span class="lane-chip">${esc(lane)}</span>` : ''}
+        </div>
         <div class="name">${esc(h.name)}</div>
         <div class="cls">${esc(roleFa(h.class))}</div>
-        <div class="lane">${esc(laneFa(h.laning))}</div>
       </div>`;
 }
 
@@ -957,12 +968,7 @@ async function loadLore(q = '') {
     const all = (sd.heroes || []).map(heroPublic);
     const list = q ? all.filter((h) => normStr(h.name).includes(normStr(q))) : all;
     if (!list.length) { box.innerHTML = ''; st.textContent = 'هیرویی پیدا نشد.'; return; }
-    box.innerHTML = `<div class="grid">${list.map((h) => `
-      <div class="hero-card" data-id="${h.id}" data-name="${esc(h.name)}">
-        ${h.portrait ? `<img src="${esc(h.portrait)}" alt="${esc(h.name)}" loading="lazy">` : '<div style="height:100px">📖</div>'}
-        <div class="name">${esc(h.name)}</div>
-        <div class="cls">${esc(roleFa(h.class))}</div>
-      </div>`).join('')}</div>`;
+    box.innerHTML = `<div class="grid">${list.map(heroCard).join('')}</div>`;
     box.querySelectorAll('.hero-card').forEach((c) => c.addEventListener('click', () => showLore(c.dataset.id)));
   } catch (e) { showError(box, e); }
 }
