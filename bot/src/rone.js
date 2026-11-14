@@ -20,6 +20,13 @@ function cacheSet(key, value) {
   cache.set(key, { at: Date.now(), value });
 }
 
+// پاک‌کردن کش دادهٔ زنده — برای پنل مدیریت؛ تعداد موارد پاک‌شده را برمی‌گرداند
+function clearCache() {
+  const n = cache.size;
+  cache.clear();
+  return n;
+}
+
 async function fetchJson(url, { method = 'GET', body = null, headers = {} } = {}) {
   const ctrl = new AbortController();
   const t = setTimeout(() => ctrl.abort(), 10000);
@@ -193,4 +200,4 @@ async function equipNameMap() {
   return map;
 }
 
-module.exports = { BASE, roneGet, ronePost, normHeroRecord, normRankRecord, normCounterRecord, normBuildRecord, normStanding, equipNameMap };
+module.exports = { BASE, roneGet, ronePost, clearCache, normHeroRecord, normRankRecord, normCounterRecord, normBuildRecord, normStanding, equipNameMap };
