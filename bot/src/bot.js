@@ -360,26 +360,37 @@ function createBot() {
   bot.command('news', async (ctx) => {
     const { patchNotes, wikiRecent } = sd.news || {};
     const disc = sd.discussions || [];
+    const ev = sd.events || [];
     let t = '📰 <b>اخبار و پچ‌نوت‌ها</b>';
-    if ((!patchNotes || !patchNotes.length) && (!wikiRecent || !wikiRecent.length) && !disc.length) {
-      return ctx.replyWithHTML(t + '\\n\\n— فعلاً خبری نیست.' + FOOTER);
+    if ((!patchNotes || !patchNotes.length) && (!wikiRecent || !wikiRecent.length) && !disc.length && !ev.length) {
+      return ctx.replyWithHTML(t + '\n\n— فعلاً خبری نیست.' + FOOTER);
     }
     if (patchNotes && patchNotes.length) {
-      t += '\\n\\n<b>📝 پچ‌نوت‌ها:</b>';
+      t += '\n\n<b>📝 پچ‌نوت‌ها:</b>';
       patchNotes.slice(0, 5).forEach((p) => {
-        t += `\\n• <b>${esc(p.title_fa || p.title)}</b>` + (dateFa(p.updated) ? ` — ${dateFa(p.updated)}` : '');
+        t += `\n• <b>${esc(p.title_fa || p.title)}</b>` + (dateFa(p.updated) ? ` — ${dateFa(p.updated)}` : '');
+      });
+    }
+    if (ev.length) {
+      const stFa = { current: 'در حال اجرا', upcoming: 'به‌زودی', unknown: 'تاریخ مشخص نیست', ended: 'تمام‌شده' };
+      t += '\n\n<b>🎉 ایونت‌ها:</b>';
+      ev.slice(0, 5).forEach((e) => {
+        const d1 = e.start_date ? dateFa(e.start_date) : '';
+        const d2 = e.end_date ? dateFa(e.end_date) : '';
+        const dates = [d1, d2].filter(Boolean).join(' تا ');
+        t += `\n• <b>${esc(e.title)}</b> — ${stFa[e.status] || ''}` + (dates ? ` — ${dates}` : '');
       });
     }
     if (wikiRecent && wikiRecent.length) {
-      t += '\\n\\n<b>📚 تازه‌ها:</b>';
+      t += '\n\n<b>📚 تازه‌ها:</b>';
       wikiRecent.slice(0, 5).forEach((w) => {
-        t += `\\n• <b>${esc(w.title)}</b>` + (dateFa(w.timestamp) ? ` — ${dateFa(w.timestamp)}` : '');
+        t += `\n• <b>${esc(w.title)}</b>` + (dateFa(w.timestamp) ? ` — ${dateFa(w.timestamp)}` : '');
       });
     }
     if (disc.length) {
-      t += '\\n\\n<b>💬 گفتگوها:</b>';
+      t += '\n\n<b>💬 گفتگوها:</b>';
       disc.slice(0, 5).forEach((d) => {
-        t += `\\n• <b>${esc(d.title)}</b>` + (d.category_fa ? ` — ${esc(d.category_fa)}` : '') + (dateFa(d.date_iso) ? ` — ${dateFa(d.date_iso)}` : '');
+        t += `\n• <b>${esc(d.title)}</b>` + (d.category_fa ? ` — ${esc(d.category_fa)}` : '') + (dateFa(d.date_iso) ? ` — ${dateFa(d.date_iso)}` : '');
       });
     }
     t += FOOTER;
@@ -396,7 +407,7 @@ function createBot() {
     for (const k of order) {
       const list = (tl.tiers || {})[k] || [];
       if (!list.length) continue;
-      t += `\\n\\n<b>${k}</b> (${faNum(list.length)}): ` + list.map((h) => esc(h.name)).join('، ');
+      t += `\n\n<b>${k}</b> (${faNum(list.length)}): ` + list.map((h) => esc(h.name)).join('، ');
     }
     t += FOOTER;
     return ctx.replyWithHTML(t);

@@ -24,12 +24,14 @@ const faFile = loadJson('fa-overrides.json');
 // بیلد کامل ۶ آیتمی از mlbb.io (data/builds-full.json) — اگر نباشد، خالی است
 const fullBuildsFile = loadJson('builds-full.json');
 const fullBuilds = (fullBuildsFile && fullBuildsFile.heroes) || {};
-// اخبار و تیرلیست + انجمن (data/news.json + data/tierlist.json + data/discussions.json) — اگر نباشند، خالی است
+// اخبار و تیرلیست + انجمن + ایونت‌ها (data/news.json + data/tierlist.json + data/discussions.json + data/events.json) — اگر نباشند، خالی است
 const newsFile = loadJson('news.json');
 const tierlistFile = loadJson('tierlist.json');
 const discussionsFile = loadJson('discussions.json');
+const eventsFile = loadJson('events.json');
 const news = { patchNotes: (newsFile && newsFile.patch_notes) || [], wikiRecent: (newsFile && newsFile.wiki_recent) || [] };
 const discussions = (discussionsFile && discussionsFile.threads) || [];
+const events = (eventsFile && eventsFile.events) || [];
 const tierlist = {
   month: (tierlistFile && tierlistFile.month) || null,
   tiers: (tierlistFile && tierlistFile.tiers) || {},
@@ -51,7 +53,7 @@ const items = itemFile.data || [];
 const emblems = emblemFile.data || [];
 const talents = talentFile.data || {}; // { tier1: [...], tier2: [...], tier3: [...] }
 
-console.log(`[static] heroes=${heroes.length} items=${items.length} emblems=${emblems.length} news=${news.patchNotes.length + news.wikiRecent.length} tierlist=${Object.values(tierlist.counts).reduce((a, b) => a + b, 0)} discussions=${discussions.length} revdate=${heroFile.revdate || '?'}`);
+console.log(`[static] heroes=${heroes.length} items=${items.length} emblems=${emblems.length} news=${news.patchNotes.length + news.wikiRecent.length} tierlist=${Object.values(tierlist.counts).reduce((a, b) => a + b, 0)} discussions=${discussions.length} events=${events.length} revdate=${heroFile.revdate || '?'}`);
 
 function norm(s) {
   return String(s || '').toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -180,7 +182,7 @@ function heroesByRole() {
 }
 
 module.exports = {
-  heroes, items, emblems, talents, fullBuilds, news, tierlist, discussions,
+  heroes, items, emblems, talents, fullBuilds, news, tierlist, discussions, events,
   heroRevdate: heroFile.revdate || null,
   itemRevdate: itemFile.revdate || null,
   searchHeroes, findHero, heroById,
