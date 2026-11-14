@@ -12,8 +12,9 @@ import { WorkerTelegram } from './telegram.js';
 import { kvUserStore, kvSessionStore } from './stores.js';
 
 // ⚠️ حیاتی: Telegraf در handleUpdate به‌ازای هر آپدیت یک Telegram تازه می‌سازد
-// (new telegramLib.default(...)). با جایگزینی default، آن نمونه‌ها هم
+// (new telegram_1.default(...)). با جایگزینی default، آن نمونه‌ها هم
 // WorkerTelegram می‌شوند — وگرنه کلاینت stock با node-fetch خطا می‌دهد.
+// (فقط bot.telegram را عوض‌کردن کافی نیست، چون Context از نمونهٔ تازه استفاده می‌کند.)
 telegramLib.default = WorkerTelegram;
 
 const DEFAULT_STATIC_BASE = 'https://yahootattoo1-commits.github.io/mobile-legends/data';

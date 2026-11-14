@@ -1,17 +1,25 @@
-// کلاینت تلگرام برای Cloudflare Workers — به‌جای node-fetchِ Telegraf از
-// fetch سراسری استفاده می‌کند (node-fetch در Workers وجود ندارد).
-//
-// چرا ساب‌کلاس: همهٔ متدهای Telegram (sendMessage، sendPhoto،
-// setChatMenuButton، answerCbQuery و…) از callApi رد می‌شوند؛ با بازنویسی
-// فقط همین یک متد، کل ربات روی fetch سراسری می‌دود.
-//
-// فقط JSON فرستاده می‌شود (عکس‌ها با URL)؛ آپلود فایل پشتیبانی نمی‌شود —
-// ربات در این حالت هرگز فایل نمی‌فرستد (عکس خوشامد با URL می‌آید،
-// پرترهٔ هیرو هم URL است).
-import { Telegram } from '../../node_modules/telegraf/lib/telegram.js';
-import TelegramError from '../../node_modules/telegraf/lib/core/network/error.js';
+// کلاینت تلگرام برای Cloudflare Workers — مستقل از Telegraf، با fetch سراسری.
+// چرا مستقل: ایمپورتِ کلاس Telegram از داخل telegraf در باندل esbuild خراب
+// می‌شد (زمان‌اجرا: «import_error.default is not a constructor» در callApi،
+// و همهٔ پیام‌های ربات بی‌صدا می‌مردند)؛ پس این کلاس هیچ ایمپورتی از telegraf
+// ندارد و فقط همان متدهایی را پیاده کرده که ربات استفاده می‌کند:
+// sendMessage، sendPhoto، answerCbQuery، getMe، setChatMenuButton.
+// فقط JSON فرستاده می‌شود (عکس‌ها با URL)؛ آپلود فایل پشتیبانی نمی‌شود.
 
 const TELEGRAM_API = 'https://api.telegram.org';
+
+// هم‌شکلِ TelegramError خودِ telegraf، تا کدهایی که .code یا .response
+// می‌خوانند همان رفتار را ببینند.
+class TelegramError extends Error {
+  constructor(response, on = {}) {
+    super(`${response.error_code}: ${response.description}`);
+    this.response = response;
+    this.on = on;
+  }
+  get code() { return this.response.error_code; }
+  get description() { return this.response.description; }
+  get parameters() { return this.response.parameters; }
+}
 
 function hasFileSource(v, seen = new Set()) {
   if (!v || typeof v !== 'object' || seen.has(v)) return false;
@@ -20,11 +28,37 @@ function hasFileSource(v, seen = new Set()) {
   return Object.values(v).some((x) => hasFileSource(x, seen));
 }
 
-// قرارداد callApi دقیقاً مثل ApiClient اصلی است: data.result را برمی‌گرداند
-// و روی خطا TelegramError می‌اندازد (با همان response/code).
-class WorkerTelegram extends Telegram {
+class WorkerTelegram {
   constructor(token) {
-    super(token, { webhookReply: false });
+    this.token = token;
+    this.webhookReply = false;
+    this.options = {};
+  }
+
+  getMe() {
+    return this.callApi('getMe', {});
+  }
+
+  sendMessage(chatId, text, extra = {}) {
+    return this.callApi('sendMessage', { chat_id: chatId, text, ...extra });
+  }
+
+  sendPhoto(chatId, photo, extra = {}) {
+    return this.callApi('sendPhoto', { chat_id: chatId, photo, ...extra });
+  }
+
+  // نام متد در Telegraf همین است (Context آن را answerCbQuery صدا می‌زند)؛
+  // answerCallbackQuery همان کار را می‌کند، برای سازگاریِ کامل.
+  answerCbQuery(callbackQueryId, text = '', extra = {}) {
+    return this.callApi('answerCallbackQuery', { callback_query_id: callbackQueryId, text, ...extra });
+  }
+
+  answerCallbackQuery(callbackQueryId, text = '', extra = {}) {
+    return this.answerCbQuery(callbackQueryId, text, extra);
+  }
+
+  setChatMenuButton(menuButton) {
+    return this.callApi('setChatMenuButton', { menu_button: menuButton });
   }
 
   async callApi(method, payload = {}, { signal } = {}) {
@@ -62,4 +96,4 @@ class WorkerTelegram extends Telegram {
   }
 }
 
-export { WorkerTelegram };
+export { WorkerTelegram, TelegramError };
