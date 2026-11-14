@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>MLBB — مینی‌اپ فارسی</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="app-header">
+  <div class="logo">⚔️ <span>MLBB</span> <small>مینی‌اپ فارسی</small></div>
+  <div class="version" id="version">…</div>
+</header>
+
+<nav class="tabs" id="tabs">
+  <button data-tab="heroes" class="active">🦸 هیروها</button>
+  <button data-tab="meta">📊 متا</button>
+  <button data-tab="items">🧰 آیتم‌ها</button>
+  <button data-tab="emblems">🛡️ امبلم</button>
+  <button data-tab="wr">🧮 وین‌ریت</button>
+  <button data-tab="mpl">🏆 MPL</button>
+  <button data-tab="player">👤 پروفایل</button>
+</nav>
+
+<main>
+  <!-- هیروها -->
+  <section id="tab-heroes" class="tab active">
+    <div class="search-row">
+      <input id="heroSearch" type="search" placeholder="جست‌وجوی هیرو… مثلاً Miya" autocomplete="off">
+      <button id="heroSearchBtn">🔍</button>
+    </div>
+    <div id="heroGrid" class="grid"></div>
+    <div id="heroStatus" class="status"></div>
+  </section>
+
+  <!-- جزییات هیرو -->
+  <section id="tab-hero" class="tab">
+    <button class="back" id="heroBack">← بازگشت به هیروها</button>
+    <div id="heroDetail"></div>
+    <div class="lane-row" id="laneRow"></div>
+    <div id="buildBox"></div>
+  </section>
+
+  <!-- متا -->
+  <section id="tab-meta" class="tab">
+    <div class="row-between">
+      <h2>📊 متا — ۷ روز اخیر</h2>
+      <select id="metaSort">
+        <option value="win">بر اساس وین‌ریت</option>
+        <option value="ban">بر اساس بن‌ریت</option>
+      </select>
+    </div>
+    <div id="metaTable"></div>
+    <div id="metaStatus" class="status"></div>
+  </section>
+
+  <!-- آیتم‌ها -->
+  <section id="tab-items" class="tab">
+    <div class="search-row">
+      <input id="itemSearch" type="search" placeholder="جست‌وجوی آیتم… مثلاً Berserker" autocomplete="off">
+      <button id="itemSearchBtn">🔍</button>
+    </div>
+    <div id="itemList"></div>
+    <div id="itemStatus" class="status"></div>
+  </section>
+
+  <!-- امبلم / اسپل -->
+  <section id="tab-emblems" class="tab">
+    <h2>🛡️ امبلم‌ها و تلنت‌ها</h2>
+    <div id="emblemList"></div>
+    <h2>🪄 اسپل‌ها</h2>
+    <div id="spellList"></div>
+    <div id="emblemStatus" class="status"></div>
+  </section>
+
+  <!-- ماشین وین‌ریت -->
+  <section id="tab-wr" class="tab">
+    <h2>🧮 ماشین‌حساب وین‌ریت</h2>
+    <label>تعداد مچ فعلی<input id="wrMatch" type="number" min="1" value="100"></label>
+    <label>وین‌ریت فعلی (٪)<input id="wrNow" type="number" min="0" max="99" value="50"></label>
+    <label>وین‌ریت هدف (٪)<input id="wrFuture" type="number" min="1" max="99" value="60"></label>
+    <button class="primary" id="wrCalc">محاسبه</button>
+    <div id="wrResult" class="result"></div>
+  </section>
+
+  <!-- MPL -->
+  <section id="tab-mpl" class="tab">
+    <h2>🏆 لیگ‌های MPL</h2>
+    <div class="league-row">
+      <button data-league="id">🇮🇩 اندونزی</button>
+      <button data-league="ph">🇵🇭 فیلیپین</button>
+      <button data-league="my">🇲🇾 مالزی</button>
+      <button data-league="kh">🇰🇭 کامبوج</button>
+    </div>
+    <div id="mplBox"></div>
+  </section>
+
+  <!-- پروفایل -->
+  <section id="tab-player" class="tab">
+    <h2>👤 پروفایل بازیکن</h2>
+    <p class="hint">برای ورود، Game ID و Zone ID را بده؛ کد تایید به صندوق پیام داخل بازی می‌آید. توکن فقط در همین مرورگر می‌ماند.</p>
+    <label>Game ID<input id="plGame" type="text" inputmode="numeric" placeholder="مثلاً 12345678"></label>
+    <label>Zone ID<input id="plZone" type="text" inputmode="numeric" placeholder="مثلاً 1234"></label>
+    <button class="primary" id="plSendVc">📩 ارسال کد تایید</button>
+    <label>کد تایید داخل بازی<input id="plCode" type="text" inputmode="numeric" placeholder="کد ۴ تا ۸ رقمی"></label>
+    <button class="primary" id="plLogin">🔑 ورود</button>
+    <div id="plResult" class="result"></div>
+  </section>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
