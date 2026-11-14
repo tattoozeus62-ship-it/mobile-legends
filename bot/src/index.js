@@ -250,9 +250,9 @@ if (bot) {
     // دکمهٔ «Open App» پایین چت (کنار جای تایپ) — مستقیم مینی‌اپ را باز می‌کند
     if (process.env.MINIAPP_URL) {
       try {
-        await bot.telegram.setChatMenuButton({ menuButton: { type: 'web_app', text: 'Open App', web_app: { url: process.env.MINIAPP_URL } } });
+        const setOk = await bot.telegram.setChatMenuButton({ menuButton: { type: 'web_app', text: 'Open App', web_app: { url: process.env.MINIAPP_URL } } });
         const cur = await bot.telegram.getChatMenuButton();
-        console.log('[bot] menu button:', JSON.stringify(cur));
+        console.log('[bot] menu button set:', setOk, 'current:', JSON.stringify(cur));
       } catch (e) { console.error('[bot] menu button failed:', e.message); }
     }
   }).catch((e) => console.error('[bot] launch failed:', e.message));
