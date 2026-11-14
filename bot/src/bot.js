@@ -271,14 +271,22 @@ function createBot() {
     const rec = r.records[0];
     if (!rec) return ctx.replyWithHTML('❌ برای این هیرو کانتر ثبت‌نشده‌ای پیدا نشد.' + FOOTER);
     const c = normCounterRecord(rec);
-    const sorted = [...c.counters].filter((x) => x.delta != null).sort((a, b) => a.delta - b.delta).slice(0, 5);
-    let t = `⚔️ <b>بهترین کانترهای ${esc(c.name || hero.hero_name)}</b>`;
+    // مرتب نزولی: بزرگ‌ترین افزایش وین‌ریت اول — این‌ها هیروهایی‌اند که هیروی اصلی آن‌ها را کانتر می‌کند
+    const sorted = [...c.counters].filter((x) => x.delta != null).sort((a, b) => b.delta - a.delta).slice(0, 5);
+    let t = `⚔️ <b>${esc(c.name || hero.hero_name)} این هیروها را کانتر می‌کند</b>`;
     if (c.win != null) t += `\nوین‌ریت خودش: ${pct(c.win)} | بن‌ریت: ${pct(c.ban)}`;
-    t += '\n\nاین هیروها وین‌ریت او را از همه بیشتر پایین می‌آورند:';
+    t += '\n\nوین‌ریت او در برابر این هیروها از همه بیشتر است:';
     if (!sorted.length) t += '\n— فعلاً کانتر مشخصی ثبت نشده است.';
     sorted.forEach((x, i) => {
-      t += `\n${faNum(i + 1)}. <b>${esc(x.name)}</b> — ${pct(x.delta)} تغییر وین‌ریت`;
+      t += `\n${faNum(i + 1)}. <b>${esc(x.name)}</b> — وین‌ریت +${pct(x.delta)} در برابر او`;
     });
+    // هیروهایی که این هیرو را کانتر می‌کنند — از relation هیرو در Rone
+    try {
+      const hr = await roneGet(`/heroes/${id}`);
+      const weak = hr.records?.[0]?.data?.relation?.weak?.target_hero_id || [];
+      const weakNames = weak.filter(Boolean).map((wid) => sd.heroById(wid)?.hero_name).filter(Boolean);
+      if (weakNames.length) t += `\n\n⚔️ <b>جلوی این هیروها کانتر می‌شود:</b>\n${weakNames.map((n) => `• ${esc(n)}`).join('\n')}`;
+    } catch { /* اگر relation نبود، فقط همان لیست بالا می‌ماند */ }
     t += FOOTER;
     return ctx.replyWithHTML(t);
   }

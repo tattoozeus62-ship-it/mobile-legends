@@ -101,7 +101,7 @@ app.get('/api/counters/:id', async (req, res) => {
   const rec = r.records[0];
   if (!rec) return fail(res, 404, 'کانتر پیدا نشد');
   const c = normCounterRecord(rec);
-  c.counters = [...c.counters].filter((x) => x.delta != null).sort((a, b) => a.delta - b.delta);
+  c.counters = [...c.counters].filter((x) => x.delta != null).sort((a, b) => b.delta - a.delta);
   return ok(res, { counters: c });
 });
 
