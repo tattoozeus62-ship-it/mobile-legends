@@ -24,6 +24,15 @@ const faFile = loadJson('fa-overrides.json');
 // بیلد کامل ۶ آیتمی از mlbb.io (data/builds-full.json) — اگر نباشد، خالی است
 const fullBuildsFile = loadJson('builds-full.json');
 const fullBuilds = (fullBuildsFile && fullBuildsFile.heroes) || {};
+// اخبار و تیرلیست (data/news.json + data/tierlist.json) — اگر نباشند، خالی است
+const newsFile = loadJson('news.json');
+const tierlistFile = loadJson('tierlist.json');
+const news = { patchNotes: (newsFile && newsFile.patch_notes) || [], wikiRecent: (newsFile && newsFile.wiki_recent) || [] };
+const tierlist = {
+  month: (tierlistFile && tierlistFile.month) || null,
+  tiers: (tierlistFile && tierlistFile.tiers) || {},
+  counts: (tierlistFile && tierlistFile.counts) || {},
+};
 const FA = {
   heroSkills: (faFile && faFile.heroSkills) || {},
   items: (faFile && faFile.items) || {},
@@ -40,7 +49,7 @@ const items = itemFile.data || [];
 const emblems = emblemFile.data || [];
 const talents = talentFile.data || {}; // { tier1: [...], tier2: [...], tier3: [...] }
 
-console.log(`[static] heroes=${heroes.length} items=${items.length} emblems=${emblems.length} revdate=${heroFile.revdate || '?'}`);
+console.log(`[static] heroes=${heroes.length} items=${items.length} emblems=${emblems.length} news=${news.patchNotes.length + news.wikiRecent.length} tierlist=${Object.values(tierlist.counts).reduce((a, b) => a + b, 0)} revdate=${heroFile.revdate || '?'}`);
 
 function norm(s) {
   return String(s || '').toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -169,7 +178,7 @@ function heroesByRole() {
 }
 
 module.exports = {
-  heroes, items, emblems, talents, fullBuilds,
+  heroes, items, emblems, talents, fullBuilds, news, tierlist,
   heroRevdate: heroFile.revdate || null,
   itemRevdate: itemFile.revdate || null,
   searchHeroes, findHero, heroById,

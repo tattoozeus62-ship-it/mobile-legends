@@ -21,6 +21,10 @@ const LEAGUES = [
   { v: 'my', fa: '🇲🇾 MPL مالزی (MY)' },
   { v: 'kh', fa: '🇰🇭 MPL کامبوج (KH)' },
 ];
+// تاریخ میلادی به فارسی (مثلاً «۱۱ نوامبر ۲۰۲۶») و نام ماه («November 2026» → «نوامبر ۲۰۲۶»)
+const MONTH_FA = ['ژانویه', 'فوریه', 'مارس', 'آوریل', 'مه', 'ژوئن', 'ژوئیه', 'اوت', 'سپتامبر', 'اکتبر', 'نوامبر', 'دسامبر'];
+function dateFa(iso) { const d = new Date(iso); if (isNaN(d.getTime())) return ''; return `${faNum(d.getUTCDate())} ${MONTH_FA[d.getUTCMonth()]} ${faNum(d.getUTCFullYear())}`; }
+function monthFa(m) { const [name, year] = String(m || '').split(' '); const i = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].indexOf(name); return (i >= 0 ? MONTH_FA[i] : name) + (year ? ' ' + faNum(year) : ''); }
 
 // وضعیت موقت /player برای هر چت — JWT فقط در حافظهٔ همین پروسه نگه داشته می‌شود
 const playerSessions = new Map(); // chatId -> { step, gameId, zoneId, jwt }
@@ -151,6 +155,8 @@ function createBot() {
 /wr &lt;مچ فعلی&gt; &lt;وین‌ریت فعلی&gt; &lt;وین‌ریت هدف&gt; — چند برد پشت سر هم لازم است؟
 /mpl — جدول لیگ‌های MPL (ID / PH / MY / KH)
 /player — اتصال پروفایل بازی (با کد تایید داخل بازی)
+/news — اخبار و پچ‌نوت‌های بازی
+/tier — تیرلیست هیروها
 /version — نسخهٔ فعلی بازی
 /admin — پنل مدیریت (فقط مدیر)
 /help — همین راهنما
@@ -168,7 +174,7 @@ function createBot() {
       ? '🎮 با دکمهٔ زیر مینی‌اپ فارسی را باز کن:'
       : '⚠️ مینی‌اپ هنوز روی هاست HTTPS تنظیم نشده است (MINIAPP_URL خالی است) — دستورهای زیر بدون مینی‌اپ هم کار می‌کنند.';
     const caption =
-      `👋 سلام! به <b>Persian Mlbb</b> خوش آمدی.\n\nربات فارسی Mobile Legends: Bang Bang — هیروها بر اساس نقش، متا، کانتر، بیلد، آیتم، امبلم و جدول MPL، همه به فارسی و با دادهٔ زنده.\n\n${waNote}\n\nبرای راهنما: /help` +
+      `👋 سلام! به <b>Persian Mlbb</b> خوش آمدی.\n\nربات فارسی Mobile Legends: Bang Bang — هیروها بر اساس نقش، متا، کانتر، بیلد، آیتم، امبلم، اخبار و تیرلیست و جدول MPL، همه به فارسی و با دادهٔ زنده.\n\n${waNote}\n\nبرای راهنما: /help` +
       (isAdmin(ctx) ? '\n\n🛠️ تو مدیر ربات هستی — /admin برای پنل مدیریت.' : '') + FOOTER;
     // پیام ورود با عکس خوشامد (assets/welcome.jpg، وگرنه لوگوی ربات) — اگر فایل نبود، فقط متن فرستاده می‌شود
     const welcomePath = [path.join(__dirname, '..', 'assets', 'welcome.jpg'), path.join(__dirname, '..', 'assets', 'logo.jpg')].find((p) => fs.existsSync(p));
@@ -346,6 +352,45 @@ function createBot() {
       if (b.spell) t += `\n🪄 اسپل: ${esc(b.spell)}`;
       t += '\n🧰 آیتم‌ها: ' + (b.equipNames.length ? b.equipNames.map(esc).join(' ← ') : '—');
     });
+    t += FOOTER;
+    return ctx.replyWithHTML(t);
+  });
+
+  // ---------- /news و /tier ----------
+  bot.command('news', async (ctx) => {
+    const { patchNotes, wikiRecent } = sd.news || {};
+    let t = '📰 <b>اخبار و پچ‌نوت‌ها</b>';
+    if ((!patchNotes || !patchNotes.length) && (!wikiRecent || !wikiRecent.length)) {
+      return ctx.replyWithHTML(t + '\\n\\n— فعلاً خبری نیست.' + FOOTER);
+    }
+    if (patchNotes && patchNotes.length) {
+      t += '\\n\\n<b>📝 پچ‌نوت‌ها:</b>';
+      patchNotes.slice(0, 5).forEach((p) => {
+        t += `\\n• <a href="${esc(p.url)}">${esc(p.title_fa || p.title)}</a>` + (dateFa(p.updated) ? ` — ${dateFa(p.updated)}` : '');
+      });
+    }
+    if (wikiRecent && wikiRecent.length) {
+      t += '\\n\\n<b>📚 تازه‌های ویکی:</b>';
+      wikiRecent.slice(0, 5).forEach((w) => {
+        t += `\\n• <a href="${esc(w.url)}">${esc(w.title)}</a>` + (dateFa(w.timestamp) ? ` — ${dateFa(w.timestamp)}` : '');
+      });
+    }
+    t += FOOTER;
+    return ctx.replyWithHTML(t);
+  });
+
+  bot.command('tier', async (ctx) => {
+    const tl = sd.tierlist || {};
+    const order = ['SS', 'S', 'A', 'B', 'C', 'D'];
+    if (!order.some((k) => ((tl.tiers || {})[k] || []).length)) {
+      return ctx.replyWithHTML('❌ تیرلیست فعلاً در دسترس نیست.' + FOOTER);
+    }
+    let t = '🏆 <b>تیرلیست هیروها</b>' + (tl.month ? ' — ' + esc(monthFa(tl.month)) : '');
+    for (const k of order) {
+      const list = (tl.tiers || {})[k] || [];
+      if (!list.length) continue;
+      t += `\\n\\n<b>${k}</b> (${faNum(list.length)}): ` + list.map((h) => esc(h.name)).join('، ');
+    }
     t += FOOTER;
     return ctx.replyWithHTML(t);
   });
