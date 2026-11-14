@@ -1,9 +1,11 @@
 // ربات تلگرام MLBB — Telegraf با polling
 // همهٔ متن‌ها فارسی و راست‌چین؛ فوتر منبع داده در همهٔ پاسخ‌ها
+const fs = require('fs');
+const path = require('path');
 const { Telegraf, Markup } = require('telegraf');
 const { roneGet, ronePost, normRankRecord, normCounterRecord, normBuildRecord, normStanding, equipNameMap } = require('./rone');
 const sd = require('./staticData');
-const { faNum, faInt, pct, esc, FOOTER, cleanText, truncate } = require('./fa');
+const { faNum, faInt, pct, esc, FOOTER, cleanText, truncate, ROLES, roleFa, laneFa } = require('./fa');
 
 const MINIAPP_URL = process.env.MINIAPP_URL || '';
 const LANES = [
@@ -93,6 +95,7 @@ function createBot() {
 
 <b>دستورها:</b>
 /hero &lt;نام هیرو&gt; — اطلاعات هیرو، اسکیل‌ها و وین‌ریت زنده
+/heroes — لیست هیروها بر اساس نقش (۱۳۳ هیرو در ۶ نقش)
 /meta — برترین هیروهای متا (۷ روز اخیر، وین‌ریت)
 /counter &lt;نام هیرو&gt; — بهترین کانترهای آن هیرو
 /build &lt;نام هیرو&gt; — بیلد پیشنهادی (بعد لین را انتخاب کن)
@@ -114,10 +117,17 @@ function createBot() {
     const waNote = MINIAPP_URL
       ? '🎮 با دکمهٔ زیر مینی‌اپ فارسی را باز کن:'
       : '⚠️ مینی‌اپ هنوز روی هاست HTTPS تنظیم نشده است (MINIAPP_URL خالی است) — دستورهای زیر بدون مینی‌اپ هم کار می‌کنند.';
-    await ctx.replyWithHTML(
-      `👋 سلام! به <b>ربات MLBB</b> خوش آمدی.\n\nاینجا می‌توانی هیروها، متا، کانتر، بیلد، آیتم، امبلم و جدول MPL را به فارسی ببینی — با دادهٔ زنده و به‌روز.\n\n${waNote}\n\nبرای راهنما: /help` + FOOTER,
-      kb,
-    );
+    const caption =
+      `👋 سلام! به <b>پرشین MLBB</b> خوش آمدی.\n\nربات فارسی Mobile Legends: Bang Bang — هیروها بر اساس نقش، متا، کانتر، بیلد، آیتم، امبلم و جدول MPL، همه به فارسی و با دادهٔ زنده.\n\n${waNote}\n\nبرای راهنما: /help` + FOOTER;
+    // پیام ورود با لوگوی ربات (assets/logo.jpg) — اگر فایل نبود، فقط متن فرستاده می‌شود
+    const logoPath = path.join(__dirname, '..', 'assets', 'logo.jpg');
+    if (fs.existsSync(logoPath)) {
+      try {
+        await ctx.replyWithPhoto({ source: logoPath }, { caption, parse_mode: 'HTML', ...kb });
+        return;
+      } catch { /* بدون عکس ادامه بده */ }
+    }
+    await ctx.replyWithHTML(caption, kb);
   });
 
   bot.help((ctx) => ctx.replyWithHTML(helpText));
@@ -134,10 +144,10 @@ function createBot() {
     const rankRes = await getRankList(7);
     const rank = rankRes.ok ? rankRes.all.find((r) => r.id === id) : null;
     const head = await heroHead(id);
-    const skills = (hero.skills || []).slice(0, 4);
+    const skills = sd.heroPublic(hero).skills.slice(0, 4);
     let t = `🦸 <b>${esc(hero.hero_name)}</b>`;
-    if (hero.class) t += ` — ${esc(hero.class)}`;
-    if (hero.laning?.length) t += `\n🛤️ لین: ${hero.laning.map(esc).join('، ')}`;
+    if (hero.class) t += ` — ${roleFa(hero.class)}`;
+    if (hero.laning?.length) t += `\n🛤️ لین: ${laneFa(hero.laning)}`;
     if (rank) {
       t += `\n\n📊 <b>آمار زنده (۷ روز اخیر)</b>\nوین‌ریت: ${pct(rank.win)}\nبن‌ریت: ${pct(rank.ban)}\nپیک‌ریت: ${pct(rank.pick)}`;
     } else {
@@ -156,6 +166,37 @@ function createBot() {
       try { return await ctx.replyWithPhoto(head, { caption: t, parse_mode: 'HTML' }); } catch { /* بدون عکس ادامه بده */ }
     }
     return ctx.replyWithHTML(t);
+  });
+
+  // ---------- /heroes — لیست هیروها بر اساس نقش ----------
+  function heroesRoleKeyboard() {
+    const groups = sd.heroesByRole();
+    const rows = groups.map((g) => [Markup.button.callback(`${g.emoji} ${g.fa} (${faNum(g.count)})`, `heroes_role:${g.en}`)]);
+    return Markup.inlineKeyboard(rows);
+  }
+
+  bot.command('heroes', async (ctx) => {
+    const total = sd.heroes.length;
+    return ctx.replyWithHTML(
+      `🦸 <b>هیروها بر اساس نقش</b>\n\n${faNum(total)} هیرو در ۶ نقش — یکی را انتخاب کن:` + FOOTER,
+      heroesRoleKeyboard(),
+    );
+  });
+
+  bot.action(/^heroes_role:(.+)$/, async (ctx) => {
+    const role = ctx.match[1];
+    const g = sd.heroesByRole().find((x) => x.en === role);
+    if (!g) return ctx.answerCbQuery('نقش پیدا نشد');
+    await ctx.answerCbQuery();
+    let t = `${g.emoji} <b>${g.fa} (${faNum(g.count)})</b>\n`;
+    for (const h of g.heroes) {
+      t += `\n• <b>${esc(h.name)}</b> — ${laneFa(h.laning)}`;
+    }
+    t += `\n\nبرای جزئیات هر هیرو: <code>/hero نام</code>` + FOOTER;
+    // پیام تلگرام حداکثر ۴۰۹۶ کاراکتر — لیست نقش‌ها زیر این حد است، ولی برای اطمینان تکه‌تکه می‌فرستیم
+    for (let i = 0; i < t.length; i += 3500) {
+      await ctx.replyWithHTML(t.slice(i, i + 3500));
+    }
   });
 
   // ---------- /meta ----------
@@ -419,7 +460,13 @@ function createBot() {
   });
 
   // ---------- منوی شیشه‌ای ----------
-  bot.action('menu_heroes', (ctx) => ctx.answerCbQuery().then(() => ctx.replyWithHTML('نام هیرو را با دستور بفرست؛ مثلاً: <code>/hero Miya</code>' + FOOTER)));
+  bot.action('menu_heroes', async (ctx) => {
+    await ctx.answerCbQuery();
+    return ctx.replyWithHTML(
+      `🦸 <b>هیروها بر اساس نقش</b>\n\n${faNum(sd.heroes.length)} هیرو در ۶ نقش — یکی را انتخاب کن، یا نام هیرو را با دستور بفرست؛ مثلاً: <code>/hero Miya</code>` + FOOTER,
+      heroesRoleKeyboard(),
+    );
+  });
   bot.action('menu_meta', async (ctx) => { await ctx.answerCbQuery(); return ctx.replyWithHTML('برای دیدن متا: /meta' + FOOTER); });
   bot.action('menu_counter', (ctx) => ctx.answerCbQuery().then(() => ctx.replyWithHTML('نام هیرو را بفرست؛ مثلاً: <code>/counter Gusion</code>' + FOOTER)));
   bot.action('menu_build', (ctx) => ctx.answerCbQuery().then(() => ctx.replyWithHTML('نام هیرو را بفرست؛ مثلاً: <code>/build Miya</code>' + FOOTER)));

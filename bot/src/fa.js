@@ -49,4 +49,55 @@ function truncate(s, n = 900) {
   return s.length > n ? s.slice(0, n) + '…' : s;
 }
 
-module.exports = { faNum, faInt, pct, esc, FOOTER, cleanText, truncate };
+// ---------- نقش و لین هیرو — نام فارسی ----------
+// ترتیب نمایش نقش‌ها: تیرانداز، مبارز، قاتل، جادوگر، تانک، پشتیبان
+const ROLES = [
+  { en: 'Marksman', fa: 'تیرانداز', emoji: '🏹' },
+  { en: 'Fighter', fa: 'مبارز', emoji: '⚔️' },
+  { en: 'Assassin', fa: 'قاتل', emoji: '🗡️' },
+  { en: 'Mage', fa: 'جادوگر', emoji: '🔮' },
+  { en: 'Tank', fa: 'تانک', emoji: '🛡️' },
+  { en: 'Support', fa: 'پشتیبان', emoji: '💚' },
+];
+const ROLE_FA = Object.fromEntries(ROLES.map((r) => [r.en, r.fa]));
+const LANE_FA = { gold: 'گلد', exp: 'اکس‌پی', mid: 'مید', jungle: 'جانگل', roam: 'روم' };
+
+function normLaneKey(s) {
+  return String(s || '').toLowerCase().replace(/\s*lane\s*$/, '').replace(/jungling/g, 'jungle').replace(/roaming/g, 'roam').trim();
+}
+
+// 'Fighter, Assassin' -> 'مبارز، قاتل' | 'Tank' -> 'تانک'
+function roleFa(classStr) {
+  return String(classStr || '').split(',').map((s) => ROLE_FA[s.trim()] || s.trim()).filter(Boolean).join('، ');
+}
+
+// ['exp lane', 'jungle'] یا ['jungle, roam'] -> 'اکس‌پی، جانگل' / 'جانگل، روم'
+function laneFa(laning) {
+  const out = [];
+  for (const l of (laning || [])) {
+    for (const p of String(l).split(',')) {
+      const k = normLaneKey(p);
+      if (k && LANE_FA[k] && !out.includes(LANE_FA[k])) out.push(LANE_FA[k]);
+    }
+  }
+  return out.join('، ');
+}
+
+// نقش‌های هیرو به‌صورت آرایهٔ انگلیسی: 'Fighter, Assassin' -> ['Fighter', 'Assassin']
+function roleList(classStr) {
+  return String(classStr || '').split(',').map((s) => s.trim()).filter((s) => ROLE_FA[s]);
+}
+
+// لین‌های هیرو به‌صورت کلید انگلیسی: ['exp lane', 'jungle'] -> ['exp', 'jungle']
+function laneList(laning) {
+  const out = [];
+  for (const l of (laning || [])) {
+    for (const p of String(l).split(',')) {
+      const k = normLaneKey(p);
+      if (k && LANE_FA[k] && !out.includes(k)) out.push(k);
+    }
+  }
+  return out;
+}
+
+module.exports = { faNum, faInt, pct, esc, FOOTER, cleanText, truncate, ROLES, ROLE_FA, LANE_FA, roleFa, laneFa, roleList, laneList };

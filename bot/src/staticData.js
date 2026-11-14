@@ -151,6 +151,20 @@ function itemPublic(it) {
   };
 }
 
+const { ROLES, roleList } = require('./fa');
+
+// هیروها دسته‌بندی‌شده بر اساس نقش — هر هیروی دورنقشه در هر دو گروه می‌آید
+// برمی‌گرداند: [{ en, fa, emoji, count, heroes: [heroPublic...] }, ...] به ترتیب ROLES
+function heroesByRole() {
+  return ROLES.map((r) => {
+    const list = heroes
+      .filter((h) => roleList(h.class).includes(r.en))
+      .sort((a, b) => a.hero_name.localeCompare(b.hero_name))
+      .map(heroPublic);
+    return { en: r.en, fa: r.fa, emoji: r.emoji, count: list.length, heroes: list };
+  });
+}
+
 module.exports = {
   heroes, items, emblems, talents,
   heroRevdate: heroFile.revdate || null,
@@ -158,6 +172,7 @@ module.exports = {
   searchHeroes, findHero, heroById,
   searchItems, findItem,
   heroPublic, itemPublic,
+  heroesByRole,
   faSkill, faItem, faTalent, faSpell,
   faCounts: {
     heroSkills: Object.keys(FA.heroSkills).length,
