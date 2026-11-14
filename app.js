@@ -1089,6 +1089,58 @@ document.getElementById('plLogin').addEventListener('click', async () => {
   } catch (e) { showError(box, e); }
 });
 
+// ---------- اسپات‌لایت متا (۵ هیروی برتر ۷ روز اخیر با عکس واقعی) ----------
+async function renderSpotlight() {
+  const box = document.getElementById('spotlightBox');
+  if (!box) return;
+  try {
+    const sd = await loadStatic();
+    const stats = (sd.heroStats || []).filter((s) => s && Number.isFinite(Number(s.win_rate)))
+      .sort((a, b) => Number(b.win_rate) - Number(a.win_rate)).slice(0, 5);
+    const card = box.closest ? box.closest('.spotlight-card') : null;
+    if (!stats.length) { if (card) card.style.display = 'none'; return; }
+    const byName = new Map((sd.heroes || []).map((h) => [h.hero_name, h]));
+    const items = stats.map((s) => {
+      const h = byName.get(s.name);
+      return h ? { stat: s, pub: heroPublic(h) } : null;
+    }).filter(Boolean);
+    if (!items.length) { if (card) card.style.display = 'none'; return; }
+    let cur = 0;
+    let timer = null;
+    const mainHTML = (i) => {
+      const { stat: s, pub: h } = items[i];
+      const fa = (sd.faContent.stats.heroes || {})[s.slug] || {};
+      const specs = (fa.specialities_fa || s.specialities || []).join('، ');
+      return `<div class="spot-main">
+        <img src="${esc(h.portrait)}" alt="${esc(h.name)}">
+        <div>
+          <div class="spot-rank">رتبهٔ ${faNum(s.position)} وین‌ریت — ۷ روز اخیر</div>
+          <h3>${esc(h.name)}</h3>
+          <div class="spot-tags">${esc(roleFa(h.class))} — ${esc(laneFa(h.laning))}</div>
+          <div class="spot-win">وین‌ریت <b>${pct(s.win_rate)}</b> <span>(${esc(fa.win_label_fa || s.win_label || '')})</span></div>
+          <div class="spot-sub">پیک ${pct(s.pick_rate)} — بن ${pct(s.ban_rate)}${specs ? ' — ' + esc(specs) : ''}</div>
+        </div>
+      </div>
+      <div class="spot-strip">${items.map((it, j) => `<img src="${esc(it.pub.portrait)}" class="spot-chip${j === i ? ' active' : ''}" data-i="${j}" alt="${esc(it.pub.name)}">`).join('')}</div>`;
+    };
+    const show = (i) => {
+      cur = i;
+      box.classList.add('fade');
+      setTimeout(() => { box.innerHTML = mainHTML(cur); bindChips(); box.classList.remove('fade'); }, 250);
+    };
+    const bindChips = () => box.querySelectorAll('.spot-chip').forEach((c) => c.addEventListener('click', () => { show(Number(c.dataset.i) || 0); schedule(); }));
+    const schedule = () => {
+      if (timer) clearTimeout(timer);
+      if (!box.isConnected) return;
+      timer = setTimeout(() => { show((cur + 1) % items.length); schedule(); }, 4500);
+    };
+    box.innerHTML = mainHTML(0);
+    bindChips();
+    schedule();
+  } catch { const card = box.closest ? box.closest('.spotlight-card') : null; if (card) card.style.display = 'none'; }
+}
+
 // شروع
 loadHeroes();
 loadItems();
+renderSpotlight();

@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;900&family=Space+Grotesk:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20261114-16">
+<link rel="stylesheet" href="style.css?v=20261114-17">
 </head>
 <body>
 <header class="app-header">
@@ -37,10 +37,10 @@
       <button class="ghost" onclick="showTab('wr')">🧮 محاسبه‌گر وین‌ریت</button>
       <button class="ghost gold" onclick="showTab('player')">🔑 ورود با Game ID</button>
     </div>
-    <div class="arena-card">
-      <div class="arena-badge"><span class="dot"></span>LIVE 3D ARENA HUD</div>
-      <div id="threejs-container-ANIMATION_3"></div>
-      <div class="arena-fps">سیستم رندر تعاملی سه‌بعدی — <b>60 FPS</b></div>
+    <div class="spotlight-card">
+      <div class="spot-badge">🔥 داغ‌ترین‌های متا</div>
+      <div id="spotlightBox"><div class="spot-loading">در حال بارگذاری…</div></div>
+      <div class="spot-time">📊 آمار ۷ روز اخیر</div>
     </div>
   </section>
 
@@ -203,101 +203,6 @@
   </footer>
 </main>
 
-<script src="https://ajax.googleapis.com/ajax/libs/threejs/r125/three.min.js"></script>
-<script>
-(function () {
-  try {
-    if (!window.THREE) return;
-    var container = document.getElementById('threejs-container-ANIMATION_3');
-    if (!container) return;
-    var width = container.clientWidth || window.innerWidth;
-    var height = container.clientHeight || window.innerHeight;
-    var scene = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 1000);
-    camera.position.z = 5;
-    var renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    container.appendChild(renderer.domElement);
-    scene.add(new THREE.AmbientLight(0xffffff, 0.8));
-    var dirLight = new THREE.DirectionalLight(0x00f2fe, 2.5);
-    dirLight.position.set(5, 5, 5);
-    scene.add(dirLight);
-    var goldLight = new THREE.PointLight(0xf59e0b, 3, 20);
-    goldLight.position.set(-4, -2, 3);
-    scene.add(goldLight);
-    var mythicGroup = new THREE.Group();
-    scene.add(mythicGroup);
-    var crystal = new THREE.Mesh(
-      new THREE.OctahedronGeometry(1.4, 0),
-      new THREE.MeshPhongMaterial({ color: 0x0ea5e9, emissive: 0x0284c7, emissiveIntensity: 0.4, shininess: 90, flatShading: true, transparent: true, opacity: 0.92 })
-    );
-    mythicGroup.add(crystal);
-    var wireCage = new THREE.Mesh(
-      new THREE.OctahedronGeometry(1.48, 0),
-      new THREE.MeshBasicMaterial({ color: 0x38bdf8, wireframe: true, transparent: true, opacity: 0.5 })
-    );
-    mythicGroup.add(wireCage);
-    var innerCore = new THREE.Mesh(
-      new THREE.IcosahedronGeometry(0.6, 1),
-      new THREE.MeshBasicMaterial({ color: 0xfbbf24, wireframe: true })
-    );
-    mythicGroup.add(innerCore);
-    var ring1 = new THREE.Mesh(
-      new THREE.TorusGeometry(2.2, 0.04, 16, 100),
-      new THREE.MeshPhongMaterial({ color: 0xf59e0b, emissive: 0xd97706, shininess: 100 })
-    );
-    ring1.rotation.x = Math.PI / 3;
-    mythicGroup.add(ring1);
-    var ring2 = new THREE.Mesh(
-      new THREE.TorusGeometry(2.6, 0.03, 16, 100),
-      new THREE.MeshPhongMaterial({ color: 0x00f2fe, emissive: 0x0284c7, shininess: 100 })
-    );
-    ring2.rotation.y = Math.PI / 4;
-    mythicGroup.add(ring2);
-    var particleCount = 200;
-    var pGeo = new THREE.BufferGeometry();
-    var pPos = new Float32Array(particleCount * 3);
-    for (var i = 0; i < particleCount * 3; i += 3) {
-      pPos[i] = (Math.random() - 0.5) * 8;
-      pPos[i + 1] = (Math.random() - 0.5) * 8;
-      pPos[i + 2] = (Math.random() - 0.5) * 8;
-    }
-    pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
-    var particles = new THREE.Points(pGeo, new THREE.PointsMaterial({ color: 0x38bdf8, size: 0.04, transparent: true, opacity: 0.7 }));
-    scene.add(particles);
-    var mouseX = 0, mouseY = 0, targetX = 0, targetY = 0;
-    window.addEventListener('mousemove', function (e) {
-      mouseX = (e.clientX - window.innerWidth / 2) * 0.001;
-      mouseY = (e.clientY - window.innerHeight / 2) * 0.001;
-    });
-    window.addEventListener('resize', function () {
-      var w = container.clientWidth || window.innerWidth;
-      var h = container.clientHeight || window.innerHeight;
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-      renderer.setSize(w, h);
-    });
-    var clock = new THREE.Clock();
-    (function animate() {
-      requestAnimationFrame(animate);
-      var t = clock.getElapsedTime();
-      targetX += (mouseX - targetX) * 0.05;
-      targetY += (mouseY - targetY) * 0.05;
-      mythicGroup.rotation.y = t * 0.4 + targetX * 1.5;
-      mythicGroup.rotation.x = Math.sin(t * 0.5) * 0.15 + targetY * 1.5;
-      crystal.position.y = Math.sin(t * 1.5) * 0.15;
-      wireCage.position.y = crystal.position.y;
-      innerCore.position.y = crystal.position.y;
-      innerCore.rotation.y = -t * 0.8;
-      ring1.rotation.z = t * 0.6;
-      ring2.rotation.x = t * 0.5;
-      particles.rotation.y = t * 0.05;
-      renderer.render(scene, camera);
-    })();
-  } catch (e) { /* بدون انیمیشن سه‌بعدی ادامه بده */ }
-})();
-</script>
-<script src="app.js?v=20261114-16"></script>
+<script src="app.js?v=20261114-17"></script>
 </body>
 </html>
