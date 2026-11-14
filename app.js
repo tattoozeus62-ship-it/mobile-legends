@@ -713,7 +713,7 @@ async function computeFullBuild(id) {
     return `<div class="build"><b>🧰 بیلد پیشنهادی — ۶ آیتم</b><div class="bitems">${items}</div>
       ${fb.spell ? `<div>🪄 اسپل: ${esc(fb.spell)}</div>` : ''}
       ${fb.emblem ? `<div class="it-row" style="margin-top:6px">${emIc ? `<img src="${esc(emIc)}" alt="" loading="lazy" onerror="this.remove()">` : ''}<div>🛡️ امبلم: <b>${esc(fb.emblem)}</b>${tl ? `<br><span class="sub">${tl}</span>` : ''}</div></div>` : ''}
-      <div class="sub" style="margin-top:6px">منبع: mlbb.io — ${fb.month ? 'بیلد ' + esc(monthFa(fb.month)) : ''}${fb.builds_count ? `، تجمیع ${faNum(fb.builds_count)} بیلد` : ''}${small ? ' — ⚠️ نمونهٔ کوچک، با احتیاط استفاده کن' : ''}</div></div>`;
+      <div class="sub" style="margin-top:6px">${fb.month ? 'بیلد ' + esc(monthFa(fb.month)) : ''}${fb.builds_count ? `، تجمیع ${faNum(fb.builds_count)} بیلد` : ''}${small ? ' — ⚠️ نمونهٔ کوچک، با احتیاط استفاده کن' : ''}</div></div>`;
   } catch { return ''; }
 }
 
@@ -821,8 +821,8 @@ async function loadNews() {
     const order = ['SS', 'S', 'A', 'B', 'C', 'D'];
     const nameToId = new Map((sd.heroes || []).map((h) => [normStr(h.hero_name), String(h.mlid)]));
     box.innerHTML =
-      (pn.length ? '<h2>📝 پچ‌نوت‌ها</h2>' + pn.slice(0, 10).map((p) => `<div class="item-card"><a href="${esc(p.url)}" target="_blank" rel="noopener"><b>${esc(p.title_fa || p.title)}</b></a><br><span class="sub">${esc(dateFa(p.updated))} — ${esc(p.title)}</span></div>`).join('') : '') +
-      (wr.length ? '<h2>📚 تازه‌های ویکی</h2>' + wr.slice(0, 10).map((w) => `<div class="item-card"><a href="${esc(w.url)}" target="_blank" rel="noopener"><b>${esc(w.title)}</b></a><br><span class="sub">${esc(dateFa(w.timestamp))}${w.comment ? ' — ' + esc(w.comment) : ''}</span></div>`).join('') : '') ||
+      (pn.length ? '<h2>📝 پچ‌نوت‌ها</h2>' + pn.slice(0, 10).map((p) => `<div class="item-card"><b>${esc(p.title_fa || p.title)}</b><br><span class="sub">${esc(dateFa(p.updated))} — ${esc(p.title)}</span></div>`).join('') : '') +
+      (wr.length ? '<h2>📚 تازه‌ها</h2>' + wr.slice(0, 10).map((w) => `<div class="item-card"><b>${esc(w.title)}</b><br><span class="sub">${esc(dateFa(w.timestamp))}${w.comment ? ' — ' + esc(w.comment) : ''}</span></div>`).join('') : '') ||
       '<p class="hint">خبری پیدا نشد.</p>';
     tb.innerHTML =
       (tl.month ? `<p class="hint">تیرلیست ${esc(monthFa(tl.month))} — ${faNum(Object.values(tl.counts || {}).reduce((a, b) => a + b, 0))} هیرو</p>` : '') +
