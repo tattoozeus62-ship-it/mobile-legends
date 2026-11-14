@@ -1,0 +1,151 @@
+{
+ "fetched_at": "2026-11-14T19:00:27.765043+00:00",
+ "derived_from": "hero-stats.json (ALL ranks, past 7 days) — top hero per lane",
+ "month": "November 2026",
+ "comps": [
+  {
+   "id": "best_win_rate",
+   "title": "Best win-rate lineup",
+   "title_fa": "بهترین ترکیب بر اساس وین‌ریت",
+   "heroes": [
+    {
+     "name": "Bruno",
+     "slug": "bruno",
+     "lane": "gold",
+     "win_rate": 54.16,
+     "pick_rate": 0.65,
+     "ban_rate": 0.37
+    },
+    {
+     "name": "Masha",
+     "slug": "masha",
+     "lane": "exp",
+     "win_rate": 58.28,
+     "pick_rate": 0.48,
+     "ban_rate": 41.9
+    },
+    {
+     "name": "Valir",
+     "slug": "valir",
+     "lane": "mid",
+     "win_rate": 53.82,
+     "pick_rate": 1.16,
+     "ban_rate": 4.08
+    },
+    {
+     "name": "Marcel",
+     "slug": "marcel",
+     "lane": "roam",
+     "win_rate": 57.35,
+     "pick_rate": 0.28,
+     "ban_rate": 42.74
+    },
+    {
+     "name": "Sun",
+     "slug": "sun",
+     "lane": "jungle",
+     "win_rate": 54.02,
+     "pick_rate": 1.69,
+     "ban_rate": 41.78
+    }
+   ],
+   "avg_win_rate": 55.53
+  },
+  {
+   "id": "most_picked",
+   "title": "Most picked lineup",
+   "title_fa": "پرطرفدارترین ترکیب",
+   "heroes": [
+    {
+     "name": "Hanabi",
+     "slug": "hanabi",
+     "lane": "gold",
+     "win_rate": 52.74,
+     "pick_rate": 2.33,
+     "ban_rate": 4.07
+    },
+    {
+     "name": "Sun",
+     "slug": "sun",
+     "lane": "exp",
+     "win_rate": 54.02,
+     "pick_rate": 1.69,
+     "ban_rate": 41.78
+    },
+    {
+     "name": "Eudora",
+     "slug": "eudora",
+     "lane": "mid",
+     "win_rate": 50.11,
+     "pick_rate": 1.66,
+     "ban_rate": 43.71
+    },
+    {
+     "name": "Tigreal",
+     "slug": "tigreal",
+     "lane": "roam",
+     "win_rate": 45.56,
+     "pick_rate": 2.01,
+     "ban_rate": 7.64
+    },
+    {
+     "name": "Nolan",
+     "slug": "nolan",
+     "lane": "jungle",
+     "win_rate": 49.72,
+     "pick_rate": 2.61,
+     "ban_rate": 21.15
+    }
+   ],
+   "avg_win_rate": 50.43
+  },
+  {
+   "id": "most_banned",
+   "title": "Most banned lineup",
+   "title_fa": "ترسناک‌ترین ترکیب (بیشترین بن)",
+   "heroes": [
+    {
+     "name": "Obsidia",
+     "slug": "obsidia",
+     "lane": "gold",
+     "win_rate": 53.09,
+     "pick_rate": 2.09,
+     "ban_rate": 51.99
+    },
+    {
+     "name": "Gloo",
+     "slug": "gloo",
+     "lane": "exp",
+     "win_rate": 51.37,
+     "pick_rate": 0.71,
+     "ban_rate": 42.07
+    },
+    {
+     "name": "Eudora",
+     "slug": "eudora",
+     "lane": "mid",
+     "win_rate": 50.11,
+     "pick_rate": 1.66,
+     "ban_rate": 43.71
+    },
+    {
+     "name": "Belerick",
+     "slug": "belerick",
+     "lane": "roam",
+     "win_rate": 51.71,
+     "pick_rate": 1.67,
+     "ban_rate": 55.89
+    },
+    {
+     "name": "Hirara",
+     "slug": "hirara",
+     "lane": "jungle",
+     "win_rate": 49.9,
+     "pick_rate": 0.61,
+     "ban_rate": 67.62
+    }
+   ],
+   "avg_win_rate": 51.24
+  }
+ ]
+}

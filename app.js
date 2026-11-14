@@ -7,6 +7,7 @@
 // ======= DATA LAYER START (standalone: Rone direct + static JSON) =======
 const RONE_BASE = 'https://arena.rone.dev/api';
 const STATIC_BASE = 'data/';
+const DATA_VERSION = '20261114-11'; // با هر انتشار، همراه با ?v= اسکریپت بالا می‌رود تا دیتا کهنه نماند
 const TTL_MS = 5 * 60 * 1000; // کش ۵ دقیقه‌ای، مثل سرور پراکسی
 const cache = new Map();
 
@@ -98,13 +99,13 @@ async function loadStatic() {
   if (!staticPromise) {
     staticPromise = (async () => {
       const load = async (file) => {
-        const r = await fetch(STATIC_BASE + file);
+        const r = await fetch(STATIC_BASE + file + '?v=' + DATA_VERSION);
         if (!r.ok) throw new Error('خطا در خواندن ' + file);
         return r.json();
       };
       const loadOptional = async (file) => {
         try {
-          const r = await fetch(STATIC_BASE + file);
+          const r = await fetch(STATIC_BASE + file + '?v=' + DATA_VERSION);
           if (!r.ok) return {};
           return r.json();
         } catch { return {}; }
@@ -121,6 +122,12 @@ async function loadStatic() {
       const tierFile = await loadOptional('tierlist.json');
       const discFile = await loadOptional('discussions.json');
       const evFile = await loadOptional('events.json');
+      const faContentFile = await loadOptional('fa-content.json');
+      const heroStatsFile = await loadOptional('hero-stats.json');
+      const teamCompsFile = await loadOptional('team-comps.json');
+      const teamCompGuideFile = await loadOptional('team-comp-guide.json');
+      const patchFullFile = await loadOptional('patch-notes-full.json');
+      const matchupsFile = await loadOptional('matchups.json');
       FA = {
         heroSkills: faFile.heroSkills || {},
         items: faFile.items || {},
@@ -142,6 +149,12 @@ async function loadStatic() {
         tierlist: { month: tierFile.month || null, tiers: tierFile.tiers || {}, counts: tierFile.counts || {} },
         discussions: discFile.threads || [],
         events: evFile.events || [],
+        faContent: faContentFile && faContentFile.version ? faContentFile : { lore: {}, matchups: {}, patches: {}, events: {}, stats: { heroes: {} }, guide: {}, comps: {} },
+        heroStats: heroStatsFile.heroes || [],
+        teamComps: teamCompsFile.comps || [],
+        teamCompGuide: teamCompGuideFile || {},
+        patchFull: patchFullFile.patches || [],
+        matchups: matchupsFile.heroes || {},
       };
     })();
   }
@@ -617,6 +630,7 @@ tabs.forEach((b) => b.addEventListener('click', () => {
   if (b.dataset.tab === 'meta') loadMeta();
   if (b.dataset.tab === 'emblems') loadEmblems();
   if (b.dataset.tab === 'news') loadNews();
+  if (b.dataset.tab === 'comps') loadComps();
 }));
 function showTab(name) {
   document.querySelector(`#tabs button[data-tab="${name}"]`)?.click();
@@ -750,6 +764,27 @@ async function openHero(id) {
       ${(counters.counters.counters || []).slice(0, 5).map((c) => `<div class="skill hrow">${c.head ? `<img class="h-ic" src="${esc(c.head)}" alt="" loading="lazy" onerror="this.style.display='none'">` : ''}<div><b>${esc(c.name)}</b><br><span class="meta">وین‌ریت در برابر او: +${pct(c.delta)}</span></div></div>`).join('') || '<p class="hint">—</p>'}
       <h2>⚔️ جلوی این هیروها کانتر می‌شود</h2>
       ${(h.relation?.weak || []).map((w) => `<div class="skill hrow">${w.head ? `<img class="h-ic" src="${esc(w.head)}" alt="" loading="lazy" onerror="this.style.display='none'">` : ''}<div><b>${esc(w.name)}</b></div></div>`).join('') || '<p class="hint">—</p>'}` : ''}`;
+    const sd = await loadStatic();
+    const stat = (sd.heroStats || []).find((x) => normStr(x.name) === normStr(h.name));
+    const statFa = stat ? (((sd.faContent.stats || {}).heroes || {})[stat.slug] || {}) : {};
+    const lore = (sd.faContent.lore || {})[String(id)];
+    const muSrc = (sd.matchups || {})[String(id)];
+    const muFa = (sd.faContent.matchups || {})[String(id)] || {};
+    let extra = '';
+    if (stat) extra += `<p class="hint">📊 آمار ۷ روز اخیر: رتبهٔ ${faNum(stat.position)} از ۱۳۳ — وین‌ریت ${pct(stat.win_rate)} (${esc(statFa.win_label_fa || stat.win_label || '')}) — تخصص: ${esc((statFa.specialities_fa || stat.specialities || []).join('، '))}</p>`;
+    if (lore) {
+      const info = lore.info_fa || {};
+      const infoBits = [info.title_fa, info.gender_fa, info.species_fa, info.occupation_fa, info.fighting_style_fa].filter(Boolean).join('، ');
+      extra += `<h2>📖 داستان</h2>` + (lore.bio_short_fa ? `<p>${esc(lore.bio_short_fa)}</p>` : '') + (infoBits ? `<p class="hint">${esc(infoBits)}</p>` : '') + (lore.bio_fa ? `<details><summary>داستان کامل</summary><p>${esc(lore.bio_fa)}</p></details>` : '');
+    }
+    if (muSrc && (muSrc.countered_by || []).length) {
+      const cbFa = muFa.countered_by_fa || {};
+      extra += `<h2>⚔️ سخت‌ترین حریف‌ها</h2>` + muSrc.countered_by.slice(0, 3).map((cb) => {
+        const f = cbFa[cb.slug] || {};
+        return `<div class="skill hrow"><div><b>${esc(cb.name)}</b> <span class="meta">${esc(f.strength_fa || cb.strength || '')}</span><br>${esc(f.reason_fa || cb.reason || '')}</div></div>`;
+      }).join('');
+    }
+    if (extra) box.innerHTML += extra;
     laneRow.innerHTML = '<span style="align-self:center">🛠️ بیلد برای لین:</span>' +
       [['exp', 'اکس‌پی'], ['mid', 'مید'], ['gold', 'گلد'], ['roam', 'روم'], ['jungle', 'جانگل']]
         .map(([v, fa]) => `<button data-lane="${v}">${fa}</button>`).join('');
@@ -825,20 +860,23 @@ async function loadNews() {
     const ev = sd.events || [];
     const tl = sd.tierlist || {};
     const evStatusFa = { current: 'در حال اجرا', upcoming: 'به‌زودی', unknown: 'تاریخ مشخص نیست', ended: 'تمام‌شده' };
-    const thumb = (u) => u ? `<img class="news-thumb" src="${esc(u)}" alt="" loading="lazy" onerror="this.style.display='none'">` : '';
+    const thumb = (u) => u ? `<img class="news-thumb" src="${esc(u)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'">` : '';
     const order = ['SS', 'S', 'A', 'B', 'C', 'D'];
     const nameToId = new Map((sd.heroes || []).map((h) => [normStr(h.hero_name), String(h.mlid)]));
     box.innerHTML =
-      (pn.length ? '<h2>📝 پچ‌نوت‌ها</h2>' + pn.slice(0, 10).map((p) => `<div class="item-card">${thumb(p.image_url)}<b>${esc(p.title_fa || p.title)}</b><br><span class="sub">${esc(dateFa(p.updated))} — ${esc(p.title)}</span></div>`).join('') : '') +
+      (pn.length ? '<h2>📝 پچ‌نوت‌ها</h2>' + pn.slice(0, 10).map((p) => `<div class="item-card" data-patch="${esc(p.title)}" style="cursor:pointer">${thumb(p.image_url)}<b>${esc(p.title_fa || p.title)}</b><br><span class="sub">${esc(dateFa(p.updated))} — ${esc(p.title)}</span><br><span class="sub">👆 برای متن کامل پچ بزن</span></div>`).join('') : '') +
       (ev.length ? '<h2>🎉 ایونت‌ها</h2>' + ev.slice(0, 10).map((e) => {
+        const fev = ((sd.faContent || {}).events || {})[e.title] || {};
         const d1 = e.start_date ? dateFa(e.start_date) : '';
         const d2 = e.end_date ? dateFa(e.end_date) : '';
         const dates = [d1, d2].filter(Boolean).join(' تا ');
-        return `<div class="item-card">${thumb(e.image_url)}<b>${esc(e.title)}</b> <span class="sub">${evStatusFa[e.status] || ''}${dates ? ' — ' + esc(dates) : ''}</span>${e.summary ? `<br><span class="sub">${esc(e.summary.slice(0, 160))}${e.summary.length > 160 ? '…' : ''}</span>` : ''}</div>`;
+        const summary = fev.summary_fa || e.summary;
+        return `<div class="item-card">${thumb(e.image_url)}<b>${esc(fev.title_fa || e.title)}</b> <span class="sub">${esc(fev.status_fa || evStatusFa[e.status] || '')}${dates ? ' — ' + esc(dates) : ''}</span>${summary ? `<br><span class="sub">${esc(summary.slice(0, 160))}${summary.length > 160 ? '…' : ''}</span>` : ''}</div>`;
       }).join('') : '') +
       (wr.length ? '<h2>📚 تازه‌ها</h2>' + wr.slice(0, 10).map((w) => `<div class="item-card">${thumb(w.image_url)}<b>${esc(w.title)}</b><br><span class="sub">${esc(dateFa(w.timestamp))}${w.comment ? ' — ' + esc(w.comment) : ''}</span></div>`).join('') : '') +
       (dc.length ? '<h2>💬 گفتگوها</h2>' + dc.slice(0, 10).map((d) => `<div class="item-card"><b>${esc(d.title)}</b><br><span class="sub">${esc(dateFa(d.date_iso))}${d.category_fa ? ' — ' + esc(d.category_fa) : ''}</span></div>`).join('') : '') ||
       '<p class="hint">خبری پیدا نشد.</p>';
+    box.querySelectorAll('[data-patch]').forEach((el) => el.addEventListener('click', () => showPatchDetail(el.dataset.patch)));
     tb.innerHTML =
       (tl.month ? `<p class="hint">تیرلیست ${esc(monthFa(tl.month))} — ${faNum(Object.values(tl.counts || {}).reduce((a, b) => a + b, 0))} هیرو</p>` : '') +
       (order.map((k) => {
@@ -850,6 +888,53 @@ async function loadNews() {
         }).join('، ')}</div>`;
       }).join('') || '<p class="hint">تیرلیست فعلاً در دسترس نیست.</p>');
     tb.querySelectorAll('a[data-hero]').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); openHero(a.dataset.hero); }));
+  } catch (e) { showError(box, e); }
+}
+
+// ---------- جزئیات پچ ----------
+async function showPatchDetail(title) {
+  const box = document.getElementById('newsBox');
+  const tb = document.getElementById('tierBox');
+  loading(box);
+  tb.innerHTML = '';
+  try {
+    const sd = await loadStatic();
+    const p = (sd.faContent.patches || {})[title];
+    const src = (sd.patchFull || []).find((x) => x.title === title) || {};
+    if (!p) { box.innerHTML = '<p class="hint">جزئیات این پچ پیدا نشد.</p>'; return; }
+    const det = (heading, inner) => inner ? `<details class="item-card"><summary>${heading}</summary>${inner}</details>` : '';
+    const news = (p.new_heroes_fa || []).map((nh) => det(`<b>${esc(nh.hero)}</b> — هیروی تازه`, `${nh.feature_fa ? `<p>${esc(nh.feature_fa)}</p>` : ''}${(nh.skills_fa || []).map((sk) => `<p><b>${esc(sk.skill)}</b></p>${(sk.changes_fa || []).map((c) => `<p>◦ ${esc(c)}</p>`).join('')}`).join('')}`)).join('');
+    const heroAdj = (p.hero_adjustments_fa || []).map((a) => det(`<b>${esc(a.hero)}</b>${a.type_fa ? ` — ${esc(a.type_fa)}` : ''}`, `${a.note_fa ? `<p>${esc(a.note_fa)}</p>` : ''}${(a.skills_fa || []).map((sk) => `<p><b>${esc(sk.skill)}</b>${sk.type_fa ? ` <span class="sub">${esc(sk.type_fa)}</span>` : ''}</p>${(sk.changes_fa || []).map((c) => `<p>◦ ${esc(c)}</p>`).join('')}`).join('')}`)).join('');
+    const equipAdj = (p.equipment_adjustments_fa || []).map((a) => det(`<b>${esc(a.item)}</b>${a.type_fa ? ` — ${esc(a.type_fa)}` : ''}`, `${a.note_fa ? `<p>${esc(a.note_fa)}</p>` : ''}${(a.groups_fa || []).map((g) => `<p><b>${esc(g.group)}</b>${g.type_fa ? ` <span class="sub">${esc(g.type_fa)}</span>` : ''}</p>${(g.changes_fa || []).map((c) => `<p>◦ ${esc(c)}</p>`).join('')}`).join('')}`)).join('');
+    const others = (p.other_sections_fa || []).map((o) => det(`<b>${esc(o.heading_fa)}</b>`, `<p>${esc(o.text_fa)}</p>`)).join('');
+    box.innerHTML = `<button class="back" id="patchBack">← بازگشت به اخبار</button>
+      <h2>📝 ${esc(p.title_fa || title)}</h2>${src.release_date ? `<p class="hint">تاریخ انتشار: ${esc(src.release_date)}</p>` : ''}
+      ${news ? `<h2>🆕 هیروهای تازه</h2>${news}` : ''}
+      ${heroAdj ? `<h2>⚖️ تغییرات هیروها (${faNum((p.hero_adjustments_fa || []).length)})</h2>${heroAdj}` : ''}
+      ${equipAdj ? `<h2>🛡️ تغییرات آیتم‌ها</h2>${equipAdj}` : ''}
+      ${others ? `<h2>📋 بخش‌های دیگر</h2>${others}` : ''}`;
+    document.getElementById('patchBack').addEventListener('click', () => loadNews());
+  } catch (e) { showError(box, e); }
+}
+
+// ---------- ترکیب تیمی ----------
+async function loadComps() {
+  const box = document.getElementById('compsBox');
+  const st = document.getElementById('compsStatus');
+  st.textContent = '';
+  loading(box);
+  try {
+    const sd = await loadStatic();
+    const comps = sd.teamComps || [];
+    const guide = (sd.faContent.guide || {});
+    const laneName = { exp: 'اکس‌پی', mid: 'مید', gold: 'گلد', roam: 'روم', jungle: 'جانگل' };
+    box.innerHTML =
+      (comps.length ? comps.map((c) => {
+        const titleFa = ((sd.faContent.comps || {})[c.id] || {}).title_fa || c.title_fa || c.title;
+        return `<div class="item-card"><b>${esc(titleFa)}</b> <span class="sub">— میانگین وین‌ریت ${pct(c.avg_win_rate)}</span><br>${(c.heroes || []).map((h) => `<div class="skill hrow"><div><b>${esc(h.name)}</b> — ${esc(laneName[h.lane] || h.lane)} (وین ${pct(h.win_rate)})</div></div>`).join('')}</div>`;
+      }).join('') : '<p class="hint">ترکیب تیمی فعلاً در دسترس نیست.</p>') +
+      (guide.how_it_works_fa ? `<h2>🧭 ترکیب تیمی چطور ساخته می‌شود؟</h2><p>${esc(guide.how_it_works_fa)}</p>` : '') +
+      ((guide.faqs_fa || []).length ? `<h2>❓ پرسش‌های متداول</h2>` + guide.faqs_fa.map((f) => `<details class="item-card"><summary><b>${esc(f.question_fa)}</b></summary><p>${esc(f.answer_fa)}</p></details>`).join('') : '');
   } catch (e) { showError(box, e); }
 }
 
