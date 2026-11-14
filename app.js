@@ -474,24 +474,28 @@ async function itemsAdapter(q) {
 
 async function emblemsAdapter() {
   // اسپل‌های زنده از Rone؛ امبلم و تلنت از دیتای استاتیک
+  // عکس‌ها از mlbb.tools (عکس رسمی خودشان): امبلم‌ها در /emblems/*.webp و
+  // تلنت‌ها در /emblems/talents/*.webp — مسیر ذخیره‌شدهٔ تلنت‌ها (/talents/*.webp)
+  // پیشوند /emblems را ندارد، پس اینجا اضافه می‌شود. هر ۳۳ عکس ۲۰۲۶-۱۱-۱۴ چک شد (HTTP 200).
+  const ICON_BASE = 'https://mlbb.tools';
   const sd = await loadStatic();
   const spellsRes = await roneGet('/academy/spells?size=20&index=1');
   const spells = spellsRes.ok ? spellsRes.records.map((rec) => {
     const d = rec?.data?.__data || rec?.data || {};
     const name = d.skillname || d.name || '';
     const desc = (d.skilldesc || '').replace(/<[^>]+>/g, '');
-    return { name, desc: faSpell(name) || desc, icon: rec?.data?.skillicon || null };
+    return { name, desc: faSpell(name) || desc, icon: (d.skillicon && /^https?:/.test(d.skillicon)) ? d.skillicon : null };
   }).filter((s) => s.name) : [];
   const mapTalents = (tiers) => {
     const out = {};
     for (const [k, arr] of Object.entries(tiers || {})) {
-      out[k] = (arr || []).map((t) => ({ ...t, description: faTalent(t.id) || t.description }));
+      out[k] = (arr || []).map((t) => ({ ...t, description: faTalent(t.id) || t.description, icon: t.icon ? ICON_BASE + '/emblems' + t.icon : null }));
     }
     return out;
   };
   return {
     ok: true,
-    emblems: sd.emblems,
+    emblems: (sd.emblems || []).map((e) => ({ ...e, icon: e.icon ? ICON_BASE + e.icon : null })),
     talents: mapTalents(sd.talents),
     spells,
     spells_error: spellsRes.ok ? null : spellsRes.error,
@@ -796,13 +800,14 @@ async function loadEmblems() {
   loading(eb); sb.innerHTML = '';
   try {
     const j = await api('/api/emblems');
+    const img = (u) => u ? `<img src="${esc(u)}" alt="" loading="lazy" onerror="this.remove()">` : '';
     eb.innerHTML = (j.emblems || []).map((e) => {
       const mods = (e.modifiers || []).flatMap((m) => Object.entries(m).map(([k, v]) => `${esc(k)}: ${faNum(v)}`)).join('، ');
-      return `<div class="item-card"><b>${esc(e.emblem_name)}</b> <span class="sub">${esc(e.emblem_role || '')}</span><br>${mods}</div>`;
+      return `<div class="item-card"><div class="it-row">${img(e.icon)}<div><b>${esc(e.emblem_name)}</b> <span class="sub">${esc(e.emblem_role || '')}</span></div></div>${mods ? `<div class="sub">${mods}</div>` : ''}</div>`;
     }).join('') + '<h2>⭐ تلنت‌ها</h2>' +
       [...(j.talents.tier1 || []), ...(j.talents.tier2 || []), ...(j.talents.tier3 || [])]
-        .map((t) => `<div class="item-card"><b>${esc(t.name)}</b> — ${esc(t.description)}</div>`).join('');
-    sb.innerHTML = (j.spells || []).map((s) => `<div class="item-card"><b>${esc(s.name)}</b><br>${esc(clean(s.desc))}</div>`).join('')
+        .map((t) => `<div class="item-card"><div class="it-row">${img(t.icon)}<div><b>${esc(t.name)}</b><br><span class="sub">${esc(t.description)}</span></div></div></div>`).join('');
+    sb.innerHTML = (j.spells || []).map((s) => `<div class="item-card"><div class="it-row">${img(s.icon)}<div><b>${esc(s.name)}</b><br><span class="sub">${esc(clean(s.desc))}</span></div></div></div>`).join('')
       || (j.spells_error ? `<p class="hint error">اسپل‌ها فعلاً در دسترس نیستند: ${esc(j.spells_error)}</p>` : '<p class="hint">اسپلی پیدا نشد.</p>');
   } catch (e) { showError(eb, e); }
 }
