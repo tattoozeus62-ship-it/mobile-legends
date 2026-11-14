@@ -116,6 +116,7 @@ async function loadStatic() {
         load('talent-meta-final.json'),
       ]);
       const faFile = await loadOptional('fa-overrides.json');
+      const fbFile = await loadOptional('builds-full.json');
       FA = {
         heroSkills: faFile.heroSkills || {},
         items: faFile.items || {},
@@ -132,6 +133,7 @@ async function loadStatic() {
         emblems: emblemFile.data || [],
         talents: talentFile.data || {},
         itemRevdate: itemFile.revdate || null,
+        fullBuilds: fbFile.heroes || {},
       };
     })();
   }
@@ -686,6 +688,29 @@ document.getElementById('heroSearchBtn').addEventListener('click', () => loadHer
 document.getElementById('heroSearch').addEventListener('keydown', (e) => { if (e.key === 'Enter') loadHeroes(e.target.value.trim()); });
 
 // ---------- جزییات هیرو ----------
+// ---------- بیلد کامل ۶ آیتمی (mlbb.io) ----------
+let fullBuildHTML = '';
+const MONTH_FA = { January: 'ژانویه', February: 'فوریه', March: 'مارس', April: 'آوریل', May: 'مه', June: 'ژوئن', July: 'ژوئیه', August: 'اوت', September: 'سپتامبر', October: 'اکتبر', November: 'نوامبر', December: 'دسامبر' };
+function monthFa(m) { const [name, year] = String(m || '').split(' '); return (MONTH_FA[name] || name) + (year ? ' ' + faNum(year) : ''); }
+function emblemIconByName(sd, name) { const e = (sd.emblems || []).find((x) => normStr(x.emblem_name) === normStr(name)); return e && e.icon ? 'https://mlbb.tools' + e.icon : null; }
+function talentIconByName(sd, name) { for (const tier of Object.values(sd.talents || {})) { const t = (tier || []).find((x) => normStr(x.name) === normStr(name)); if (t && t.icon) return 'https://mlbb.tools/emblems' + t.icon; } return null; }
+async function computeFullBuild(id) {
+  try {
+    const sd = await loadStatic();
+    const fb = sd.fullBuilds[String(id)];
+    if (!fb || !(fb.items || []).length) return '';
+    await equipNameMap(); // عکس اصلی آیتم‌ها
+    const items = fb.items.map((nm, i) => { const ic = equipIconByName.get(normStr(nm)) || null; return `<div class="bi">${ic ? `<img src="${esc(ic)}" alt="${esc(nm)}" loading="lazy" onerror="this.style.display='none'">` : ''}<div>${faNum(i + 1)}. ${esc(nm)}</div></div>`; }).join('');
+    const emIc = fb.emblem ? emblemIconByName(sd, fb.emblem) : null;
+    const tl = (fb.emblem_talents || []).map((tn) => { const ic = talentIconByName(sd, tn); return `<span style="display:inline-flex;align-items:center;gap:4px">${ic ? `<img src="${esc(ic)}" alt="" loading="lazy" onerror="this.remove()" style="width:22px;height:22px;border-radius:6px">` : ''}${esc(tn)}</span>`; }).join('، ');
+    const small = (fb.builds_count || 99) <= 2;
+    return `<div class="build"><b>🧰 بیلد پیشنهادی — ۶ آیتم</b><div class="bitems">${items}</div>
+      ${fb.spell ? `<div>🪄 اسپل: ${esc(fb.spell)}</div>` : ''}
+      ${fb.emblem ? `<div class="it-row" style="margin-top:6px">${emIc ? `<img src="${esc(emIc)}" alt="" loading="lazy" onerror="this.remove()">` : ''}<div>🛡️ امبلم: <b>${esc(fb.emblem)}</b>${tl ? `<br><span class="sub">${tl}</span>` : ''}</div></div>` : ''}
+      <div class="sub" style="margin-top:6px">منبع: mlbb.io — ${fb.month ? 'بیلد ' + esc(monthFa(fb.month)) : ''}${fb.builds_count ? `، تجمیع ${faNum(fb.builds_count)} بیلد` : ''}${small ? ' — ⚠️ نمونهٔ کوچک، با احتیاط استفاده کن' : ''}</div></div>`;
+  } catch { return ''; }
+}
+
 async function openHero(id) {
   currentHeroId = id;
   document.querySelectorAll('main .tab').forEach((s) => s.classList.remove('active'));
@@ -693,7 +718,7 @@ async function openHero(id) {
   const box = document.getElementById('heroDetail');
   const buildBox = document.getElementById('buildBox');
   const laneRow = document.getElementById('laneRow');
-  laneRow.innerHTML = ''; buildBox.innerHTML = '';
+  laneRow.innerHTML = ''; buildBox.innerHTML = ''; fullBuildHTML = '';
   loading(box);
   try {
     const j = await api('/api/heroes/' + encodeURIComponent(id));
@@ -719,6 +744,8 @@ async function openHero(id) {
       [['exp', 'اکس‌پی'], ['mid', 'مید'], ['gold', 'گلد'], ['roam', 'روم'], ['jungle', 'جانگل']]
         .map(([v, fa]) => `<button data-lane="${v}">${fa}</button>`).join('');
     laneRow.querySelectorAll('button').forEach((b) => b.addEventListener('click', () => loadBuild(id, b.dataset.lane, b)));
+    // بیلد کامل ۶ آیتمی (mlbb.io) اول محاسبه می‌شود تا loadBuild آن را بالای بیلدهای لین نشان دهد
+    fullBuildHTML = await computeFullBuild(id);
     // آیتم‌های پیشنهادی برای لین اصلی هیرو، خودکار در انتهای صفحه لود می‌شود
     const laneMap = { 'gold lane': 'gold', 'exp lane': 'exp', 'mid lane': 'mid', 'roam': 'roam', 'jungle': 'jungle' };
     const firstLane = (h.laning || []).flatMap((l) => String(l).split(',')).map((s) => laneMap[s.trim().toLowerCase()]).find(Boolean);
@@ -738,10 +765,12 @@ async function loadBuild(id, lane, btn) {
   try {
     const j = await api(`/api/builds/${encodeURIComponent(id)}?lane=${lane}`);
     const list = (j.builds || []).slice(0, 3);
-    box.innerHTML = list.length ? `<h2>🧰 آیتم‌های پیشنهادی</h2>` + list.map((b, i) => `
+    box.innerHTML = (fullBuildHTML || '') + (list.length
+      ? `<h2>${fullBuildHTML ? '🔄 بیلدهای دیگر بر اساس لین' : '🧰 آیتم‌های پیشنهادی'}</h2>` + list.map((b, i) => `
       <div class="build"><b>بیلد ${faNum(i + 1)}</b> — وین ${pct(b.win)} | پیک ${pct(b.pick)}
       ${b.spell ? `<br>🪄 اسپل: ${esc(b.spell)}` : ''}
-      <div class="bitems">${(b.equipIds || []).map((eid, ix) => { const nm = (b.equipNames || [])[ix] || ''; const ic = (b.equipIcons || [])[ix]; return `<div class="bi">${ic ? `<img src="${esc(ic)}" alt="${esc(nm)}" loading="lazy" onerror="this.style.display='none'">` : ''}<div>${esc(nm)}</div></div>`; }).join('')}</div></div>`).join('') : '<p class="hint">بیلدی ثبت نشده است.</p>';
+      <div class="bitems">${(b.equipIds || []).map((eid, ix) => { const nm = (b.equipNames || [])[ix] || ''; const ic = (b.equipIcons || [])[ix]; return `<div class="bi">${ic ? `<img src="${esc(ic)}" alt="${esc(nm)}" loading="lazy" onerror="this.style.display='none'">` : ''}<div>${esc(nm)}</div></div>`; }).join('')}</div></div>`).join('')
+      : (fullBuildHTML ? '' : '<p class="hint">بیلدی ثبت نشده است.</p>'));
   } catch (e) { showError(box, e); }
 }
 
