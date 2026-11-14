@@ -7,7 +7,7 @@
 // ======= DATA LAYER START (standalone: Rone direct + static JSON) =======
 const RONE_BASE = 'https://arena.rone.dev/api';
 const STATIC_BASE = 'data/';
-const DATA_VERSION = '20261114-12'; // با هر انتشار، همراه با ?v= اسکریپت بالا می‌رود تا دیتا کهنه نماند
+const DATA_VERSION = '20261114-13'; // با هر انتشار، همراه با ?v= اسکریپت بالا می‌رود تا دیتا کهنه نماند
 const TTL_MS = 5 * 60 * 1000; // کش ۵ دقیقه‌ای، مثل سرور پراکسی
 const cache = new Map();
 
@@ -631,6 +631,7 @@ tabs.forEach((b) => b.addEventListener('click', () => {
   if (b.dataset.tab === 'emblems') loadEmblems();
   if (b.dataset.tab === 'news') loadNews();
   if (b.dataset.tab === 'comps') loadComps();
+  if (b.dataset.tab === 'lore') loadLore();
 }));
 function showTab(name) {
   document.querySelector(`#tabs button[data-tab="${name}"]`)?.click();
@@ -709,6 +710,8 @@ async function loadHeroes(q = '') {
 }
 document.getElementById('heroSearchBtn').addEventListener('click', () => loadHeroes(document.getElementById('heroSearch').value.trim()));
 document.getElementById('heroSearch').addEventListener('keydown', (e) => { if (e.key === 'Enter') loadHeroes(e.target.value.trim()); });
+document.getElementById('loreSearchBtn').addEventListener('click', () => loadLore(document.getElementById('loreSearch').value.trim()));
+document.getElementById('loreSearch').addEventListener('keydown', (e) => { if (e.key === 'Enter') loadLore(e.target.value.trim()); });
 
 // ---------- جزییات هیرو ----------
 // ---------- بیلد کامل ۶ آیتمی (mlbb.io) ----------
@@ -940,6 +943,45 @@ async function loadComps() {
       }).join('') : '<p class="hint">ترکیب تیمی فعلاً در دسترس نیست.</p>') +
       (guide.how_it_works_fa ? `<h2>🧭 ترکیب تیمی چطور ساخته می‌شود؟</h2><p>${esc(guide.how_it_works_fa)}</p>` : '') +
       ((guide.faqs_fa || []).length ? `<h2>❓ پرسش‌های متداول</h2>` + guide.faqs_fa.map((f) => `<details class="item-card"><summary><b>${esc(f.question_fa)}</b></summary><p>${esc(f.answer_fa)}</p></details>`).join('') : '');
+  } catch (e) { showError(box, e); }
+}
+
+// ---------- داستان هیروها ----------
+async function loadLore(q = '') {
+  const box = document.getElementById('loreBox');
+  const st = document.getElementById('loreStatus');
+  st.textContent = '';
+  loading(box);
+  try {
+    const sd = await loadStatic();
+    const all = (sd.heroes || []).map(heroPublic);
+    const list = q ? all.filter((h) => normStr(h.name).includes(normStr(q))) : all;
+    if (!list.length) { box.innerHTML = ''; st.textContent = 'هیرویی پیدا نشد.'; return; }
+    box.innerHTML = `<div class="grid">${list.map((h) => `
+      <div class="hero-card" data-id="${h.id}" data-name="${esc(h.name)}">
+        ${h.portrait ? `<img src="${esc(h.portrait)}" alt="${esc(h.name)}" loading="lazy">` : '<div style="height:100px">📖</div>'}
+        <div class="name">${esc(h.name)}</div>
+        <div class="cls">${esc(roleFa(h.class))}</div>
+      </div>`).join('')}</div>`;
+    box.querySelectorAll('.hero-card').forEach((c) => c.addEventListener('click', () => showLore(c.dataset.id)));
+  } catch (e) { showError(box, e); }
+}
+async function showLore(id) {
+  const box = document.getElementById('loreBox');
+  loading(box);
+  try {
+    const sd = await loadStatic();
+    const h = (sd.heroes || []).map(heroPublic).find((x) => String(x.id) === String(id));
+    const lore = (sd.faContent.lore || {})[String(id)];
+    if (!h || !lore) { box.innerHTML = '<p class="hint">داستانی پیدا نشد.</p>'; return; }
+    const info = lore.info_fa || {};
+    const infoBits = [info.title_fa, info.gender_fa, info.species_fa, info.occupation_fa, info.fighting_style_fa].filter(Boolean).join('، ');
+    box.innerHTML = `<button class="back" id="loreBack">← بازگشت به داستان‌ها</button>
+      <div class="detail-head">${h.portrait ? `<img src="${esc(h.portrait)}" alt="${esc(h.name)}">` : ''}<div><h2>${esc(h.name)}</h2><div>${esc(roleFa(h.class))} — ${esc(laneFa(h.laning))}</div></div></div>
+      ${infoBits ? `<p class="hint">${esc(infoBits)}</p>` : ''}
+      ${lore.bio_short_fa ? `<p>${esc(lore.bio_short_fa)}</p>` : ''}
+      ${lore.bio_fa ? `<details open><summary>داستان کامل</summary><p>${esc(lore.bio_fa)}</p></details>` : ''}`;
+    document.getElementById('loreBack').addEventListener('click', () => loadLore());
   } catch (e) { showError(box, e); }
 }
 

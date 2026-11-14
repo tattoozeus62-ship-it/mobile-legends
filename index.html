@@ -25,6 +25,7 @@
   <button data-tab="player">👤 پروفایل</button>
   <button data-tab="news">📰 اخبار</button>
   <button data-tab="comps">👥 ترکیب تیمی</button>
+  <button data-tab="lore">📖 داستان‌ها</button>
 </nav>
 
 <main>
@@ -128,8 +129,19 @@
     <div id="compsBox"></div>
     <div id="compsStatus" class="status"></div>
   </section>
+
+  <!-- داستان‌ها -->
+  <section id="tab-lore" class="tab">
+    <div class="search-row">
+      <input id="loreSearch" type="search" placeholder="جست‌وجوی هیرو… مثلاً Miya" autocomplete="off">
+      <button id="loreSearchBtn">🔍</button>
+    </div>
+    <h2>📖 داستان هیروها</h2>
+    <div id="loreBox"></div>
+    <div id="loreStatus" class="status"></div>
+  </section>
 </main>
 
-<script src="app.js?v=20261114-12"></script>
+<script src="app.js?v=20261114-13"></script>
 </body>
 </html>
