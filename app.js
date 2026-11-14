@@ -608,7 +608,7 @@ function renderRoleChips(groups, total) {
   if (!box) return;
   const chips = [{ en: null, fa: 'همه', emoji: '🦸', count: total }, ...groups];
   box.innerHTML = chips.map((c) =>
-    `<button class="role-chip${heroRoleFilter === c.en ? ' active' : ''}" data-role="${c.en || ''}">${c.emoji} ${c.fa} (${faNum(c.count)})</button>`
+    `<button class="role-chip${heroRoleFilter === c.en ? ' active' : ''}" data-role="${c.en || ''}">${c.emoji} ${c.en || c.fa} (${faNum(c.count)})</button>`
   ).join('');
   box.querySelectorAll('.role-chip').forEach((b) => b.addEventListener('click', () => {
     heroRoleFilter = b.dataset.role || null;
@@ -643,7 +643,7 @@ async function loadHeroes(q = '') {
     const shown = heroRoleFilter ? groups.filter((g) => g.en === heroRoleFilter) : groups;
     grid.innerHTML = shown.map((g) => `
       <div class="role-section">
-        <h3>${g.emoji} ${g.fa} <span class="count">${faNum(g.count)}</span></h3>
+        <h3>${g.emoji} ${g.en} <span class="count">${faNum(g.count)}</span></h3>
         <div class="grid">${g.heroes.map(heroCard).join('')}</div>
       </div>`).join('');
     bindHeroCards(grid);
