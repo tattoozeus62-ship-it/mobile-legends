@@ -168,7 +168,7 @@ function createBot() {
       ? '🎮 با دکمهٔ زیر مینی‌اپ فارسی را باز کن:'
       : '⚠️ مینی‌اپ هنوز روی هاست HTTPS تنظیم نشده است (MINIAPP_URL خالی است) — دستورهای زیر بدون مینی‌اپ هم کار می‌کنند.';
     const caption =
-      `👋 سلام! به <b>پرشین MLBB</b> خوش آمدی.\n\nربات فارسی Mobile Legends: Bang Bang — هیروها بر اساس نقش، متا، کانتر، بیلد، آیتم، امبلم و جدول MPL، همه به فارسی و با دادهٔ زنده.\n\n${waNote}\n\nبرای راهنما: /help` +
+      `👋 سلام! به <b>Persian Mlbb</b> خوش آمدی.\n\nربات فارسی Mobile Legends: Bang Bang — هیروها بر اساس نقش، متا، کانتر، بیلد، آیتم، امبلم و جدول MPL، همه به فارسی و با دادهٔ زنده.\n\n${waNote}\n\nبرای راهنما: /help` +
       (isAdmin(ctx) ? '\n\n🛠️ تو مدیر ربات هستی — /admin برای پنل مدیریت.' : '') + FOOTER;
     // پیام ورود با عکس خوشامد (assets/welcome.jpg، وگرنه لوگوی ربات) — اگر فایل نبود، فقط متن فرستاده می‌شود
     const welcomePath = [path.join(__dirname, '..', 'assets', 'welcome.jpg'), path.join(__dirname, '..', 'assets', 'logo.jpg')].find((p) => fs.existsSync(p));
