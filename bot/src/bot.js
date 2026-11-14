@@ -170,11 +170,11 @@ function createBot() {
     const caption =
       `👋 سلام! به <b>پرشین MLBB</b> خوش آمدی.\n\nربات فارسی Mobile Legends: Bang Bang — هیروها بر اساس نقش، متا، کانتر، بیلد، آیتم، امبلم و جدول MPL، همه به فارسی و با دادهٔ زنده.\n\n${waNote}\n\nبرای راهنما: /help` +
       (isAdmin(ctx) ? '\n\n🛠️ تو مدیر ربات هستی — /admin برای پنل مدیریت.' : '') + FOOTER;
-    // پیام ورود با لوگوی ربات (assets/logo.jpg) — اگر فایل نبود، فقط متن فرستاده می‌شود
-    const logoPath = path.join(__dirname, '..', 'assets', 'logo.jpg');
-    if (fs.existsSync(logoPath)) {
+    // پیام ورود با عکس خوشامد (assets/welcome.jpg، وگرنه لوگوی ربات) — اگر فایل نبود، فقط متن فرستاده می‌شود
+    const welcomePath = [path.join(__dirname, '..', 'assets', 'welcome.jpg'), path.join(__dirname, '..', 'assets', 'logo.jpg')].find((p) => fs.existsSync(p));
+    if (welcomePath) {
       try {
-        await ctx.replyWithPhoto({ source: logoPath }, { caption, parse_mode: 'HTML', ...kb });
+        await ctx.replyWithPhoto({ source: welcomePath }, { caption, parse_mode: 'HTML', ...kb });
         return;
       } catch { /* بدون عکس ادامه بده */ }
     }
