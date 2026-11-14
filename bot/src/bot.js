@@ -145,6 +145,7 @@ function createBot() {
 
 <b>دستورها:</b>
 /hero &lt;نام هیرو&gt; — اطلاعات هیرو، اسکیل‌ها و وین‌ریت زنده
+/lore &lt;نام هیرو&gt; — داستان کامل هیرو (فارسی)
 /heroes — لیست هیروها بر اساس نقش (۱۳۳ هیرو در ۶ نقش)
 /meta — برترین هیروهای متا (۷ روز اخیر، وین‌ریت)
 /counter &lt;نام هیرو&gt; — بهترین کانترهای آن هیرو
@@ -230,7 +231,7 @@ function createBot() {
         t += `\n• <b>${esc(c.name)}</b>${c.strength_fa ? ` (${esc(c.strength_fa)})` : ''} — ${esc(truncate(c.reason_fa || '', 110))}`;
       });
     }
-    t += `\n\nبرای کانتر: <code>/counter ${esc(hero.hero_name)}</code>\nبرای بیلد: <code>/build ${esc(hero.hero_name)}</code>`;
+    t += `\n\nبرای کانتر: <code>/counter ${esc(hero.hero_name)}</code>\nبرای بیلد: <code>/build ${esc(hero.hero_name)}</code>\nبرای داستان: <code>/lore ${esc(hero.hero_name)}</code>`;
     t += FOOTER;
     if (head) {
       try {
@@ -463,6 +464,34 @@ function createBot() {
     }
     t += FOOTER;
     return ctx.replyWithHTML(t);
+  });
+
+  // ---------- /lore — داستان کامل هیرو (فارسی) ----------
+  bot.command('lore', async (ctx) => {
+    const q = ctx.message.text.replace(/^\/lore(@\S+)?\s*/i, '').trim();
+    if (!q) return ctx.replyWithHTML('نام هیرو را بنویس؛ مثلاً: <code>/lore Miya</code>' + FOOTER);
+    const hero = sd.findHero(q);
+    if (!hero) {
+      return ctx.replyWithHTML(esc(heroNotFoundText(q, sd.searchHeroes(q, 5))));
+    }
+    const id = Number(hero.mlid);
+    const lore = sd.loreById(id);
+    if (!lore || (!lore.bio_fa && !lore.bio_short_fa)) {
+      return ctx.replyWithHTML(`داستان ${esc(hero.hero_name)} فعلاً در دسترس نیست.` + FOOTER);
+    }
+    const info = lore.info_fa || {};
+    const infoBits = [info.title_fa, info.gender_fa, info.species_fa, info.occupation_fa, info.fighting_style_fa].filter(Boolean).join('، ');
+    const pub = sd.heroPublic(hero);
+    const head = pub.portrait || null;
+    const body = (lore.bio_fa || lore.bio_short_fa || '').trim();
+    const cap = `📖 <b>داستان ${esc(hero.hero_name)}</b>` + (infoBits ? `\n${esc(infoBits)}` : '') + FOOTER;
+    if (head) {
+      try {
+        await ctx.replyWithPhoto(head, { caption: cap, parse_mode: 'HTML' });
+        return await ctx.replyWithHTML(esc(body));
+      } catch { /* بدون عکس ادامه بده */ }
+    }
+    return ctx.replyWithHTML(`📖 <b>داستان ${esc(hero.hero_name)}</b>` + (infoBits ? `\n${esc(infoBits)}` : '') + `\n\n${esc(body)}` + FOOTER);
   });
 
   bot.command('tier', async (ctx) => {
