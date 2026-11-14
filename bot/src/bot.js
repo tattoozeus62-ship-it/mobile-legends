@@ -336,7 +336,7 @@ function createBot() {
     const fb = sd.fullBuilds[String(idStr)];
     let t = '';
     if (fb && (fb.items || []).length) {
-      t += `🧰 <b>بیلد پیشنهادی ${esc(hero?.hero_name || '')}</b> — ۶ آیتم (mlbb.io، ${esc(fb.month || '')})`;
+      t += `🧰 <b>بیلد پیشنهادی ${esc(hero?.hero_name || '')}</b> — ۶ آیتم${fb.month ? ' (' + esc(monthFa(fb.month)) + ')' : ''}`;
       fb.items.forEach((nm, i) => { t += `\n${faNum(i + 1)}. ${esc(nm)}`; });
       if (fb.spell) t += `\n🪄 اسپل: ${esc(fb.spell)}`;
       if (fb.emblem) t += `\n🛡️ امبلم: ${esc(fb.emblem)}${(fb.emblem_talents || []).length ? ' (' + fb.emblem_talents.map(esc).join('، ') + ')' : ''}`;
@@ -344,7 +344,7 @@ function createBot() {
       t += '\n';
     }
     t += fb && (fb.items || []).length
-      ? `\n🔄 <b>بیلدهای دیگر — ${esc(laneFa)}</b> (دادهٔ زندهٔ Rone)`
+      ? `\n🔄 <b>بیلدهای دیگر — ${esc(laneFa)}</b>`
       : `\n🛠️ <b>بیلد پیشنهادی ${esc(hero?.hero_name || '')}</b> — ${esc(laneFa)}`;
     if (!builds.length) t += '\n\n— بیلدی ثبت نشده است.';
     builds.slice(0, 3).forEach((b, i) => {
@@ -366,13 +366,13 @@ function createBot() {
     if (patchNotes && patchNotes.length) {
       t += '\\n\\n<b>📝 پچ‌نوت‌ها:</b>';
       patchNotes.slice(0, 5).forEach((p) => {
-        t += `\\n• <a href="${esc(p.url)}">${esc(p.title_fa || p.title)}</a>` + (dateFa(p.updated) ? ` — ${dateFa(p.updated)}` : '');
+        t += `\\n• <b>${esc(p.title_fa || p.title)}</b>` + (dateFa(p.updated) ? ` — ${dateFa(p.updated)}` : '');
       });
     }
     if (wikiRecent && wikiRecent.length) {
-      t += '\\n\\n<b>📚 تازه‌های ویکی:</b>';
+      t += '\\n\\n<b>📚 تازه‌ها:</b>';
       wikiRecent.slice(0, 5).forEach((w) => {
-        t += `\\n• <a href="${esc(w.url)}">${esc(w.title)}</a>` + (dateFa(w.timestamp) ? ` — ${dateFa(w.timestamp)}` : '');
+        t += `\\n• <b>${esc(w.title)}</b>` + (dateFa(w.timestamp) ? ` — ${dateFa(w.timestamp)}` : '');
       });
     }
     t += FOOTER;
