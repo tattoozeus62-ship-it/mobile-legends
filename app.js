@@ -119,6 +119,7 @@ async function loadStatic() {
       const fbFile = await loadOptional('builds-full.json');
       const newsFile = await loadOptional('news.json');
       const tierFile = await loadOptional('tierlist.json');
+      const discFile = await loadOptional('discussions.json');
       FA = {
         heroSkills: faFile.heroSkills || {},
         items: faFile.items || {},
@@ -138,6 +139,7 @@ async function loadStatic() {
         fullBuilds: fbFile.heroes || {},
         news: { patchNotes: newsFile.patch_notes || [], wikiRecent: newsFile.wiki_recent || [] },
         tierlist: { month: tierFile.month || null, tiers: tierFile.tiers || {}, counts: tierFile.counts || {} },
+        discussions: discFile.threads || [],
       };
     })();
   }
@@ -817,12 +819,14 @@ async function loadNews() {
     const sd = await loadStatic();
     const pn = (sd.news && sd.news.patchNotes) || [];
     const wr = (sd.news && sd.news.wikiRecent) || [];
+    const dc = sd.discussions || [];
     const tl = sd.tierlist || {};
     const order = ['SS', 'S', 'A', 'B', 'C', 'D'];
     const nameToId = new Map((sd.heroes || []).map((h) => [normStr(h.hero_name), String(h.mlid)]));
     box.innerHTML =
       (pn.length ? '<h2>📝 پچ‌نوت‌ها</h2>' + pn.slice(0, 10).map((p) => `<div class="item-card"><b>${esc(p.title_fa || p.title)}</b><br><span class="sub">${esc(dateFa(p.updated))} — ${esc(p.title)}</span></div>`).join('') : '') +
-      (wr.length ? '<h2>📚 تازه‌ها</h2>' + wr.slice(0, 10).map((w) => `<div class="item-card"><b>${esc(w.title)}</b><br><span class="sub">${esc(dateFa(w.timestamp))}${w.comment ? ' — ' + esc(w.comment) : ''}</span></div>`).join('') : '') ||
+      (wr.length ? '<h2>📚 تازه‌ها</h2>' + wr.slice(0, 10).map((w) => `<div class="item-card"><b>${esc(w.title)}</b><br><span class="sub">${esc(dateFa(w.timestamp))}${w.comment ? ' — ' + esc(w.comment) : ''}</span></div>`).join('') : '') +
+      (dc.length ? '<h2>💬 گفتگوها</h2>' + dc.slice(0, 10).map((d) => `<div class="item-card"><b>${esc(d.title)}</b><br><span class="sub">${esc(dateFa(d.date_iso))}${d.category_fa ? ' — ' + esc(d.category_fa) : ''}</span></div>`).join('') : '') ||
       '<p class="hint">خبری پیدا نشد.</p>';
     tb.innerHTML =
       (tl.month ? `<p class="hint">تیرلیست ${esc(monthFa(tl.month))} — ${faNum(Object.values(tl.counts || {}).reduce((a, b) => a + b, 0))} هیرو</p>` : '') +
