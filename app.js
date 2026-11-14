@@ -526,12 +526,40 @@ async function api(path, opts = {}) {
 const tg = window.Telegram?.WebApp;
 if (tg) { tg.ready(); tg.expand(); }
 
-const FA = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
-const faNum = (v) => v == null ? '—' : String(v).replace(/[0-9]/g, (d) => FA[+d]).replace(/\./g, '٫');
+const FA_DIGITS = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+const faNum = (v) => v == null ? '—' : String(v).replace(/[0-9]/g, (d) => FA_DIGITS[+d]).replace(/\./g, '٫');
 const faInt = (v) => { const n = Number(v); return Number.isFinite(n) ? faNum(Math.round(n).toLocaleString('en-US').replace(/,/g, '٬')) : '—'; };
 const pct = (x, d = 1) => { const n = Number(x); if (!Number.isFinite(n)) return '—'; return faNum(((n <= 1 ? n * 100 : n)).toFixed(d)) + '٪'; };
 const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const clean = (s) => String(s || '').replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').trim();
+
+// ---------- نقش و لین هیرو — نام فارسی ----------
+const ROLES = [
+  { en: 'Marksman', fa: 'تیرانداز', emoji: '🏹' },
+  { en: 'Fighter', fa: 'مبارز', emoji: '⚔️' },
+  { en: 'Assassin', fa: 'قاتل', emoji: '🗡️' },
+  { en: 'Mage', fa: 'جادوگر', emoji: '🔮' },
+  { en: 'Tank', fa: 'تانک', emoji: '🛡️' },
+  { en: 'Support', fa: 'پشتیبان', emoji: '💚' },
+];
+const ROLE_FA = Object.fromEntries(ROLES.map((r) => [r.en, r.fa]));
+const LANE_FA = { gold: 'گلد', exp: 'اکس‌پی', mid: 'مید', jungle: 'جانگل', roam: 'روم' };
+const normLaneKey = (s) => String(s || '').toLowerCase().replace(/\s*lane\s*$/, '').replace(/jungling/g, 'jungle').replace(/roaming/g, 'roam').trim();
+const roleFa = (classStr) => String(classStr || '').split(',').map((s) => ROLE_FA[s.trim()] || s.trim()).filter(Boolean).join('، ');
+const laneFa = (laning) => {
+  const out = [];
+  for (const l of (laning || [])) for (const p of String(l).split(',')) {
+    const k = normLaneKey(p);
+    if (k && LANE_FA[k] && !out.includes(LANE_FA[k])) out.push(LANE_FA[k]);
+  }
+  return out.join('، ');
+};
+const roleList = (classStr) => String(classStr || '').split(',').map((s) => s.trim()).filter((s) => ROLE_FA[s]);
+// دسته‌بندی هیروها بر اساس نقش — هیروی دورنقشه در هر دو گروه می‌آید
+const groupHeroesByRole = (list) => ROLES.map((r) => {
+  const heroes = list.filter((h) => roleList(h.class).includes(r.en)).sort((a, b) => a.name.localeCompare(b.name));
+  return { en: r.en, fa: r.fa, emoji: r.emoji, count: heroes.length, heroes };
+});
 
 const loading = (el, msg = '⏳ در حال بارگذاری…') => { el.innerHTML = `<div class="status">${msg}</div>`; };
 const showError = (el, e) => { el.innerHTML = `<div class="status error">❌ ${esc(e.message || 'خطا در گرفتن داده')}</div>`; };
@@ -557,23 +585,68 @@ api('/api/version').then((j) => {
 
 // ---------- هیروها ----------
 let currentHeroId = null;
+let heroRoleFilter = null; // null = همهٔ نقش‌ها
+let allHeroesCache = null;
+
+function heroCard(h) {
+  const img = h.portrait || h.head;
+  return `
+      <div class="hero-card" data-id="${h.id}" data-name="${esc(h.name)}">
+        ${img ? `<img src="${esc(img)}" alt="${esc(h.name)}" loading="lazy">` : '<div style="height:100px">🦸</div>'}
+        <div class="name">${esc(h.name)}</div>
+        <div class="cls">${esc(roleFa(h.class))}</div>
+        <div class="lane">${esc(laneFa(h.laning))}</div>
+      </div>`;
+}
+
+function bindHeroCards(grid) {
+  grid.querySelectorAll('.hero-card').forEach((c) => c.addEventListener('click', () => openHero(c.dataset.id)));
+}
+
+function renderRoleChips(groups, total) {
+  const box = document.getElementById('roleChips');
+  if (!box) return;
+  const chips = [{ en: null, fa: 'همه', emoji: '🦸', count: total }, ...groups];
+  box.innerHTML = chips.map((c) =>
+    `<button class="role-chip${heroRoleFilter === c.en ? ' active' : ''}" data-role="${c.en || ''}">${c.emoji} ${c.fa} (${faNum(c.count)})</button>`
+  ).join('');
+  box.querySelectorAll('.role-chip').forEach((b) => b.addEventListener('click', () => {
+    heroRoleFilter = b.dataset.role || null;
+    document.getElementById('heroSearch').value = '';
+    loadHeroes();
+  }));
+}
+
 async function loadHeroes(q = '') {
   const grid = document.getElementById('heroGrid');
   const st = document.getElementById('heroStatus');
   st.textContent = '';
   loading(grid);
   try {
-    const j = await api('/api/heroes?size=60&index=1' + (q ? '&q=' + encodeURIComponent(q) : ''));
-    const list = j.heroes || [];
-    if (!list.length) { grid.innerHTML = ''; st.textContent = 'هیرویی پیدا نشد.'; return; }
-    grid.innerHTML = list.map((h) => `
-      <div class="hero-card" data-id="${h.id}" data-name="${esc(h.name)}">
-        ${h.portrait || h.head ? `<img src="${esc(h.portrait || h.head)}" alt="${esc(h.name)}" loading="lazy">` : '<div style="height:100px">🦸</div>'}
-        <div class="name">${esc(h.name)}</div>
-        <div class="cls">${esc(h.class || '')}</div>
-        <div class="lane">${esc((h.laning || []).join('، '))}</div>
+    // جست‌وجو: نتایج تخت (مثل قبل)
+    if (q) {
+      const j = await api('/api/heroes?size=140&index=1' + '&q=' + encodeURIComponent(q));
+      const list = j.heroes || [];
+      if (!list.length) { grid.innerHTML = ''; st.textContent = 'هیرویی پیدا نشد.'; return; }
+      grid.innerHTML = `<div class="grid">${list.map(heroCard).join('')}</div>`;
+      bindHeroCards(grid);
+      return;
+    }
+    // نمای پیش‌فرض: همهٔ ۱۳۳ هیرو، دسته‌بندی‌شده بر اساس نقش (از دیتای استاتیک که نقش و لین دارد)
+    if (!allHeroesCache) {
+      const sd = await loadStatic();
+      allHeroesCache = sd.heroes.map(heroPublic);
+    }
+    const groups = groupHeroesByRole(allHeroesCache);
+    const total = allHeroesCache.length;
+    renderRoleChips(groups, total);
+    const shown = heroRoleFilter ? groups.filter((g) => g.en === heroRoleFilter) : groups;
+    grid.innerHTML = shown.map((g) => `
+      <div class="role-section">
+        <h3>${g.emoji} ${g.fa} <span class="count">${faNum(g.count)}</span></h3>
+        <div class="grid">${g.heroes.map(heroCard).join('')}</div>
       </div>`).join('');
-    grid.querySelectorAll('.hero-card').forEach((c) => c.addEventListener('click', () => openHero(c.dataset.id)));
+    bindHeroCards(grid);
   } catch (e) { showError(grid, e); }
 }
 document.getElementById('heroSearchBtn').addEventListener('click', () => loadHeroes(document.getElementById('heroSearch').value.trim()));
@@ -596,7 +669,7 @@ async function openHero(id) {
     box.innerHTML = `
       <div class="detail-head">
         ${h.portrait || h.head_big || h.head ? `<img src="${esc(h.portrait || h.head_big || h.head)}" alt="${esc(h.name)}">` : ''}
-        <div><h2>${esc(h.name)}</h2><div>${esc(h.class || '')} — ${esc((h.laning || []).join('، '))}</div></div>
+        <div><h2>${esc(h.name)}</h2><div>${esc(roleFa(h.class))} — ${esc(laneFa(h.laning))}</div></div>
       </div>
       ${h.rank ? `<div class="stat-chips">
         <span class="chip">وین‌ریت <b>${pct(h.rank.win)}</b></span>
