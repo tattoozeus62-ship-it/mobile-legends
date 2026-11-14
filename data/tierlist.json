@@ -1,0 +1,558 @@
+{
+ "month": "November 2026",
+ "tiers": {
+  "SS": [
+   {
+    "slug": "sun",
+    "name": "Sun"
+   },
+   {
+    "slug": "obsidia",
+    "name": "Obsidia"
+   }
+  ],
+  "S": [
+   {
+    "slug": "marcel",
+    "name": "Marcel"
+   },
+   {
+    "slug": "masha",
+    "name": "Masha"
+   },
+   {
+    "slug": "floryn",
+    "name": "Floryn"
+   },
+   {
+    "slug": "carmilla",
+    "name": "Carmilla"
+   },
+   {
+    "slug": "rafaela",
+    "name": "Rafaela"
+   }
+  ],
+  "A": [
+   {
+    "slug": "valir",
+    "name": "Valir"
+   },
+   {
+    "slug": "hanabi",
+    "name": "Hanabi"
+   },
+   {
+    "slug": "minotaur",
+    "name": "Minotaur"
+   },
+   {
+    "slug": "saber",
+    "name": "Saber"
+   },
+   {
+    "slug": "aulus",
+    "name": "Aulus"
+   },
+   {
+    "slug": "zetian",
+    "name": "Zetian"
+   },
+   {
+    "slug": "belerick",
+    "name": "Belerick"
+   },
+   {
+    "slug": "lukas",
+    "name": "Lukas"
+   },
+   {
+    "slug": "gloo",
+    "name": "Gloo"
+   },
+   {
+    "slug": "atlas",
+    "name": "Atlas"
+   },
+   {
+    "slug": "cyclops",
+    "name": "Cyclops"
+   },
+   {
+    "slug": "badang",
+    "name": "Badang"
+   },
+   {
+    "slug": "eudora",
+    "name": "Eudora"
+   },
+   {
+    "slug": "ling",
+    "name": "Ling"
+   },
+   {
+    "slug": "gord",
+    "name": "Gord"
+   },
+   {
+    "slug": "minsitthar",
+    "name": "Minsitthar"
+   },
+   {
+    "slug": "silvanna",
+    "name": "Silvanna"
+   },
+   {
+    "slug": "guinevere",
+    "name": "Guinevere"
+   },
+   {
+    "slug": "argus",
+    "name": "Argus"
+   },
+   {
+    "slug": "kadita",
+    "name": "Kadita"
+   },
+   {
+    "slug": "miya",
+    "name": "Miya"
+   },
+   {
+    "slug": "kagura",
+    "name": "Kagura"
+   },
+   {
+    "slug": "paquito",
+    "name": "Paquito"
+   },
+   {
+    "slug": "suyou",
+    "name": "Suyou"
+   },
+   {
+    "slug": "nolan",
+    "name": "Nolan"
+   },
+   {
+    "slug": "alice",
+    "name": "Alice"
+   },
+   {
+    "slug": "dyrroth",
+    "name": "Dyrroth"
+   },
+   {
+    "slug": "bruno",
+    "name": "Bruno"
+   },
+   {
+    "slug": "zhask",
+    "name": "Zhask"
+   },
+   {
+    "slug": "barats",
+    "name": "Barats"
+   },
+   {
+    "slug": "hirara",
+    "name": "Hirara"
+   },
+   {
+    "slug": "xavier",
+    "name": "Xavier"
+   },
+   {
+    "slug": "cecilion",
+    "name": "Cecilion"
+   },
+   {
+    "slug": "khufra",
+    "name": "Khufra"
+   },
+   {
+    "slug": "hilda",
+    "name": "Hilda"
+   },
+   {
+    "slug": "benedetta",
+    "name": "Benedetta"
+   },
+   {
+    "slug": "aldous",
+    "name": "Aldous"
+   },
+   {
+    "slug": "novaria",
+    "name": "Novaria"
+   },
+   {
+    "slug": "estes",
+    "name": "Estes"
+   },
+   {
+    "slug": "aamon",
+    "name": "Aamon"
+   }
+  ],
+  "B": [
+   {
+    "slug": "popol-and-kupa",
+    "name": "Popol and Kupa"
+   },
+   {
+    "slug": "irithel",
+    "name": "Irithel"
+   },
+   {
+    "slug": "xborg",
+    "name": "X.Borg"
+   },
+   {
+    "slug": "julian",
+    "name": "Julian"
+   },
+   {
+    "slug": "moskov",
+    "name": "Moskov"
+   },
+   {
+    "slug": "clint",
+    "name": "Clint"
+   },
+   {
+    "slug": "diggie",
+    "name": "Diggie"
+   },
+   {
+    "slug": "yi-sun-shin",
+    "name": "Yi Sun-shin"
+   },
+   {
+    "slug": "edith",
+    "name": "Edith"
+   },
+   {
+    "slug": "selena",
+    "name": "Selena"
+   },
+   {
+    "slug": "bane",
+    "name": "Bane"
+   },
+   {
+    "slug": "vexana",
+    "name": "Vexana"
+   },
+   {
+    "slug": "brody",
+    "name": "Brody"
+   },
+   {
+    "slug": "cici",
+    "name": "Cici"
+   },
+   {
+    "slug": "natalia",
+    "name": "Natalia"
+   },
+   {
+    "slug": "gusion",
+    "name": "Gusion"
+   },
+   {
+    "slug": "fredrinn",
+    "name": "Fredrinn"
+   },
+   {
+    "slug": "sora",
+    "name": "Sora"
+   },
+   {
+    "slug": "terizla",
+    "name": "Terizla"
+   },
+   {
+    "slug": "ixia",
+    "name": "Ixia"
+   },
+   {
+    "slug": "angela",
+    "name": "Angela"
+   },
+   {
+    "slug": "layla",
+    "name": "Layla"
+   },
+   {
+    "slug": "yve",
+    "name": "Yve"
+   },
+   {
+    "slug": "natan",
+    "name": "Natan"
+   },
+   {
+    "slug": "lolita",
+    "name": "Lolita"
+   },
+   {
+    "slug": "thamuz",
+    "name": "Thamuz"
+   },
+   {
+    "slug": "karina",
+    "name": "Karina"
+   },
+   {
+    "slug": "akai",
+    "name": "Akai"
+   },
+   {
+    "slug": "hanzo",
+    "name": "Hanzo"
+   },
+   {
+    "slug": "vale",
+    "name": "Vale"
+   },
+   {
+    "slug": "johnson",
+    "name": "Johnson"
+   },
+   {
+    "slug": "odette",
+    "name": "Odette"
+   },
+   {
+    "slug": "yu-zhong",
+    "name": "Yu Zhong"
+   },
+   {
+    "slug": "freya",
+    "name": "Freya"
+   },
+   {
+    "slug": "alpha",
+    "name": "Alpha"
+   },
+   {
+    "slug": "lunox",
+    "name": "Lunox"
+   },
+   {
+    "slug": "beatrix",
+    "name": "Beatrix"
+   },
+   {
+    "slug": "yin",
+    "name": "Yin"
+   },
+   {
+    "slug": "esmeralda",
+    "name": "Esmeralda"
+   },
+   {
+    "slug": "lylia",
+    "name": "Lylia"
+   },
+   {
+    "slug": "khaleed",
+    "name": "Khaleed"
+   }
+  ],
+  "C": [
+   {
+    "slug": "alucard",
+    "name": "Alucard"
+   },
+   {
+    "slug": "aurora",
+    "name": "Aurora"
+   },
+   {
+    "slug": "kalea",
+    "name": "Kalea"
+   },
+   {
+    "slug": "leomord",
+    "name": "Leomord"
+   },
+   {
+    "slug": "uranus",
+    "name": "Uranus"
+   },
+   {
+    "slug": "tigreal",
+    "name": "Tigreal"
+   },
+   {
+    "slug": "kaja",
+    "name": "Kaja"
+   },
+   {
+    "slug": "harley",
+    "name": "Harley"
+   },
+   {
+    "slug": "melissa",
+    "name": "Melissa"
+   },
+   {
+    "slug": "hayabusa",
+    "name": "Hayabusa"
+   },
+   {
+    "slug": "lesley",
+    "name": "Lesley"
+   },
+   {
+    "slug": "claude",
+    "name": "Claude"
+   },
+   {
+    "slug": "kimmy",
+    "name": "Kimmy"
+   },
+   {
+    "slug": "hylos",
+    "name": "Hylos"
+   },
+   {
+    "slug": "change",
+    "name": "Chang'e"
+   },
+   {
+    "slug": "nana",
+    "name": "Nana"
+   },
+   {
+    "slug": "ruby",
+    "name": "Ruby"
+   },
+   {
+    "slug": "karrie",
+    "name": "Karrie"
+   },
+   {
+    "slug": "faramis",
+    "name": "Faramis"
+   },
+   {
+    "slug": "zhuxin",
+    "name": "Zhuxin"
+   },
+   {
+    "slug": "grock",
+    "name": "Grock"
+   },
+   {
+    "slug": "helcurt",
+    "name": "Helcurt"
+   },
+   {
+    "slug": "roger",
+    "name": "Roger"
+   },
+   {
+    "slug": "martis",
+    "name": "Martis"
+   },
+   {
+    "slug": "lapu-lapu",
+    "name": "Lapu-Lapu"
+   },
+   {
+    "slug": "chou",
+    "name": "Chou"
+   }
+  ],
+  "D": [
+   {
+    "slug": "joy",
+    "name": "Joy"
+   },
+   {
+    "slug": "granger",
+    "name": "Granger"
+   },
+   {
+    "slug": "arlott",
+    "name": "Arlott"
+   },
+   {
+    "slug": "jawhead",
+    "name": "Jawhead"
+   },
+   {
+    "slug": "franco",
+    "name": "Franco"
+   },
+   {
+    "slug": "balmond",
+    "name": "Balmond"
+   },
+   {
+    "slug": "gatotkaca",
+    "name": "Gatotkaca"
+   },
+   {
+    "slug": "zilong",
+    "name": "Zilong"
+   },
+   {
+    "slug": "phoveus",
+    "name": "Phoveus"
+   },
+   {
+    "slug": "pharsa",
+    "name": "Pharsa"
+   },
+   {
+    "slug": "luo-yi",
+    "name": "Luo Yi"
+   },
+   {
+    "slug": "fanny",
+    "name": "Fanny"
+   },
+   {
+    "slug": "baxia",
+    "name": "Baxia"
+   },
+   {
+    "slug": "lancelot",
+    "name": "Lancelot"
+   },
+   {
+    "slug": "harith",
+    "name": "Harith"
+   },
+   {
+    "slug": "mathilda",
+    "name": "Mathilda"
+   },
+   {
+    "slug": "wanwan",
+    "name": "Wanwan"
+   },
+   {
+    "slug": "chip",
+    "name": "Chip"
+   },
+   {
+    "slug": "valentina",
+    "name": "Valentina"
+   }
+  ]
+ },
+ "counts": {
+  "SS": 2,
+  "S": 5,
+  "A": 40,
+  "B": 41,
+  "C": 26,
+  "D": 19
+ },
+ "fetched_at": "2026-11-14T18:49:02.841067+00:00"
+}

@@ -117,6 +117,8 @@ async function loadStatic() {
       ]);
       const faFile = await loadOptional('fa-overrides.json');
       const fbFile = await loadOptional('builds-full.json');
+      const newsFile = await loadOptional('news.json');
+      const tierFile = await loadOptional('tierlist.json');
       FA = {
         heroSkills: faFile.heroSkills || {},
         items: faFile.items || {},
@@ -134,6 +136,8 @@ async function loadStatic() {
         talents: talentFile.data || {},
         itemRevdate: itemFile.revdate || null,
         fullBuilds: fbFile.heroes || {},
+        news: { patchNotes: newsFile.patch_notes || [], wikiRecent: newsFile.wiki_recent || [] },
+        tierlist: { month: tierFile.month || null, tiers: tierFile.tiers || {}, counts: tierFile.counts || {} },
       };
     })();
   }
@@ -608,6 +612,7 @@ tabs.forEach((b) => b.addEventListener('click', () => {
   document.getElementById('tab-' + b.dataset.tab).classList.add('active');
   if (b.dataset.tab === 'meta') loadMeta();
   if (b.dataset.tab === 'emblems') loadEmblems();
+  if (b.dataset.tab === 'news') loadNews();
 }));
 function showTab(name) {
   document.querySelector(`#tabs button[data-tab="${name}"]`)?.click();
@@ -692,6 +697,7 @@ document.getElementById('heroSearch').addEventListener('keydown', (e) => { if (e
 let fullBuildHTML = '';
 const MONTH_FA = { January: 'ژانویه', February: 'فوریه', March: 'مارس', April: 'آوریل', May: 'مه', June: 'ژوئن', July: 'ژوئیه', August: 'اوت', September: 'سپتامبر', October: 'اکتبر', November: 'نوامبر', December: 'دسامبر' };
 function monthFa(m) { const [name, year] = String(m || '').split(' '); return (MONTH_FA[name] || name) + (year ? ' ' + faNum(year) : ''); }
+function dateFa(iso) { const d = new Date(iso); if (isNaN(d.getTime())) return ''; const names = Object.keys(MONTH_FA); return `${faNum(d.getUTCDate())} ${MONTH_FA[names[d.getUTCMonth()]]} ${faNum(d.getUTCFullYear())}`; }
 function emblemIconByName(sd, name) { const e = (sd.emblems || []).find((x) => normStr(x.emblem_name) === normStr(name)); return e && e.icon ? 'https://mlbb.tools' + e.icon : null; }
 function talentIconByName(sd, name) { for (const tier of Object.values(sd.talents || {})) { const t = (tier || []).find((x) => normStr(x.name) === normStr(name)); if (t && t.icon) return 'https://mlbb.tools/emblems' + t.icon; } return null; }
 async function computeFullBuild(id) {
@@ -798,6 +804,39 @@ function renderMeta() {
     </tr>`).join('')}</tbody></table>`;
 }
 document.getElementById('metaSort').addEventListener('change', renderMeta);
+
+// ---------- اخبار و تیرلیست ----------
+async function loadNews() {
+  const box = document.getElementById('newsBox');
+  const tb = document.getElementById('tierBox');
+  const st = document.getElementById('newsStatus');
+  st.textContent = '';
+  loading(box);
+  tb.innerHTML = '';
+  try {
+    const sd = await loadStatic();
+    const pn = (sd.news && sd.news.patchNotes) || [];
+    const wr = (sd.news && sd.news.wikiRecent) || [];
+    const tl = sd.tierlist || {};
+    const order = ['SS', 'S', 'A', 'B', 'C', 'D'];
+    const nameToId = new Map((sd.heroes || []).map((h) => [normStr(h.hero_name), String(h.mlid)]));
+    box.innerHTML =
+      (pn.length ? '<h2>📝 پچ‌نوت‌ها</h2>' + pn.slice(0, 10).map((p) => `<div class="item-card"><a href="${esc(p.url)}" target="_blank" rel="noopener"><b>${esc(p.title_fa || p.title)}</b></a><br><span class="sub">${esc(dateFa(p.updated))} — ${esc(p.title)}</span></div>`).join('') : '') +
+      (wr.length ? '<h2>📚 تازه‌های ویکی</h2>' + wr.slice(0, 10).map((w) => `<div class="item-card"><a href="${esc(w.url)}" target="_blank" rel="noopener"><b>${esc(w.title)}</b></a><br><span class="sub">${esc(dateFa(w.timestamp))}${w.comment ? ' — ' + esc(w.comment) : ''}</span></div>`).join('') : '') ||
+      '<p class="hint">خبری پیدا نشد.</p>';
+    tb.innerHTML =
+      (tl.month ? `<p class="hint">تیرلیست ${esc(monthFa(tl.month))} — ${faNum(Object.values(tl.counts || {}).reduce((a, b) => a + b, 0))} هیرو</p>` : '') +
+      (order.map((k) => {
+        const list = (tl.tiers || {})[k] || [];
+        if (!list.length) return '';
+        return `<div class="item-card"><b>${k}</b> <span class="sub">${faNum(list.length)} هیرو</span><br>${list.map((h) => {
+          const id = nameToId.get(normStr(h.name));
+          return id ? `<a href="#" data-hero="${id}">${esc(h.name)}</a>` : esc(h.name);
+        }).join('، ')}</div>`;
+      }).join('') || '<p class="hint">تیرلیست فعلاً در دسترس نیست.</p>');
+    tb.querySelectorAll('a[data-hero]').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); openHero(a.dataset.hero); }));
+  } catch (e) { showError(box, e); }
+}
 
 // ---------- آیتم‌ها ----------
 async function loadItems(q = '') {
