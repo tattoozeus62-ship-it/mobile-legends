@@ -21,6 +21,9 @@ const emblemFile = loadJson('emblem-meta-final.json');
 const talentFile = loadJson('talent-meta-final.json');
 // ترجمهٔ فارسی توضیحات (data/fa-overrides.json) — اگر نباشد، متن انگلیسی نشان داده می‌شود
 const faFile = loadJson('fa-overrides.json');
+// بیلد کامل ۶ آیتمی از mlbb.io (data/builds-full.json) — اگر نباشد، خالی است
+const fullBuildsFile = loadJson('builds-full.json');
+const fullBuilds = (fullBuildsFile && fullBuildsFile.heroes) || {};
 const FA = {
   heroSkills: (faFile && faFile.heroSkills) || {},
   items: (faFile && faFile.items) || {},
@@ -166,7 +169,7 @@ function heroesByRole() {
 }
 
 module.exports = {
-  heroes, items, emblems, talents,
+  heroes, items, emblems, talents, fullBuilds,
   heroRevdate: heroFile.revdate || null,
   itemRevdate: itemFile.revdate || null,
   searchHeroes, findHero, heroById,

@@ -326,7 +326,20 @@ function createBot() {
     if (!rec) return ctx.replyWithHTML('❌ برای این هیرو و لین بیلدی پیدا نشد.' + FOOTER);
     const builds = normBuildRecord(rec, equipMap);
     const laneFa = (LANES.find((l) => l.v === lane) || {}).fa || lane;
-    let t = `🛠️ <b>بیلد پیشنهادی ${esc(hero?.hero_name || '')}</b> — ${esc(laneFa)}`;
+    // بیلد کامل ۶ آیتمی (mlbb.io) — مستقل از لین، اول نشان داده می‌شود
+    const fb = sd.fullBuilds[String(idStr)];
+    let t = '';
+    if (fb && (fb.items || []).length) {
+      t += `🧰 <b>بیلد پیشنهادی ${esc(hero?.hero_name || '')}</b> — ۶ آیتم (mlbb.io، ${esc(fb.month || '')})`;
+      fb.items.forEach((nm, i) => { t += `\n${faNum(i + 1)}. ${esc(nm)}`; });
+      if (fb.spell) t += `\n🪄 اسپل: ${esc(fb.spell)}`;
+      if (fb.emblem) t += `\n🛡️ امبلم: ${esc(fb.emblem)}${(fb.emblem_talents || []).length ? ' (' + fb.emblem_talents.map(esc).join('، ') + ')' : ''}`;
+      if (fb.builds_count) t += `\n📊 تجمیع ${faNum(fb.builds_count)} بیلد${(fb.builds_count || 99) <= 2 ? ' — ⚠️ نمونهٔ کوچک، با احتیاط' : ''}`;
+      t += '\n';
+    }
+    t += fb && (fb.items || []).length
+      ? `\n🔄 <b>بیلدهای دیگر — ${esc(laneFa)}</b> (دادهٔ زندهٔ Rone)`
+      : `\n🛠️ <b>بیلد پیشنهادی ${esc(hero?.hero_name || '')}</b> — ${esc(laneFa)}`;
     if (!builds.length) t += '\n\n— بیلدی ثبت نشده است.';
     builds.slice(0, 3).forEach((b, i) => {
       t += `\n\n<b>بیلد ${faNum(i + 1)}</b> — وین ${pct(b.win)} | پیک ${pct(b.pick)}`;

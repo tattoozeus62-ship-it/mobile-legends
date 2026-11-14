@@ -1,0 +1,2888 @@
+{
+ "generated_at": "2026-11-14T18:28:03.153Z",
+ "source": "https://mlbb.io/en/hero/{slug}/build (JSON-LD ItemList)",
+ "heroes": {
+  "1": {
+   "name": "Miya",
+   "slug": "miya",
+   "items": [
+    "Swift Boots",
+    "Windtalker",
+    "Haas' Claws",
+    "Berserker's Fury",
+    "Malefic Gun",
+    "Blade of Despair"
+   ],
+   "spell": "Inspire",
+   "emblem": "Marksman",
+   "emblem_talents": [
+    "Fatal",
+    "Bargain Hunter",
+    "Weakness Finder"
+   ],
+   "builds_count": 29,
+   "submitted_range": "Aug 17, 2026 and Nov 13, 2026",
+   "month": "November 2026"
+  },
+  "2": {
+   "name": "Balmond",
+   "slug": "balmond",
+   "items": [
+    "Tough Boots",
+    "Cursed Helmet",
+    "War Axe",
+    "Oracle",
+    "Queen's Wings",
+    "Guardian Helmet"
+   ],
+   "spell": "Vengeance",
+   "emblem": "Fighter",
+   "emblem_talents": [
+    "Vitality",
+    "Festival of Blood",
+    "Concussive Blast"
+   ],
+   "builds_count": 10,
+   "submitted_range": "Aug 31, 2026 and Nov 9, 2026",
+   "month": "November 2026"
+  },
+  "3": {
+   "name": "Saber",
+   "slug": "saber",
+   "items": [
+    "Magic Shoes",
+    "Hunter Strike",
+    "War Axe",
+    "Blade of the Heptaseas",
+    "Endless Battle",
+    "Malefic Roar"
+   ],
+   "spell": "Retribution",
+   "emblem": "Assassin",
+   "emblem_talents": [
+    "Thrill",
+    "Seasoned Hunter",
+    "Lethal Ignition"
+   ],
+   "builds_count": 12,
+   "submitted_range": "Aug 28, 2026 and Oct 29, 2026",
+   "month": "November 2026"
+  },
+  "4": {
+   "name": "Alice",
+   "slug": "alice",
+   "items": [
+    "Magic Shoes",
+    "Cursed Helmet",
+    "Oracle",
+    "Concentrated Energy",
+    "Brute Force Breastplate",
+    "Queen's Wings"
+   ],
+   "spell": "Flicker",
+   "emblem": "Tank",
+   "emblem_talents": [
+    "Vitality",
+    "Festival of Blood",
+    "Impure Rage"
+   ],
+   "builds_count": 15,
+   "submitted_range": "Aug 28, 2026 and Nov 8, 2026",
+   "month": "November 2026"
+  },
+  "5": {
+   "name": "Nana",
+   "slug": "nana",
+   "items": [
+    "Arcane Boots",
+    "Sky Piercer",
+    "Lightning Truncheon",
+    "Glowing Wand",
+    "Holy Crystal",
+    "Divine Glaive"
+   ],
+   "spell": "Flameshot",
+   "emblem": "Mage",
+   "emblem_talents": [
+    "Rupture",
+    "Weapon Master",
+    "Lethal Ignition"
+   ],
+   "builds_count": 5,
+   "submitted_range": "Sep 2, 2026 and Nov 2, 2026",
+   "month": "November 2026"
+  },
+  "6": {
+   "name": "Tigreal",
+   "slug": "tigreal",
+   "items": [
+    "Tough Boots",
+    "Fleeting Time",
+    "Dominance Ice",
+    "Antique Cuirass",
+    "Radiant Armor",
+    "Athena's Shield"
+   ],
+   "spell": "Flicker",
+   "emblem": "Tank",
+   "emblem_talents": [
+    "Vitality",
+    "Tenacity",
+    "Concussive Blast"
+   ],
+   "builds_count": 5,
+   "submitted_range": "Aug 30, 2026 and Oct 24, 2026",
+   "month": "November 2026"
+  },
+  "7": {
+   "name": "Alucard",
+   "slug": "alucard",
+   "items": [
+    "Tough Boots",
+    "War Axe",
+    "Endless Battle",
+    "Rose Gold Meteor",
+    "Queen's Wings",
+    "Blade of Despair"
+   ],
+   "spell": "Retribution",
+   "emblem": "Assassin",
+   "emblem_talents": [
+    "Thrill",
+    "Weapon Master",
+    "Temporal Reign"
+   ],
+   "builds_count": 20,
+   "submitted_range": "Aug 15, 2026 and Nov 12, 2026",
+   "month": "November 2026"
+  },
+  "8": {
+   "name": "Karina",
+   "slug": "karina",
+   "items": [
+    "Arcane Boots",
+    "Sky Piercer",
+    "Starlium Scythe",
+    "Concentrated Energy",
+    "Holy Crystal",
+    "Divine Glaive"
+   ],
+   "spell": "Retribution",
+   "emblem": "Mage",
+   "emblem_talents": [
+    "Rupture",
+    "Seasoned Hunter",
+    "Lethal Ignition"
+   ],
+   "builds_count": 8,
+   "submitted_range": "Aug 15, 2026 and Nov 7, 2026",
+   "month": "November 2026"
+  },
+  "9": {
+   "name": "Akai",
+   "slug": "akai",
+   "items": [
+    "Warrior Boots",
+    "Rapid Boots",
+    "War Axe",
+    "Sky Piercer",
+    "Concentrated Energy",
+    "Guardian Helmet"
+   ],
+   "spell": "Revitalize",
+   "emblem": "Assassin",
+   "emblem_talents": [
+    "Rupture",
+    "Bargain Hunter",
+    "Concussive Blast"
+   ],
+   "builds_count": 2,
+   "submitted_range": "Sep 13, 2026 and Oct 24, 2026",
+   "month": "November 2026"
+  },
+  "10": {
+   "name": "Franco",
+   "slug": "franco",
+   "items": [
+    "Rapid Boots",
+    "Blade of the Heptaseas",
+    "Sky Piercer",
+    "Hunter Strike",
+    "Fleeting Time",
+    "Malefic Roar"
+   ],
+   "spell": "Flicker",
+   "emblem": "Tank",
+   "emblem_talents": [
+    "Agility",
+    "Pull Yourself Together",
+    "Concussive Blast"
+   ],
+   "builds_count": 9,
+   "submitted_range": "Sep 25, 2026 and Nov 10, 2026",
+   "month": "November 2026"
+  },
+  "11": {
+   "name": "Bane",
+   "slug": "bane",
+   "items": [
+    "Tough Boots",
+    "Arcane Boots",
+    "War Axe",
+    "Sky Piercer",
+    "Endless Battle",
+    "Malefic Roar"
+   ],
+   "spell": "Ice Retribution",
+   "emblem": "Assassin",
+   "emblem_talents": [
+    "Thrill",
+    "Seasoned Hunter",
+    "Lethal Ignition"
+   ],
+   "builds_count": 7,
+   "submitted_range": "Aug 17, 2026 and Sep 29, 2026",
+   "month": "November 2026"
+  },
+  "12": {
+   "name": "Bruno",
+   "slug": "bruno",
+   "items": [
+    "Haas' Claws",
+    "Windtalker",
+    "Berserker's Fury",
+    "Malefic Gun",
+    "Demon Shoes",
+    "Blade of Despair"
+   ],
+   "spell": "Flicker",
+   "emblem": "Fighter",
+   "emblem_talents": [
+    "Fatal",
+    "Bargain Hunter",
+    "Quantum Charge"
+   ],
+   "builds_count": 3,
+   "submitted_range": "Sep 20, 2026 and Nov 13, 2026",
+   "month": "November 2026"
+  },
+  "13": {
+   "name": "Clint",
+   "slug": "clint",
+   "items": [
+    "Endless Battle",
+    "Blade of the Heptaseas",
+    "Malefic Gun",
+    "Berserker's Fury",
+    "Malefic Roar",
+    "Blade of Despair"
+   ],
+   "spell": "Flicker",
+   "emblem": "Fighter",
+   "emblem_talents": [
+    "Rupture",
+    "Weapon Master",
+    "Impure Rage"
+   ],
+   "builds_count": 9,
+   "submitted_range": "Aug 16, 2026 and Oct 29, 2026",
+   "month": "November 2026"
+  },
+  "14": {
+   "name": "Rafaela",
+   "slug": "rafaela",
+   "items": [
+    "Rapid Boots",
+    "Flask of the Oasis",
+    "Enchanted Talisman",
+    "Queen's Wings",
+    "Blood Wings",
+    "Ice Queen Wand"
+   ],
+   "spell": "Flicker",
+   "emblem": "Support",
+   "emblem_talents": [
+    "Inspire",
+    "Wilderness Blessing",
+    "Impure Rage"
+   ],
+   "builds_count": 10,
+   "submitted_range": "Sep 8, 2026 and Nov 14, 2026",
+   "month": "November 2026"
+  },
+  "15": {
+   "name": "Eudora",
+   "slug": "eudora",
+   "items": [
+    "Arcane Boots",
+    "Rapid Boots",
+    "Genius Wand",
+    "Sky Piercer",
+    "Holy Crystal",
+    "Divine Glaive"
+   ],
+   "spell": "Flicker",
+   "emblem": "Mage",
+   "emblem_talents": [
+    "Rupture",
+    "Weapon Master",
+    "Lethal Ignition"
+   ],
+   "builds_count": 7,
+   "submitted_range": "Aug 31, 2026 and Nov 4, 2026",
+   "month": "November 2026"
+  },
+  "16": {
+   "name": "Zilong",
+   "slug": "zilong",
+   "items": [
+    "Rapid Boots",
+    "Blade of the Heptaseas",
+    "Windtalker",
+    "Corrosion Scythe",
+    "Haas' Claws",
+    "Berserker's Fury"
+   ],
+   "spell": "Inspire",
+   "emblem": "Assassin",
+   "emblem_talents": [
+    "Thrill",
+    "Master Assassin",
+    "War Cry"
+   ],
+   "builds_count": 7,
+   "submitted_range": "Aug 21, 2026 and Nov 12, 2026",
+   "month": "November 2026"
+  },
+  "17": {
+   "name": "Fanny",
+   "slug": "fanny",
+   "items": [
+    "Blade of the Heptaseas",
+    "Tough Boots",
+    "Malefic Roar",
+    "War Axe",
+    "Hunter Strike",
+    "Queen's Wings"
+   ],
+   "spell": "Retribution",
+   "emblem": "Assassin",
+   "emblem_talents": [
+    "Rupture",
+    "Festival of Blood",
+    "Impure Rage"
+   ],
+   "builds_count": 8,
+   "submitted_range": "Aug 27, 2026 and Nov 14, 2026",
+   "month": "November 2026"
+  },
+  "18": {
+   "name": "Layla",
+   "slug": "layla",
+   "items": [
+    "Swift Boots",
+    "Windtalker",
+    "Haas' Claws",
+    "Berserker's Fury",
+    "Malefic Gun",
+    "Blade of Despair"
+   ],
+   "spell": "Flicker",
+   "emblem": "Marksman",
+   "emblem_talents": [
+    "Fatal",
+    "Bargain Hunter",
+    "Quantum Charge"
+   ],
+   "builds_count": 9,
+   "submitted_range": "Sep 17, 2026 and Nov 6, 2026",
+   "month": "November 2026"
+  },
+  "19": {
+   "name": "Minotaur",
+   "slug": "minotaur",
+   "items": [
+    "Tough Boots",
+    "Flask of the Oasis",
+    "Dominance Ice",
+    "Oracle",
+    "Chastise Pauldron",
+    "Athena's Shield"
+   ],
+   "spell": "Revitalize",
+   "emblem": "Tank",
+   "emblem_talents": [
+    "Vitality",
+    "Pull Yourself Together",
+    "Focusing Mark"
+   ],
+   "builds_count": 7,
+   "submitted_range": "Aug 18, 2026 and Nov 8, 2026",
+   "month": "November 2026"
+  },
+  "20": {
+   "name": "Lolita",
+   "slug": "lolita",
+   "items": [
+    "Thunder Belt",
+    "Tough Boots",
+    "Cursed Helmet",
+    "Flask of the Oasis",
+    "Antique Cuirass",
+    "Dominance Ice"
+   ],
+   "spell": "Flicker",
+   "emblem": "Support",
+   "emblem_talents": [
+    "Agility",
+    "Pull Yourself Together",
+    "Focusing Mark"
+   ],
+   "builds_count": 2,
+   "submitted_range": "Oct 17, 2026 and Oct 28, 2026",
+   "month": "November 2026"
+  },
+  "21": {
+   "name": "Hayabusa",
+   "slug": "hayabusa",
+   "items": [
+    "Magic Shoes",
+    "Hunter Strike",
+    "War Axe",
+    "Malefic Roar",
+    "Blade of Despair",
+    "Rose Gold Meteor"
+   ],
+   "spell": "Retribution",
+   "emblem": "Assassin",
+   "emblem_talents": [
+    "Thrill",
+    "Seasoned Hunter",
+    "War Cry"
+   ],
+   "builds_count": 8,
+   "submitted_range": "Aug 17, 2026 and Nov 7, 2026",
+   "month": "November 2026"
+  },
+  "22": {
+   "name": "Freya",
+   "slug": "freya",
+   "items": [
+    "Golden Staff",
+    "Tough Boots",
+    "War Axe",
+    "Endless Battle",
+    "Blade of Despair",
+    "Rose Gold Meteor"
+   ],
+   "spell": "Retribution",
+   "emblem": "Fighter",
+   "emblem_talents": [
+    "Thrill",
+    "Weapon Master",
+    "War Cry"
+   ],
+   "builds_count": 17,
+   "submitted_range": "Aug 17, 2026 and Nov 14, 2026",
+   "month": "November 2026"
+  },
+  "23": {
+   "name": "Gord",
+   "slug": "gord",
+   "items": [
+    "Enchanted Talisman",
+    "Glowing Wand",
+    "Sky Piercer",
+    "Ice Queen Wand",
+    "Lightning Truncheon",
+    "Divine Glaive"
+   ],
+   "spell": "Flicker",
+   "emblem": "Mage",
+   "emblem_talents": [
+    "Rupture",
+    "Bargain Hunter",
+    "Impure Rage"
+   ],
+   "builds_count": 6,
+   "submitted_range": "Aug 18, 2026 and Nov 12, 2026",
+   "month": "November 2026"
+  },
+  "24": {
+   "name": "Natalia",
+   "slug": "natalia",
+   "items": [
+    "Arcane Boots",
+    "Blade of the Heptaseas",
+    "Rapid Boots",
+    "Berserker's Fury",
+    "Sea Halberd",
+    "Great Dragon Spear"
+   ],
+   "spell": "Execute",
+   "emblem": "Assassin",
+   "emblem_talents": [
+    "Rupture",
+    "Seasoned Hunter",
+    "Lethal Ignition"
+   ],
+   "builds_count": 3,
+   "submitted_range": "Sep 23, 2026 and Oct 30, 2026",
+   "month": "November 2026"
+  },
+  "25": {
+   "name": "Kagura",
+   "slug": "kagura",
+   "items": [
+    "Arcane Boots",
+    "Genius Wand",
+    "Lightning Truncheon",
+    "Divine Glaive",
+    "Holy Crystal",
+    "Wishing Lantern"
+   ],
+   "spell": "Flameshot",
+   "emblem": "Assassin",
+   "emblem_talents": [
+    "Rupture",
+    "Weapon Master",
+    "Lethal Ignition"
+   ],
+   "builds_count": 9,
+   "submitted_range": "Sep 30, 2026 and Nov 3, 2026",
+   "month": "November 2026"
+  },
+  "26": {
+   "name": "Chou",
+   "slug": "chou",
+   "items": [
+    "Warrior Boots",
+    "Blade of the Heptaseas",
+    "Blade of Despair",
+    "Endless Battle",
+    "Hunter Strike",
+    "Malefic Roar"
+   ],
+   "spell": "Flicker",
+   "emblem": "Assassin",
+   "emblem_talents": [
+    "Thrill",
+    "Master Assassin",
+    "Lethal Ignition"
+   ],
+   "builds_count": 43,
+   "submitted_range": "Aug 15, 2026 and Nov 11, 2026",
+   "month": "November 2026"
+  },
+  "27": {
+   "name": "Sun",
+   "slug": "sun",
+   "items": [
+    "Rapid Boots",
+    "Corrosion Scythe",
+    "Windtalker",
+    "Demon Hunter Sword",
+    "Berserker's Fury",
+    "Great Dragon Spear"
+   ],
+   "spell": "Petrify",
+   "emblem": "Assassin",
+   "emblem_talents": [
+    "Agility",
+    "Wilderness Blessing",
+    "Quantum Charge"
+   ],
+   "builds_count": 41,
+   "submitted_range": "Aug 16, 2026 and Nov 13, 2026",
+   "month": "November 2026"
+  },
+  "28": {
+   "name": "Alpha",
+   "slug": "alpha",
+   "items": [
+    "Tough Boots",
+    "War Axe",
+    "Queen's Wings",
+    "Brute Force Breastplate",
+    "Oracle",
+    "Blade of Despair"
+   ],
+   "spell": "Vengeance",
+   "emblem": "Fighter",
+   "emblem_talents": [
+    "Thrill",
+    "Festival of Blood",
+    "Brave Smite"
+   ],
+   "builds_count": 19,
+   "submitted_range": "Sep 2, 2026 and Nov 9, 2026",
+   "month": "November 2026"
+  },
+  "29": {
+   "name": "Ruby",
+   "slug": "ruby",
+   "items": [
+    "Tough Boots",
+    "Thunder Belt",
+    "War Axe",
+    "Endless Battle",
+    "Queen's Wings",
+    "Rose Gold Meteor"
+   ],
+   "spell": "Flicker",
+   "emblem": "Fighter",
+   "emblem_talents": [
+    "Rupture",
+    "Festival of Blood",
+    "Brave Smite"
+   ],
+   "builds_count": 6,
+   "submitted_range": "Oct 3, 2026 and Nov 6, 2026",
+   "month": "November 2026"
+  },
+  "30": {
+   "name": "Yi Sun-shin",
+   "slug": "yi-sun-shin",
+   "items": [
+    "Magic Shoes",
+    "War Axe",
+    "Hunter Strike",
+    "Endless Battle",
+    "Blade of Despair",
+    "Malefic Roar"
+   ],
+   "spell": "Retribution",
+   "emblem": "Assassin",
+   "emblem_talents": [
+    "Thrill",
+    "Seasoned Hunter",
+    "Killing Spree"
+   ],
+   "builds_count": 12,
+   "submitted_range": "Aug 16, 2026 and Oct 31, 2026",
+   "month": "November 2026"
+  },
+  "31": {
+   "name": "Moskov",
+   "slug": "moskov",
+   "items": [
+    "Corrosion Scythe",
+    "Windtalker",
+    "Haas' Claws",
+    "Golden Staff",
+    "Demon Hunter Sword",
+    "Malefic Gun"
+   ],
+   "spell": "Flicker",
+   "emblem": "Marksman",
+   "emblem_talents": [
+    "Swift",
+    "Master Assassin",
+    "Quantum Charge"
+   ],
+   "builds_count": 10,
+   "submitted_range": "Aug 23, 2026 and Oct 26, 2026",
+   "month": "November 2026"
+  },
+  "32": {
+   "name": "Johnson",
+   "slug": "johnson",
+   "items": [
+    "Arcane Boots",
+    "Cursed Helmet",
+    "Glowing Wand",
+    "Divine Glaive",
+    "Blade Armor",
+    "Radiant Armor"
+   ],
+   "spell": "Petrify",
+   "emblem": "Tank",
+   "emblem_talents": [
+    "Agility",
+    "Wilderness Blessing",
+    "Concussive Blast"
+   ],
+   "builds_count": 5,
+   "submitted_range": "Aug 19, 2026 and Nov 10, 2026",
+   "month": "November 2026"
+  },
+  "33": {
+   "name": "Cyclops",
+   "slug": "cyclops",
+   "items": [
+    "Enchanted Talisman",
+    "Concentrated Energy",
+    "Glowing Wand",
+    "Wishing Lantern",
+    "Divine Glaive",
+    "Holy Crystal"
+   ],
+   "spell": "Flicker",
+   "emblem": "Mage",
+   "emblem_talents": [
+    "Inspire",
+    "Festival of Blood",
+    "Impure Rage"
+   ],
+   "builds_count": 6,
+   "submitted_range": "Sep 19, 2026 and Nov 1, 2026",
+   "month": "November 2026"
+  },
+  "34": {
+   "name": "Estes",
+   "slug": "estes",
+   "items": [
+    "Rapid Boots",
+    "Flask of the Oasis",
+    "Holy Crystal",
+    "Fleeting Time",
+    "Dominance Ice",
+    "Enchanted Talisman"
+   ],
+   "spell": "Revitalize",
+   "emblem": "Support",
+   "emblem_talents": [
+    "Inspire",
+    "Tenacity",
+    "Focusing Mark"
+   ],
+   "builds_count": 4,
+   "submitted_range": "Oct 4, 2026 and Nov 13, 2026",
+   "month": "November 2026"
+  },
+  "35": {
+   "name": "Hilda",
+   "slug": "hilda",
+   "items": [
+    "Tough Boots",
+    "Rapid Boots",
+    "Thunder Belt",
+    "Antique Cuirass",
+    "Oracle",
+    "Cursed Helmet"
+   ],
+   "spell": "Revitalize",
+   "emblem": "Tank",
+   "emblem_talents": [
+    "Thrill",
+    "Wilderness Blessing",
+    "Concussive Blast"
+   ],
+   "builds_count": 2,
+   "submitted_range": "Oct 16, 2026 and Oct 18, 2026",
+   "month": "November 2026"
+  },
+  "36": {
+   "name": "Aurora",
+   "slug": "aurora",
+   "items": [
+    "Arcane Boots",
+    "Lightning Truncheon",
+    "Enchanted Talisman",
+    "Holy Crystal",
+    "Wishing Lantern",
+    "Divine Glaive"
+   ],
+   "spell": "Flicker",
+   "emblem": "Mage",
+   "emblem_talents": [
+    "Rupture",
+    "Weapon Master",
+    "Impure Rage"
+   ],
+   "builds_count": 3,
+   "submitted_range": "Sep 1, 2026 and Nov 1, 2026",
+   "month": "November 2026"
+  },
+  "37": {
+   "name": "Lapu-Lapu",
+   "slug": "lapu-lapu",
+   "items": [
+    "Tough Boots",
+    "War Axe",
+    "Hunter Strike",
+    "Queen's Wings",
+    "Sea Halberd",
+    "Immortality"
+   ],
+   "spell": "Flicker",
+   "emblem": "Fighter",
+   "emblem_talents": [
+    "Thrill",
+    "Festival of Blood",
+    "Brave Smite"
+   ],
+   "builds_count": 12,
+   "submitted_range": "Sep 13, 2026 and Nov 12, 2026",
+   "month": "November 2026"
+  },
+  "38": {
+   "name": "Vexana",
+   "slug": "vexana",
+   "items": [
+    "Arcane Boots",
+    "Glowing Wand",
+    "Genius Wand",
+    "Lightning Truncheon",
+    "Blood Wings",
+    "Holy Crystal"
+   ],
+   "spell": "Purify",
+   "emblem": "Mage",
+   "emblem_talents": [
+    "Rupture",
+    "Weapon Master",
+    "Impure Rage"
+   ],
+   "builds_count": 3,
+   "submitted_range": "Aug 17, 2026 and Oct 8, 2026",
+   "month": "November 2026"
+  },
+  "39": {
+   "name": "Roger",
+   "slug": "roger",
+   "items": [
+    "Swift Boots",
+    "Tough Boots",
+    "Windtalker",
+    "Haas' Claws",
+    "War Axe",
+    "Endless Battle"
+   ],
+   "spell": "Ice Retribution",
+   "emblem": "Assassin",
+   "emblem_talents": [
+    "Thrill",
+    "Seasoned Hunter",
+    "Killing Spree"
+   ],
+   "builds_count": 7,
+   "submitted_range": "Sep 9, 2026 and Nov 14, 2026",
+   "month": "November 2026"
+  },
+  "40": {
+   "name": "Karrie",
+   "slug": "karrie",
+   "items": [
+    "Corrosion Scythe",
+    "Demon Hunter Sword",
+    "Golden Staff",
+    "Endless Battle",
+    "Brute Force Breastplate",
+    "Malefic Roar"
+   ],
+   "spell": "Purify",
+   "emblem": "Fighter",
+   "emblem_talents": [
+    "Thrill",
+    "Tenacity",
+    "Brave Smite"
+   ],
+   "builds_count": 1,
+   "submitted_range": "Oct 13, 2026 and Oct 13, 2026",
+   "month": "November 2026"
+  },
+  "41": {
+   "name": "Gatotkaca",
+   "slug": "gatotkaca",
+   "items": [
+    "Tough Boots",
+    "Thunder Belt",
+    "Dominance Ice",
+    "Radiant Armor",
+    "Guardian Helmet",
+    "Oracle"
+   ],
+   "spell": "Vengeance",
+   "emblem": "Tank",
+   "emblem_talents": [
+    "Vitality",
+    "Tenacity",
+    "Concussive Blast"
+   ],
+   "builds_count": 12,
+   "submitted_range": "Sep 13, 2026 and Nov 10, 2026",
+   "month": "November 2026"
+  },
+  "42": {
+   "name": "Harley",
+   "slug": "harley",
+   "items": [
+    "Arcane Boots",
+    "Concentrated Energy",
+    "Genius Wand",
+    "Lightning Truncheon",
+    "Holy Crystal",
+    "Divine Glaive"
+   ],
+   "spell": "Bloody Retribution",
+   "emblem": "Mage",
+   "emblem_talents": [
+    "Rupture",
+    "Seasoned Hunter",
+    "Impure Rage"
+   ],
+   "builds_count": 6,
+   "submitted_range": "Sep 13, 2026 and Oct 17, 2026",
+   "month": "November 2026"
+  },
+  "43": {
+   "name": "Irithel",
+   "slug": "irithel",
+   "items": [
+    "Arcane Boots",
+    "Swift Boots",
+    "Windtalker",
+    "Haas' Claws",
+    "Berserker's Fury",
+    "Malefic Gun"
+   ],
+   "spell": "Sprint",
+   "emblem": "Marksman",
+   "emblem_talents": [
+    "Fatal",
+    "Bargain Hunter",
+    "Quantum Charge"
+   ],
+   "builds_count": 3,
+   "submitted_range": "Sep 10, 2026 and Nov 7, 2026",
+   "month": "November 2026"
+  },
+  "44": {
+   "name": "Grock",
+   "slug": "grock",
+   "items": [
+    "Rapid Boots",
+    "Dominance Ice",
+    "Antique Cuirass",
+    "Immortality",
+    "Guardian Helmet",
+    "Radiant Armor"
+   ],
+   "spell": "Flicker",
+   "emblem": "Tank",
+   "emblem_talents": [
+    "Vitality",
+    "Master Assassin",
+    "Concussive Blast"
+   ],
+   "builds_count": 4,
+   "submitted_range": "Sep 13, 2026 and Nov 3, 2026",
+   "month": "November 2026"
+  },
+  "45": {
+   "name": "Argus",
+   "slug": "argus",
+   "items": [
+    "Windtalker",
+    "Corrosion Scythe",
+    "Haas' Claws",
+    "Berserker's Fury",
+    "Great Dragon Spear",
+    "Blade of Despair"
+   ],
+   "spell": "Petrify",
+   "emblem": "Marksman",
+   "emblem_talents": [
+    "Fatal",
+    "Master Assassin",
+    "War Cry"
+   ],
+   "builds_count": 38,
+   "submitted_range": "Aug 15, 2026 and Nov 14, 2026",
+   "month": "November 2026"
+  },
+  "46": {
+   "name": "Odette",
+   "slug": "odette",
+   "items": [
+    "Arcane Boots",
+    "Magic Shoes",
+    "Genius Wand",
+    "Winter Crown",
+    "Glowing Wand",
+    "Divine Glaive"
+   ],
+   "spell": "Flicker",
+   "emblem": "Mage",
+   "emblem_talents": [
+    "Rupture",
+    "Bargain Hunter",
+    "Impure Rage"
+   ],
+   "builds_count": 3,
+   "submitted_range": "Sep 16, 2026 and Nov 5, 2026",
+   "month": "November 2026"
+  },
+  "47": {
+   "name": "Lancelot",
+   "slug": "lancelot",
+   "items": [
+    "Tough Boots",
+    "War Axe",
+    "Sky Piercer",
+    "Endless Battle",
+    "Hunter Strike",
+    "Brute Force Breastplate"
+   ],
+   "spell": "Retribution",
+   "emblem": "Assassin",
+   "emblem_talents": [
+    "Thrill",
+    "Seasoned Hunter",
+    "Killing Spree"
+   ],
+   "builds_count": 4,
+   "submitted_range": "Sep 11, 2026 and Nov 3, 2026",
+   "month": "November 2026"
+  },
+  "49": {
+   "name": "Hylos",
+   "slug": "hylos",
+   "items": [
+    "Clock of Destiny",
+    "Glowing Wand",
+    "Concentrated Energy",
+    "Immortality",
+    "Athena's Shield",
+    "Guardian Helmet"
+   ],
+   "spell": "Revitalize",
+   "emblem": "Support",
+   "emblem_talents": [
+    "Agility",
+    "Bargain Hunter",
+    "Concussive Blast"
+   ],
+   "builds_count": 1,
+   "submitted_range": "Sep 15, 2026 and Sep 15, 2026",
+   "month": "November 2026"
+  },
+  "50": {
+   "name": "Zhask",
+   "slug": "zhask",
+   "items": [
+    "Magic Shoes",
+    "Arcane Boots",
+    "Glowing Wand",
+    "Holy Crystal",
+    "Wishing Lantern",
+    "Divine Glaive"
+   ],
+   "spell": "Sprint",
+   "emblem": "Assassin",
+   "emblem_talents": [
+    "Rupture",
+    "Bargain Hunter",
+    "Impure Rage"
+   ],
+   "builds_count": 2,
+   "submitted_range": "Oct 1, 2026 and Nov 10, 2026",
+   "month": "November 2026"
+  },
+  "51": {
+   "name": "Helcurt",
+   "slug": "helcurt",
+   "items": [
+    "Rapid Boots",
+    "Corrosion Scythe",
+    "Blade of the Heptaseas",
+    "Demon Hunter Sword",
+    "Hunter Strike",
+    "Malefic Roar"
+   ],
+   "spell": "Petrify",
+   "emblem": "Assassin",
+   "emblem_talents": [
+    "Rupture",
+    "Master Assassin",
+    "Lethal Ignition"
+   ],
+   "builds_count": 6,
+   "submitted_range": "Aug 21, 2026 and Nov 13, 2026",
+   "month": "November 2026"
+  },
+  "52": {
+   "name": "Pharsa",
+   "slug": "pharsa",
+   "items": [
+    "Magic Shoes",
+    "Arcane Boots",
+    "Glowing Wand",
+    "Lightning Truncheon",
+    "Holy Crystal",
+    "Divine Glaive"
+   ],
+   "spell": "Flicker",
+   "emblem": "Mage",
+   "emblem_talents": [
+    "Inspire",
+    "Weapon Master",
+    "Lethal Ignition"
+   ],
+   "builds_count": 2,
+   "submitted_range": "Sep 22, 2026 and Nov 1, 2026",
+   "month": "November 2026"
+  },
+  "53": {
+   "name": "Lesley",
+   "slug": "lesley",
+   "items": [
+    "Rapid Boots",
+    "Berserker's Fury",
+    "Sky Piercer",
+    "Malefic Gun",
+    "Endless Battle",
+    "Blade of Despair"
+   ],
+   "spell": "Flicker",
+   "emblem": "Assassin",
+   "emblem_talents": [
+    "Fatal",
+    "Weapon Master",
+    "Quantum Charge"
+   ],
+   "builds_count": 12,
+   "submitted_range": "Aug 30, 2026 and Nov 4, 2026",
+   "month": "November 2026"
+  },
+  "54": {
+   "name": "Jawhead",
+   "slug": "jawhead",
+   "items": [
+    "Tough Boots",
+    "Blade of the Heptaseas",
+    "Hunter Strike",
+    "Malefic Roar",
+    "Sea Halberd",
+    "Rose Gold Meteor"
+   ],
+   "spell": "Flicker",
+   "emblem": "Assassin",
+   "emblem_talents": [
+    "Agility",
+    "Master Assassin",
+    "Lethal Ignition"
+   ],
+   "builds_count": 1,
+   "submitted_range": "Aug 28, 2026 and Aug 28, 2026",
+   "month": "November 2026"
+  },
+  "55": {
+   "name": "Angela",
+   "slug": "angela",
+   "items": [
+    "Demon Shoes",
+    "Flask of the Oasis",
+    "Fleeting Time",
+    "Glowing Wand",
+    "Oracle",
+    "Holy Crystal"
+   ],
+   "spell": "Flameshot",
+   "emblem": "Support",
+   "emblem_talents": [
+    "Agility",
+    "Bargain Hunter",
+    "Focusing Mark"
+   ],
+   "builds_count": 5,
+   "submitted_range": "Aug 19, 2026 and Nov 5, 2026",
+   "month": "November 2026"
+  },
+  "56": {
+   "name": "Gusion",
+   "slug": "gusion",
+   "items": [
+    "Arcane Boots",
+    "Genius Wand",
+    "Starlium Scythe",
+    "Holy Crystal",
+    "Divine Glaive",
+    "Winter Crown"
+   ],
+   "spell": "Retribution",
+   "emblem": "Assassin",
+   "emblem_talents": [
+    "Rupture",
+    "Seasoned Hunter",
+    "Lethal Ignition"
+   ],
+   "builds_count": 8,
+   "submitted_range": "Aug 17, 2026 and Nov 5, 2026",
+   "month": "November 2026"
+  },
+  "57": {
+   "name": "Valir",
+   "slug": "valir",
+   "items": [
+    "Demon Shoes",
+    "Arcane Boots",
+    "Glowing Wand",
+    "Ice Queen Wand",
+    "Concentrated Energy",
+    "Wishing Lantern"
+   ],
+   "spell": "Flicker",
+   "emblem": "Common",
+   "emblem_talents": [
+    "Vitality",
+    "Festival of Blood",
+    "Impure Rage"
+   ],
+   "builds_count": 10,
+   "submitted_range": "Aug 22, 2026 and Oct 22, 2026",
+   "month": "November 2026"
+  },
+  "58": {
+   "name": "Martis",
+   "slug": "martis",
+   "items": [
+    "Tough Boots",
+    "War Axe",
+    "Sky Piercer",
+    "Sea Halberd",
+    "Oracle",
+    "Queen's Wings"
+   ],
+   "spell": "Ice Retribution",
+   "emblem": "Fighter",
+   "emblem_talents": [
+    "Agility",
+    "Seasoned Hunter",
+    "Killing Spree"
+   ],
+   "builds_count": 13,
+   "submitted_range": "Aug 25, 2026 and Nov 10, 2026",
+   "month": "November 2026"
+  },
+  "59": {
+   "name": "Uranus",
+   "slug": "uranus",
+   "items": [
+    "Demon Shoes",
+    "Cursed Helmet",
+    "Enchanted Talisman",
+    "Oracle",
+    "Radiant Armor",
+    "Guardian Helmet"
+   ],
+   "spell": "Revitalize",
+   "emblem": "Mage",
+   "emblem_talents": [
+    "Inspire",
+    "Tenacity",
+    "Concussive Blast"
+   ],
+   "builds_count": 6,
+   "submitted_range": "Sep 13, 2026 and Nov 13, 2026",
+   "month": "November 2026"
+  },
+  "60": {
+   "name": "Hanabi",
+   "slug": "hanabi",
+   "items": [
+    "Corrosion Scythe",
+    "Swift Boots",
+    "Demon Hunter Sword",
+    "Golden Staff",
+    "Malefic Gun",
+    "Rose Gold Meteor"
+   ],
+   "spell": "Aegis",
+   "emblem": "Marksman",
+   "emblem_talents": [
+    "Swift",
+    "Bargain Hunter",
+    "Weakness Finder"
+   ],
+   "builds_count": 13,
+   "submitted_range": "Sep 1, 2026 and Nov 14, 2026",
+   "month": "November 2026"
+  },
+  "61": {
+   "name": "Chang'e",
+   "slug": "change",
+   "items": [
+    "Arcane Boots",
+    "Lightning Truncheon",
+    "Genius Wand",
+    "Wishing Lantern",
+    "Blood Wings",
+    "Holy Crystal"
+   ],
+   "spell": "Flicker",
+   "emblem": "Mage",
+   "emblem_talents": [
+    "Thrill",
+    "Weapon Master",
+    "Impure Rage"
+   ],
+   "builds_count": 4,
+   "submitted_range": "Aug 31, 2026 and Sep 25, 2026",
+   "month": "November 2026"
+  },
+  "62": {
+   "name": "Kaja",
+   "slug": "kaja",
+   "items": [
+    "Rapid Boots",
+    "Clock of Destiny",
+    "Fleeting Time",
+    "Dominance Ice",
+    "Radiant Armor",
+    "Guardian Helmet"
+   ],
+   "spell": "Flicker",
+   "emblem": "Support",
+   "emblem_talents": [
+    "Agility",
+    "Wilderness Blessing",
+    "Quantum Charge"
+   ],
+   "builds_count": 8,
+   "submitted_range": "Sep 8, 2026 and Nov 12, 2026",
+   "month": "November 2026"
+  },
+  "63": {
+   "name": "Selena",
+   "slug": "selena",
+   "items": [
+    "Magic Shoes",
+    "Enchanted Talisman",
+    "Lightning Truncheon",
+    "Wishing Lantern",
+    "Divine Glaive",
+    "Holy Crystal"
+   ],
+   "spell": "Flicker",
+   "emblem": "Mage",
+   "emblem_talents": [
+    "Inspire",
+    "Wilderness Blessing",
+    "Lethal Ignition"
+   ],
+   "builds_count": 10,
+   "submitted_range": "Aug 20, 2026 and Nov 11, 2026",
+   "month": "November 2026"
+  },
+  "64": {
+   "name": "Aldous",
+   "slug": "aldous",
+   "items": [
+    "Tough Boots",
+    "Rapid Boots",
+    "Thunder Belt",
+    "Blade of the Heptaseas",
+    "Endless Battle",
+    "Malefic Roar"
+   ],
+   "spell": "Flicker",
+   "emblem": "Assassin",
+   "emblem_talents": [
+    "Agility",
+    "Wilderness Blessing",
+    "Quantum Charge"
+   ],
+   "builds_count": 13,
+   "submitted_range": "Aug 16, 2026 and Oct 28, 2026",
+   "month": "November 2026"
+  },
+  "65": {
+   "name": "Claude",
+   "slug": "claude",
+   "items": [
+    "Corrosion Scythe",
+    "Demon Hunter Sword",
+    "Warrior Boots",
+    "Tough Boots",
+    "Golden Staff",
+    "Malefic Gun"
+   ],
+   "spell": "Purify",
+   "emblem": "Fighter",
+   "emblem_talents": [
+    "Thrill",
+    "Festival of Blood",
+    "Quantum Charge"
+   ],
+   "builds_count": 6,
+   "submitted_range": "Aug 17, 2026 and Nov 11, 2026",
+   "month": "November 2026"
+  },
+  "66": {
+   "name": "Vale",
+   "slug": "vale",
+   "items": [
+    "Arcane Boots",
+    "Lightning Truncheon",
+    "Genius Wand",
+    "Glowing Wand",
+    "Divine Glaive",
+    "Blood Wings"
+   ],
+   "spell": "Flicker",
+   "emblem": "Mage",
+   "emblem_talents": [
+    "Thrill",
+    "Weapon Master",
+    "Impure Rage"
+   ],
+   "builds_count": 4,
+   "submitted_range": "Aug 22, 2026 and Nov 9, 2026",
+   "month": "November 2026"
+  },
+  "67": {
+   "name": "Leomord",
+   "slug": "leomord",
+   "items": [
+    "Tough Boots",
+    "War Axe",
+    "Endless Battle",
+    "Queen's Wings",
+    "Brute Force Breastplate",
+    "Hunter Strike"
+   ],
+   "spell": "Retribution",
+   "emblem": "Assassin",
+   "emblem_talents": [
+    "Thrill",
+    "Master Assassin",
+    "Killing Spree"
+   ],
+   "builds_count": 5,
+   "submitted_range": "Aug 28, 2026 and Nov 10, 2026",
+   "month": "November 2026"
+  },
+  "68": {
+   "name": "Lunox",
+   "slug": "lunox",
+   "items": [
+    "Arcane Boots",
+    "Glowing Wand",
+    "Genius Wand",
+    "Sky Piercer",
+    "Divine Glaive",
+    "Holy Crystal"
+   ],
+   "spell": "Flicker",
+   "emblem": "Mage",
+   "emblem_talents": [
+    "Rupture",
+    "Weapon Master",
+    "Impure Rage"
+   ],
+   "builds_count": 4,
+   "submitted_range": "Sep 18, 2026 and Nov 5, 2026",
+   "month": "November 2026"
+  },
+  "69": {
+   "name": "Hanzo",
+   "slug": "hanzo",
+   "items": [
+    "Magic Shoes",
+    "Rapid Boots",
+    "Golden Staff",
+    "Corrosion Scythe",
+    "Demon Hunter Sword",
+    "Blade of Despair"
+   ],
+   "spell": "Bloody Retribution",
+   "emblem": "Support",
+   "emblem_talents": [
+    "Agility",
+    "Bargain Hunter",
+    "War Cry"
+   ],
+   "builds_count": 6,
+   "submitted_range": "Aug 15, 2026 and Nov 1, 2026",
+   "month": "November 2026"
+  },
+  "70": {
+   "name": "Belerick",
+   "slug": "belerick",
+   "items": [
+    "Rapid Boots",
+    "Blade Armor",
+    "Guardian Helmet",
+    "Radiant Armor",
+    "Chastise Pauldron",
+    "Cursed Helmet"
+   ],
+   "spell": "Flicker",
+   "emblem": "Tank",
+   "emblem_talents": [
+    "Vitality",
+    "Tenacity",
+    "Concussive Blast"
+   ],
+   "builds_count": 6,
+   "submitted_range": "Aug 31, 2026 and Nov 11, 2026",
+   "month": "November 2026"
+  },
+  "71": {
+   "name": "Kimmy",
+   "slug": "kimmy",
+   "items": [
+    "Arcane Boots",
+    "Feather of Heaven",
+    "Glowing Wand",
+    "Concentrated Energy",
+    "Blood Wings",
+    "Divine Glaive"
+   ],
+   "spell": "Flicker",
+   "emblem": "Mage",
+   "emblem_talents": [
+    "Thrill",
+    "Bargain Hunter",
+    "Lethal Ignition"
+   ],
+   "builds_count": 4,
+   "submitted_range": "Sep 26, 2026 and Nov 5, 2026",
+   "month": "November 2026"
+  },
+  "72": {
+   "name": "Thamuz",
+   "slug": "thamuz",
+   "items": [
+    "Tough Boots",
+    "Corrosion Scythe",
+    "War Axe",
+    "Demon Hunter Sword",
+    "Oracle",
+    "Queen's Wings"
+   ],
+   "spell": "Vengeance",
+   "emblem": "Fighter",
+   "emblem_talents": [
+    "Swift",
+    "Festival of Blood",
+    "Temporal Reign"
+   ],
+   "builds_count": 23,
+   "submitted_range": "Aug 28, 2026 and Nov 14, 2026",
+   "month": "November 2026"
+  },
+  "73": {
+   "name": "Harith",
+   "slug": "harith",
+   "items": [
+    "Magic Shoes",
+    "Feather of Heaven",
+    "Starlium Scythe",
+    "Holy Crystal",
+    "Concentrated Energy",
+    "Blood Wings"
+   ],
+   "spell": "Purify",
+   "emblem": "Mage",
+   "emblem_talents": [
+    "Inspire",
+    "Bargain Hunter",
+    "Impure Rage"
+   ],
+   "builds_count": 4,
+   "submitted_range": "Oct 2, 2026 and Nov 1, 2026",
+   "month": "November 2026"
+  },
+  "74": {
+   "name": "Minsitthar",
+   "slug": "minsitthar",
+   "items": [
+    "Tough Boots",
+    "Corrosion Scythe",
+    "Demon Hunter Sword",
+    "Golden Staff",
+    "Windtalker",
+    "Sea Halberd"
+   ],
+   "spell": "Flicker",
+   "emblem": "Fighter",
+   "emblem_talents": [
+    "Swift",
+    "Weapon Master",
+    "Weakness Finder"
+   ],
+   "builds_count": 10,
+   "submitted_range": "Aug 23, 2026 and Nov 12, 2026",
+   "month": "November 2026"
+  },
+  "75": {
+   "name": "Kadita",
+   "slug": "kadita",
+   "items": [
+    "Arcane Boots",
+    "Sky Piercer",
+    "Genius Wand",
+    "Lightning Truncheon",
+    "Holy Crystal",
+    "Divine Glaive"
+   ],
+   "spell": "Petrify",
+   "emblem": "Mage",
+   "emblem_talents": [
+    "Rupture",
+    "Pull Yourself Together",
+    "Lethal Ignition"
+   ],
+   "builds_count": 5,
+   "submitted_range": "Sep 21, 2026 and Nov 13, 2026",
+   "month": "November 2026"
+  },
+  "76": {
+   "name": "Faramis",
+   "slug": "faramis",
+   "items": [
+    "Arcane Boots",
+    "Glowing Wand",
+    "Lightning Truncheon",
+    "Holy Crystal",
+    "Blood Wings",
+    "Divine Glaive"
+   ],
+   "spell": "Flicker",
+   "emblem": "Assassin",
+   "emblem_talents": [
+    "Rupture",
+    "Wilderness Blessing",
+    "Impure Rage"
+   ],
+   "builds_count": 4,
+   "submitted_range": "Aug 17, 2026 and Nov 6, 2026",
+   "month": "November 2026"
+  },
+  "77": {
+   "name": "Badang",
+   "slug": "badang",
+   "items": [
+    "Rapid Boots",
+    "Demon Hunter Sword",
+    "Thunder Belt",
+    "Dominance Ice",
+    "Antique Cuirass",
+    "Golden Staff"
+   ],
+   "spell": "Flicker",
+   "emblem": "Support",
+   "emblem_talents": [
+    "Agility",
+    "Wilderness Blessing",
+    "Concussive Blast"
+   ],
+   "builds_count": 11,
+   "submitted_range": "Sep 7, 2026 and Oct 30, 2026",
+   "month": "November 2026"
+  },
+  "78": {
+   "name": "Khufra",
+   "slug": "khufra",
+   "items": [
+    "Thunder Belt",
+    "Warrior Boots",
+    "Cursed Helmet",
+    "War Axe",
+    "Immortality",
+    "Guardian Helmet"
+   ],
+   "spell": "Revitalize",
+   "emblem": "Fighter",
+   "emblem_talents": [
+    "Firmness",
+    "Tenacity",
+    "Concussive Blast"
+   ],
+   "builds_count": 2,
+   "submitted_range": "Sep 15, 2026 and Nov 13, 2026",
+   "month": "November 2026"
+  },
+  "79": {
+   "name": "Granger",
+   "slug": "granger",
+   "items": [
+    "Rapid Boots",
+    "Hunter Strike",
+    "Sea Halberd",
+    "Sky Piercer",
+    "Malefic Roar",
+    "Blade of Despair"
+   ],
+   "spell": "Flicker",
+   "emblem": "Assassin",
+   "emblem_talents": [
+    "Thrill",
+    "Festival of Blood",
+    "Impure Rage"
+   ],
+   "builds_count": 7,
+   "submitted_range": "Aug 28, 2026 and Nov 13, 2026",
+   "month": "November 2026"
+  },
+  "80": {
+   "name": "Guinevere",
+   "slug": "guinevere",
+   "items": [
+    "Magic Shoes",
+    "Concentrated Energy",
+    "Starlium Scythe",
+    "Divine Glaive",
+    "Queen's Wings",
+    "Holy Crystal"
+   ],
+   "spell": "Flicker",
+   "emblem": "Mage",
+   "emblem_talents": [
+    "Thrill",
+    "Festival of Blood",
+    "Impure Rage"
+   ],
+   "builds_count": 9,
+   "submitted_range": "Aug 17, 2026 and Nov 12, 2026",
+   "month": "November 2026"
+  },
+  "81": {
+   "name": "Esmeralda",
+   "slug": "esmeralda",
+   "items": [
+    "Tough Boots",
+    "Feather of Heaven",
+    "Enchanted Talisman",
+    "Oracle",
+    "Dominance Ice",
+    "Brute Force Breastplate"
+   ],
+   "spell": "Ice Retribution",
+   "emblem": "Mage",
+   "emblem_talents": [
+    "Inspire",
+    "Festival of Blood",
+    "Impure Rage"
+   ],
+   "builds_count": 9,
+   "submitted_range": "Sep 15, 2026 and Nov 10, 2026",
+   "month": "November 2026"
+  },
+  "82": {
+   "name": "Terizla",
+   "slug": "terizla",
+   "items": [
+    "Tough Boots",
+    "Warrior Boots",
+    "War Axe",
+    "Sky Piercer",
+    "Hunter Strike",
+    "Queen's Wings"
+   ],
+   "spell": "Flicker",
+   "emblem": "Fighter",
+   "emblem_talents": [
+    "Thrill",
+    "Festival of Blood",
+    "Brave Smite"
+   ],
+   "builds_count": 6,
+   "submitted_range": "Sep 7, 2026 and Nov 11, 2026",
+   "month": "November 2026"
+  },
+  "83": {
+   "name": "X.Borg",
+   "slug": "xborg",
+   "items": [
+    "Warrior Boots",
+    "Tough Boots",
+    "War Axe",
+    "Immortality",
+    "Ice Queen Wand",
+    "Brute Force Breastplate"
+   ],
+   "spell": "Flicker",
+   "emblem": "Tank",
+   "emblem_talents": [
+    "Thrill",
+    "Festival of Blood",
+    "Impure Rage"
+   ],
+   "builds_count": 9,
+   "submitted_range": "Sep 14, 2026 and Nov 14, 2026",
+   "month": "November 2026"
+  },
+  "84": {
+   "name": "Ling",
+   "slug": "ling",
+   "items": [
+    "Tough Boots",
+    "Magic Shoes",
+    "Berserker's Fury",
+    "Haas' Claws",
+    "Endless Battle",
+    "Blade of Despair"
+   ],
+   "spell": "Ice Retribution",
+   "emblem": "Assassin",
+   "emblem_talents": [
+    "Fatal",
+    "Seasoned Hunter",
+    "War Cry"
+   ],
+   "builds_count": 8,
+   "submitted_range": "Aug 17, 2026 and Nov 13, 2026",
+   "month": "November 2026"
+  },
+  "85": {
+   "name": "Dyrroth",
+   "slug": "dyrroth",
+   "items": [
+    "Tough Boots",
+    "War Axe",
+    "Hunter Strike",
+    "Queen's Wings",
+    "Oracle",
+    "Rose Gold Meteor"
+   ],
+   "spell": "Flicker",
+   "emblem": "Fighter",
+   "emblem_talents": [
+    "Thrill",
+    "Festival of Blood",
+    "Brave Smite"
+   ],
+   "builds_count": 25,
+   "submitted_range": "Aug 15, 2026 and Nov 14, 2026",
+   "month": "November 2026"
+  },
+  "86": {
+   "name": "Lylia",
+   "slug": "lylia",
+   "items": [
+    "Magic Shoes",
+    "Glowing Wand",
+    "Enchanted Talisman",
+    "Genius Wand",
+    "Ice Queen Wand",
+    "Divine Glaive"
+   ],
+   "spell": "Flameshot",
+   "emblem": "Mage",
+   "emblem_talents": [
+    "Rupture",
+    "Weapon Master",
+    "Lethal Ignition"
+   ],
+   "builds_count": 2,
+   "submitted_range": "Oct 11, 2026 and Nov 2, 2026",
+   "month": "November 2026"
+  },
+  "87": {
+   "name": "Baxia",
+   "slug": "baxia",
+   "items": [
+    "Tough Boots",
+    "Cursed Helmet",
+    "Dominance Ice",
+    "Radiant Armor",
+    "Antique Cuirass",
+    "Guardian Helmet"
+   ],
+   "spell": "Revitalize",
+   "emblem": "Tank",
+   "emblem_talents": [
+    "Firmness",
+    "Tenacity",
+    "Concussive Blast"
+   ],
+   "builds_count": 4,
+   "submitted_range": "Sep 27, 2026 and Oct 20, 2026",
+   "month": "November 2026"
+  },
+  "88": {
+   "name": "Masha",
+   "slug": "masha",
+   "items": [
+    "Rapid Boots",
+    "Thunder Belt",
+    "Corrosion Scythe",
+    "Sea Halberd",
+    "Demon Hunter Sword",
+    "Guardian Helmet"
+   ],
+   "spell": "Flicker",
+   "emblem": "Fighter",
+   "emblem_talents": [
+    "Swift",
+    "Festival of Blood",
+    "War Cry"
+   ],
+   "builds_count": 26,
+   "submitted_range": "Sep 2, 2026 and Nov 11, 2026",
+   "month": "November 2026"
+  },
+  "89": {
+   "name": "Wanwan",
+   "slug": "wanwan",
+   "items": [
+    "Corrosion Scythe",
+    "Windtalker",
+    "Haas' Claws",
+    "Wind of Nature",
+    "Berserker's Fury",
+    "Malefic Roar"
+   ],
+   "spell": "Inspire",
+   "emblem": "Marksman",
+   "emblem_talents": [
+    "Swift",
+    "Pull Yourself Together",
+    "Weakness Finder"
+   ],
+   "builds_count": 2,
+   "submitted_range": "Aug 17, 2026 and Aug 30, 2026",
+   "month": "November 2026"
+  },
+  "90": {
+   "name": "Silvanna",
+   "slug": "silvanna",
+   "items": [
+    "Arcane Boots",
+    "Concentrated Energy",
+    "Feather of Heaven",
+    "Wishing Lantern",
+    "Winter Crown",
+    "Glowing Wand"
+   ],
+   "spell": "Ice Retribution",
+   "emblem": "Mage",
+   "emblem_talents": [
+    "Rupture",
+    "Bargain Hunter",
+    "Lethal Ignition"
+   ],
+   "builds_count": 6,
+   "submitted_range": "Aug 28, 2026 and Nov 1, 2026",
+   "month": "November 2026"
+  },
+  "91": {
+   "name": "Cecilion",
+   "slug": "cecilion",
+   "items": [
+    "Demon Shoes",
+    "Clock of Destiny",
+    "Glowing Wand",
+    "Enchanted Talisman",
+    "Divine Glaive",
+    "Wishing Lantern"
+   ],
+   "spell": "Flicker",
+   "emblem": "Mage",
+   "emblem_talents": [
+    "Inspire",
+    "Wilderness Blessing",
+    "Impure Rage"
+   ],
+   "builds_count": 10,
+   "submitted_range": "Sep 13, 2026 and Nov 6, 2026",
+   "month": "November 2026"
+  },
+  "92": {
+   "name": "Carmilla",
+   "slug": "carmilla",
+   "items": [
+    "Rapid Boots",
+    "Dominance Ice",
+    "Cursed Helmet",
+    "Chastise Pauldron",
+    "Radiant Armor",
+    "Guardian Helmet"
+   ],
+   "spell": "Petrify",
+   "emblem": "Tank",
+   "emblem_talents": [
+    "Agility",
+    "Wilderness Blessing",
+    "Concussive Blast"
+   ],
+   "builds_count": 10,
+   "submitted_range": "Aug 19, 2026 and Oct 17, 2026",
+   "month": "November 2026"
+  },
+  "93": {
+   "name": "Atlas",
+   "slug": "atlas",
+   "items": [
+    "Rapid Boots",
+    "Dominance Ice",
+    "Antique Cuirass",
+    "Radiant Armor",
+    "Immortality",
+    "Guardian Helmet"
+   ],
+   "spell": "Revitalize",
+   "emblem": "Tank",
+   "emblem_talents": [
+    "Agility",
+    "Tenacity",
+    "Concussive Blast"
+   ],
+   "builds_count": 6,
+   "submitted_range": "Aug 17, 2026 and Nov 11, 2026",
+   "month": "November 2026"
+  },
+  "94": {
+   "name": "Popol and Kupa",
+   "slug": "popol-and-kupa",
+   "items": [
+    "Tough Boots",
+    "Sea Halberd",
+    "Haas' Claws",
+    "Windtalker",
+    "Blade of Despair",
+    "Berserker's Fury"
+   ],
+   "spell": "Ice Retribution",
+   "emblem": "Marksman",
+   "emblem_talents": [
+    "Thrill",
+    "Weapon Master",
+    "Quantum Charge"
+   ],
+   "builds_count": 6,
+   "submitted_range": "Sep 14, 2026 and Nov 14, 2026",
+   "month": "November 2026"
+  },
+  "95": {
+   "name": "Yu Zhong",
+   "slug": "yu-zhong",
+   "items": [
+    "Tough Boots",
+    "War Axe",
+    "Queen's Wings",
+    "Dominance Ice",
+    "Oracle",
+    "Brute Force Breastplate"
+   ],
+   "spell": "Petrify",
+   "emblem": "Fighter",
+   "emblem_talents": [
+    "Rupture",
+    "Festival of Blood",
+    "Brave Smite"
+   ],
+   "builds_count": 10,
+   "submitted_range": "Aug 15, 2026 and Nov 11, 2026",
+   "month": "November 2026"
+  },
+  "96": {
+   "name": "Luo Yi",
+   "slug": "luo-yi",
+   "items": [
+    "Arcane Boots",
+    "Enchanted Talisman",
+    "Genius Wand",
+    "Holy Crystal",
+    "Wishing Lantern",
+    "Divine Glaive"
+   ],
+   "spell": "Flicker",
+   "emblem": "Mage",
+   "emblem_talents": [
+    "Inspire",
+    "Wilderness Blessing",
+    "Lethal Ignition"
+   ],
+   "builds_count": 4,
+   "submitted_range": "Sep 4, 2026 and Nov 4, 2026",
+   "month": "November 2026"
+  },
+  "97": {
+   "name": "Benedetta",
+   "slug": "benedetta",
+   "items": [
+    "Blade of the Heptaseas",
+    "War Axe",
+    "Hunter Strike",
+    "Malefic Roar",
+    "Endless Battle",
+    "Blade of Despair"
+   ],
+   "spell": "Petrify",
+   "emblem": "Fighter",
+   "emblem_talents": [
+    "Rupture",
+    "Weapon Master",
+    "Lethal Ignition"
+   ],
+   "builds_count": 11,
+   "submitted_range": "Sep 23, 2026 and Nov 6, 2026",
+   "month": "November 2026"
+  },
+  "98": {
+   "name": "Khaleed",
+   "slug": "khaleed",
+   "items": [
+    "Tough Boots",
+    "Thunder Belt",
+    "Dominance Ice",
+    "Oracle",
+    "Antique Cuirass",
+    "Malefic Roar"
+   ],
+   "spell": "Revitalize",
+   "emblem": "Tank",
+   "emblem_talents": [
+    "Thrill",
+    "Master Assassin",
+    "Concussive Blast"
+   ],
+   "builds_count": 7,
+   "submitted_range": "Sep 13, 2026 and Oct 26, 2026",
+   "month": "November 2026"
+  },
+  "99": {
+   "name": "Barats",
+   "slug": "barats",
+   "items": [
+    "Tough Boots",
+    "Thunder Belt",
+    "War Axe",
+    "Dominance Ice",
+    "Brute Force Breastplate",
+    "Guardian Helmet"
+   ],
+   "spell": "Flicker",
+   "emblem": "Fighter",
+   "emblem_talents": [
+    "Thrill",
+    "Tenacity",
+    "Concussive Blast"
+   ],
+   "builds_count": 15,
+   "submitted_range": "Aug 17, 2026 and Nov 14, 2026",
+   "month": "November 2026"
+  },
+  "100": {
+   "name": "Brody",
+   "slug": "brody",
+   "items": [
+    "Tough Boots",
+    "Blade of the Heptaseas",
+    "Sky Piercer",
+    "Malefic Gun",
+    "Haas' Claws",
+    "Sea Halberd"
+   ],
+   "spell": "Flicker",
+   "emblem": "Assassin",
+   "emblem_talents": [
+    "Rupture",
+    "Festival of Blood",
+    "Quantum Charge"
+   ],
+   "builds_count": 10,
+   "submitted_range": "Aug 27, 2026 and Nov 5, 2026",
+   "month": "November 2026"
+  },
+  "101": {
+   "name": "Yve",
+   "slug": "yve",
+   "items": [
+    "Demon Shoes",
+    "Arcane Boots",
+    "Tough Boots",
+    "Enchanted Talisman",
+    "Glowing Wand",
+    "Holy Crystal"
+   ],
+   "spell": "Flameshot",
+   "emblem": "Mage",
+   "emblem_talents": [
+    "Inspire",
+    "Bargain Hunter",
+    "Impure Rage"
+   ],
+   "builds_count": 3,
+   "submitted_range": "Sep 2, 2026 and Nov 3, 2026",
+   "month": "November 2026"
+  },
+  "102": {
+   "name": "Mathilda",
+   "slug": "mathilda",
+   "items": [
+    "Arcane Boots",
+    "Magic Shoes",
+    "Flask of the Oasis",
+    "Enchanted Talisman",
+    "Blood Wings",
+    "Holy Crystal"
+   ],
+   "spell": "Revitalize",
+   "emblem": "Mage",
+   "emblem_talents": [
+    "Inspire",
+    "Wilderness Blessing",
+    "Quantum Charge"
+   ],
+   "builds_count": 5,
+   "submitted_range": "Aug 24, 2026 and Oct 9, 2026",
+   "month": "November 2026"
+  },
+  "103": {
+   "name": "Paquito",
+   "slug": "paquito",
+   "items": [
+    "Tough Boots",
+    "Hunter Strike",
+    "War Axe",
+    "Sky Piercer",
+    "Malefic Roar",
+    "Queen's Wings"
+   ],
+   "spell": "Flicker",
+   "emblem": "Assassin",
+   "emblem_talents": [
+    "Thrill",
+    "Seasoned Hunter",
+    "Lethal Ignition"
+   ],
+   "builds_count": 11,
+   "submitted_range": "Aug 15, 2026 and Oct 12, 2026",
+   "month": "November 2026"
+  },
+  "104": {
+   "name": "Gloo",
+   "slug": "gloo",
+   "items": [
+    "Rapid Boots",
+    "Cursed Helmet",
+    "Glowing Wand",
+    "Oracle",
+    "Guardian Helmet",
+    "Chastise Pauldron"
+   ],
+   "spell": "Flameshot",
+   "emblem": "Common",
+   "emblem_talents": [
+    "Agility",
+    "Wilderness Blessing",
+    "Impure Rage"
+   ],
+   "builds_count": 13,
+   "submitted_range": "Aug 18, 2026 and Nov 10, 2026",
+   "month": "November 2026"
+  },
+  "105": {
+   "name": "Beatrix",
+   "slug": "beatrix",
+   "items": [
+    "Swift Boots",
+    "Corrosion Scythe",
+    "Malefic Gun",
+    "Blade of Despair",
+    "Rose Gold Meteor",
+    "Sea Halberd"
+   ],
+   "spell": "Flicker",
+   "emblem": "Marksman",
+   "emblem_talents": [
+    "Thrill",
+    "Weapon Master",
+    "Quantum Charge"
+   ],
+   "builds_count": 10,
+   "submitted_range": "Aug 15, 2026 and Nov 12, 2026",
+   "month": "November 2026"
+  },
+  "106": {
+   "name": "Phoveus",
+   "slug": "phoveus",
+   "items": [
+    "Tough Boots",
+    "War Axe",
+    "Queen's Wings",
+    "Dominance Ice",
+    "Radiant Armor",
+    "Antique Cuirass"
+   ],
+   "spell": "Vengeance",
+   "emblem": "Fighter",
+   "emblem_talents": [
+    "Thrill",
+    "Festival of Blood",
+    "Brave Smite"
+   ],
+   "builds_count": 6,
+   "submitted_range": "Sep 14, 2026 and Nov 12, 2026",
+   "month": "November 2026"
+  },
+  "107": {
+   "name": "Natan",
+   "slug": "natan",
+   "items": [
+    "Arcane Boots",
+    "Windtalker",
+    "Feather of Heaven",
+    "Concentrated Energy",
+    "Divine Glaive",
+    "Holy Crystal"
+   ],
+   "spell": "Flicker",
+   "emblem": "Mage",
+   "emblem_talents": [
+    "Swift",
+    "Bargain Hunter",
+    "Weakness Finder"
+   ],
+   "builds_count": 5,
+   "submitted_range": "Aug 15, 2026 and Nov 12, 2026",
+   "month": "November 2026"
+  },
+  "108": {
+   "name": "Aulus",
+   "slug": "aulus",
+   "items": [
+    "Magic Shoes",
+    "War Axe",
+    "Brute Force Breastplate",
+    "Rose Gold Meteor",
+    "Queen's Wings",
+    "Malefic Roar"
+   ],
+   "spell": "Retribution",
+   "emblem": "Fighter",
+   "emblem_talents": [
+    "Thrill",
+    "Festival of Blood",
+    "Killing Spree"
+   ],
+   "builds_count": 22,
+   "submitted_range": "Aug 29, 2026 and Nov 6, 2026",
+   "month": "November 2026"
+  },
+  "109": {
+   "name": "Aamon",
+   "slug": "aamon",
+   "items": [
+    "Arcane Boots",
+    "Genius Wand",
+    "Sky Piercer",
+    "Feather of Heaven",
+    "Divine Glaive",
+    "Holy Crystal"
+   ],
+   "spell": "Retribution",
+   "emblem": "Assassin",
+   "emblem_talents": [
+    "Rupture",
+    "Seasoned Hunter",
+    "Impure Rage"
+   ],
+   "builds_count": 10,
+   "submitted_range": "Aug 15, 2026 and Nov 2, 2026",
+   "month": "November 2026"
+  },
+  "110": {
+   "name": "Valentina",
+   "slug": "valentina",
+   "items": [
+    "Demon Shoes",
+    "Tough Boots",
+    "Glowing Wand",
+    "Enchanted Talisman",
+    "Brute Force Breastplate",
+    "Radiant Armor"
+   ],
+   "spell": "Flicker",
+   "emblem": "Mage",
+   "emblem_talents": [
+    "Inspire",
+    "Weapon Master",
+    "Impure Rage"
+   ],
+   "builds_count": 2,
+   "submitted_range": "Oct 25, 2026 and Nov 11, 2026",
+   "month": "November 2026"
+  },
+  "111": {
+   "name": "Edith",
+   "slug": "edith",
+   "items": [
+    "Tough Boots",
+    "Dominance Ice",
+    "Feather of Heaven",
+    "Thunder Belt",
+    "Radiant Armor",
+    "Blade Armor"
+   ],
+   "spell": "Inspire",
+   "emblem": "Tank",
+   "emblem_talents": [
+    "Swift",
+    "Tenacity",
+    "Concussive Blast"
+   ],
+   "builds_count": 10,
+   "submitted_range": "Sep 21, 2026 and Nov 14, 2026",
+   "month": "November 2026"
+  },
+  "112": {
+   "name": "Floryn",
+   "slug": "floryn",
+   "items": [
+    "Demon Shoes",
+    "Arcane Boots",
+    "Blade of the Heptaseas",
+    "Flask of the Oasis",
+    "Fleeting Time",
+    "Oracle"
+   ],
+   "spell": "Revitalize",
+   "emblem": "Support",
+   "emblem_talents": [
+    "Vitality",
+    "Festival of Blood",
+    "Lethal Ignition"
+   ],
+   "builds_count": 3,
+   "submitted_range": "Aug 20, 2026 and Nov 2, 2026",
+   "month": "November 2026"
+  },
+  "113": {
+   "name": "Yin",
+   "slug": "yin",
+   "items": [
+    "Blade of the Heptaseas",
+    "Magic Shoes",
+    "Warrior Boots",
+    "Sea Halberd",
+    "Malefic Roar",
+    "War Axe"
+   ],
+   "spell": "Petrify",
+   "emblem": "Assassin",
+   "emblem_talents": [
+    "Thrill",
+    "Master Assassin",
+    "Lethal Ignition"
+   ],
+   "builds_count": 2,
+   "submitted_range": "Sep 12, 2026 and Oct 24, 2026",
+   "month": "November 2026"
+  },
+  "114": {
+   "name": "Melissa",
+   "slug": "melissa",
+   "items": [
+    "Windtalker",
+    "Swift Boots",
+    "Haas' Claws",
+    "Berserker's Fury",
+    "Corrosion Scythe",
+    "Malefic Gun"
+   ],
+   "spell": "Inspire",
+   "emblem": "Fighter",
+   "emblem_talents": [
+    "Swift",
+    "Bargain Hunter",
+    "Weakness Finder"
+   ],
+   "builds_count": 4,
+   "submitted_range": "Aug 20, 2026 and Oct 18, 2026",
+   "month": "November 2026"
+  },
+  "115": {
+   "name": "Xavier",
+   "slug": "xavier",
+   "items": [
+    "Arcane Boots",
+    "Sky Piercer",
+    "Lightning Truncheon",
+    "Glowing Wand",
+    "Holy Crystal",
+    "Divine Glaive"
+   ],
+   "spell": "Flicker",
+   "emblem": "Mage",
+   "emblem_talents": [
+    "Rupture",
+    "Weapon Master",
+    "Impure Rage"
+   ],
+   "builds_count": 4,
+   "submitted_range": "Aug 15, 2026 and Sep 1, 2026",
+   "month": "November 2026"
+  },
+  "116": {
+   "name": "Julian",
+   "slug": "julian",
+   "items": [
+    "Arcane Boots",
+    "Feather of Heaven",
+    "Concentrated Energy",
+    "Windtalker",
+    "Divine Glaive",
+    "Holy Crystal"
+   ],
+   "spell": "Ice Retribution",
+   "emblem": "Mage",
+   "emblem_talents": [
+    "Swift",
+    "Seasoned Hunter",
+    "Lethal Ignition"
+   ],
+   "builds_count": 20,
+   "submitted_range": "Aug 15, 2026 and Nov 13, 2026",
+   "month": "November 2026"
+  },
+  "117": {
+   "name": "Fredrinn",
+   "slug": "fredrinn",
+   "items": [
+    "Tough Boots",
+    "Brute Force Breastplate",
+    "Oracle",
+    "War Axe",
+    "Queen's Wings",
+    "Chastise Pauldron"
+   ],
+   "spell": "Vengeance",
+   "emblem": "Support",
+   "emblem_talents": [
+    "Vitality",
+    "Seasoned Hunter",
+    "Impure Rage"
+   ],
+   "builds_count": 11,
+   "submitted_range": "Aug 15, 2026 and Nov 10, 2026",
+   "month": "November 2026"
+  },
+  "119": {
+   "name": "Novaria",
+   "slug": "novaria",
+   "items": [
+    "Arcane Boots",
+    "Lightning Truncheon",
+    "Sky Piercer",
+    "Genius Wand",
+    "Holy Crystal",
+    "Divine Glaive"
+   ],
+   "spell": "Flicker",
+   "emblem": "Mage",
+   "emblem_talents": [
+    "Rupture",
+    "Weapon Master",
+    "Impure Rage"
+   ],
+   "builds_count": 5,
+   "submitted_range": "Aug 23, 2026 and Oct 29, 2026",
+   "month": "November 2026"
+  },
+  "120": {
+   "name": "Arlott",
+   "slug": "arlott",
+   "items": [
+    "Tough Boots",
+    "War Axe",
+    "Dominance Ice",
+    "Oracle",
+    "Brute Force Breastplate",
+    "Queen's Wings"
+   ],
+   "spell": "Petrify",
+   "emblem": "Fighter",
+   "emblem_talents": [
+    "Thrill",
+    "Festival of Blood",
+    "Brave Smite"
+   ],
+   "builds_count": 16,
+   "submitted_range": "Aug 17, 2026 and Nov 13, 2026",
+   "month": "November 2026"
+  },
+  "121": {
+   "name": "Ixia",
+   "slug": "ixia",
+   "items": [
+    "Swift Boots",
+    "Corrosion Scythe",
+    "Golden Staff",
+    "Demon Hunter Sword",
+    "Sea Halberd",
+    "Wind of Nature"
+   ],
+   "spell": "Flicker",
+   "emblem": "Marksman",
+   "emblem_talents": [
+    "Thrill",
+    "Weapon Master",
+    "War Cry"
+   ],
+   "builds_count": 1,
+   "submitted_range": "Oct 20, 2026 and Oct 20, 2026",
+   "month": "November 2026"
+  },
+  "122": {
+   "name": "Nolan",
+   "slug": "nolan",
+   "items": [
+    "Magic Shoes",
+    "Blade of the Heptaseas",
+    "Hunter Strike",
+    "Malefic Roar",
+    "Endless Battle",
+    "Blade of Despair"
+   ],
+   "spell": "Retribution",
+   "emblem": "Assassin",
+   "emblem_talents": [
+    "Thrill",
+    "Seasoned Hunter",
+    "Impure Rage"
+   ],
+   "builds_count": 15,
+   "submitted_range": "Sep 5, 2026 and Nov 12, 2026",
+   "month": "November 2026"
+  },
+  "123": {
+   "name": "Cici",
+   "slug": "cici",
+   "items": [
+    "Rapid Boots",
+    "War Axe",
+    "Brute Force Breastplate",
+    "Hunter Strike",
+    "Oracle",
+    "Malefic Roar"
+   ],
+   "spell": "Vengeance",
+   "emblem": "Fighter",
+   "emblem_talents": [
+    "Thrill",
+    "Festival of Blood",
+    "Brave Smite"
+   ],
+   "builds_count": 7,
+   "submitted_range": "Sep 22, 2026 and Nov 1, 2026",
+   "month": "November 2026"
+  },
+  "124": {
+   "name": "Chip",
+   "slug": "chip",
+   "items": [
+    "Tough Boots",
+    "Warrior Boots",
+    "Fleeting Time",
+    "Antique Cuirass",
+    "Dominance Ice",
+    "Athena's Shield"
+   ],
+   "spell": "Flicker",
+   "emblem": "Tank",
+   "emblem_talents": [
+    "Vitality",
+    "Wilderness Blessing",
+    "Concussive Blast"
+   ],
+   "builds_count": 2,
+   "submitted_range": "Oct 4, 2026 and Oct 21, 2026",
+   "month": "November 2026"
+  },
+  "125": {
+   "name": "Zhuxin",
+   "slug": "zhuxin",
+   "items": [
+    "Demon Shoes",
+    "Rapid Boots",
+    "Clock of Destiny",
+    "Glowing Wand",
+    "Brute Force Breastplate",
+    "Wishing Lantern"
+   ],
+   "spell": "Flicker",
+   "emblem": "Common",
+   "emblem_talents": [
+    "Agility",
+    "Bargain Hunter",
+    "Impure Rage"
+   ],
+   "builds_count": 6,
+   "submitted_range": "Aug 28, 2026 and Nov 14, 2026",
+   "month": "November 2026"
+  },
+  "126": {
+   "name": "Suyou",
+   "slug": "suyou",
+   "items": [
+    "Magic Shoes",
+    "Hunter Strike",
+    "War Axe",
+    "Queen's Wings",
+    "Malefic Roar",
+    "Blade of Despair"
+   ],
+   "spell": "Ice Retribution",
+   "emblem": "Assassin",
+   "emblem_talents": [
+    "Thrill",
+    "Seasoned Hunter",
+    "Impure Rage"
+   ],
+   "builds_count": 9,
+   "submitted_range": "Sep 29, 2026 and Nov 9, 2026",
+   "month": "November 2026"
+  },
+  "127": {
+   "name": "Lukas",
+   "slug": "lukas",
+   "items": [
+    "Tough Boots",
+    "Hunter Strike",
+    "War Axe",
+    "Queen's Wings",
+    "Oracle",
+    "Malefic Roar"
+   ],
+   "spell": "Retribution",
+   "emblem": "Assassin",
+   "emblem_talents": [
+    "Thrill",
+    "Seasoned Hunter",
+    "Temporal Reign"
+   ],
+   "builds_count": 19,
+   "submitted_range": "Sep 22, 2026 and Nov 13, 2026",
+   "month": "November 2026"
+  },
+  "128": {
+   "name": "Kalea",
+   "slug": "kalea",
+   "items": [
+    "Rapid Boots",
+    "Tough Boots",
+    "Oracle",
+    "Guardian Helmet",
+    "Fleeting Time",
+    "Queen's Wings"
+   ],
+   "spell": "Flicker",
+   "emblem": "Fighter",
+   "emblem_talents": [
+    "Vitality",
+    "Festival of Blood",
+    "Concussive Blast"
+   ],
+   "builds_count": 5,
+   "submitted_range": "Sep 9, 2026 and Nov 4, 2026",
+   "month": "November 2026"
+  },
+  "129": {
+   "name": "Zetian",
+   "slug": "zetian",
+   "items": [
+    "Arcane Boots",
+    "Enchanted Talisman",
+    "Lightning Truncheon",
+    "Glowing Wand",
+    "Fleeting Time",
+    "Wishing Lantern"
+   ],
+   "spell": "Flicker",
+   "emblem": "Mage",
+   "emblem_talents": [
+    "Inspire",
+    "Bargain Hunter",
+    "Impure Rage"
+   ],
+   "builds_count": 6,
+   "submitted_range": "Aug 18, 2026 and Nov 13, 2026",
+   "month": "November 2026"
+  },
+  "130": {
+   "name": "Obsidia",
+   "slug": "obsidia",
+   "items": [
+    "Windtalker",
+    "Corrosion Scythe",
+    "Haas' Claws",
+    "Berserker's Fury",
+    "Demon Hunter Sword",
+    "Malefic Gun"
+   ],
+   "spell": "Inspire",
+   "emblem": "Marksman",
+   "emblem_talents": [
+    "Swift",
+    "Bargain Hunter",
+    "Weakness Finder"
+   ],
+   "builds_count": 15,
+   "submitted_range": "Aug 31, 2026 and Nov 6, 2026",
+   "month": "November 2026"
+  },
+  "131": {
+   "name": "Sora",
+   "slug": "sora",
+   "items": [
+    "Tough Boots",
+    "War Axe",
+    "Queen's Wings",
+    "Chastise Pauldron",
+    "Oracle",
+    "Guardian Helmet"
+   ],
+   "spell": "Flicker",
+   "emblem": "Fighter",
+   "emblem_talents": [
+    "Vitality",
+    "Festival of Blood",
+    "Concussive Blast"
+   ],
+   "builds_count": 9,
+   "submitted_range": "Aug 17, 2026 and Nov 6, 2026",
+   "month": "November 2026"
+  },
+  "132": {
+   "name": "Marcel",
+   "slug": "marcel",
+   "items": [
+    "Rapid Boots",
+    "Thunder Belt",
+    "Dominance Ice",
+    "Flask of the Oasis",
+    "Guardian Helmet",
+    "Immortality"
+   ],
+   "spell": "Revitalize",
+   "emblem": "Support",
+   "emblem_talents": [
+    "Agility",
+    "Wilderness Blessing",
+    "Focusing Mark"
+   ],
+   "builds_count": 7,
+   "submitted_range": "Sep 18, 2026 and Nov 7, 2026",
+   "month": "November 2026"
+  },
+  "133": {
+   "name": "Hirara",
+   "slug": "hirara",
+   "items": [
+    "Magic Shoes",
+    "Hunter Strike",
+    "War Axe",
+    "Malefic Roar",
+    "Blade of Despair",
+    "Queen's Wings"
+   ],
+   "spell": "Ice Retribution",
+   "emblem": "Assassin",
+   "emblem_talents": [
+    "Thrill",
+    "Seasoned Hunter",
+    "Killing Spree"
+   ],
+   "builds_count": 9,
+   "submitted_range": "Aug 30, 2026 and Nov 8, 2026",
+   "month": "November 2026"
+  }
+ }
+}
