@@ -1,0 +1,20 @@
+{
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2",
+    "hpagent": "^1.2.0",
+    "telegraf": "^4.16.3"
+  },
+  "description": "ربات تلگرام MLBB با مینی‌اپ فارسی — دادهٔ زنده از Rone Arena API و دیتای آفلاین p3hndrx/MLBB-API",
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "main": "src/index.js",
+  "name": "mlbb-bot",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "type": "commonjs",
+  "version": "1.0.0"
+}
