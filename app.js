@@ -296,6 +296,7 @@ function normBuildRecord(rec, equipNameById) {
   return (d.build || []).map((b) => ({
     equipIds: b.equipid || [],
     equipNames: (b.equipid || []).map((id) => equipNameById?.get?.(id) || equipNameById?.get?.(String(id)) || `آیتم #${id}`),
+    equipIcons: (b.equipid || []).map((id) => equipIconById.get(id) || equipIconById.get(String(id)) || null),
     win: b.build_win_rate ?? null,
     pick: b.build_pick_rate ?? null,
     spell: b.battleskill?.data?.__data?.skillname || b.battleskill?.data?.skillshortdesc || '',
@@ -319,19 +320,25 @@ function normStanding(s) {
   };
 }
 
-// نگاشت equipid -> equipname (برای اسم آیتم‌های بیلد) — یک بار لود و کش می‌شود
+// نگاشت equipid -> equipname (برای اسم آیتم‌های بیلد) + عکس آیتم‌ها — یک بار لود و کش می‌شود
 let equipMapCache = null;
 let equipMapAt = 0;
+const equipIconById = new Map(); // equipid -> equipicon (عکس اصلی آیتم از Rone)
+const equipIconByName = new Map(); // normStr(name) -> equipicon
 async function equipNameMap() {
   if (equipMapCache && Date.now() - equipMapAt < TTL_MS) return equipMapCache;
   const map = new Map();
-  const r = await roneGet('/academy/equipment?size=100&index=1');
+  const r = await roneGet('/academy/equipment?size=200&index=1');
   if (r.ok) {
     for (const rec of r.records) {
       const d = rec?.data || {};
       if (d.equipid != null && d.equipname) {
         map.set(d.equipid, d.equipname);
         map.set(String(d.equipid), d.equipname);
+      }
+      if (d.equipicon) {
+        if (d.equipid != null) { equipIconById.set(d.equipid, d.equipicon); equipIconById.set(String(d.equipid), d.equipicon); }
+        if (d.equipname) equipIconByName.set(normStr(d.equipname), d.equipicon);
       }
     }
   }
@@ -391,8 +398,28 @@ async function heroDetailAdapter(id) {
       portrait: st?.portrait || '',
       skills: st ? heroPublic(st).skills : [],
       rank: rankRec || null,
+      // relation از Rone: strong = هیروهایی که این هیرو کانتر می‌کند، weak = هیروهایی که این هیرو را کانتر می‌کنند
+      relation: mapRelationTargets(detail.relation || null, sd.heroByMlid),
     },
   };
+}
+
+// relation هیرو را به لیست {id, name, head} تبدیل می‌کند؛ نام را از دیتای استاتیک می‌گیرد
+function mapRelationTargets(rel, heroByMlid) {
+  const out = { strong: [], weak: [] };
+  if (!rel) return out;
+  for (const key of ['strong', 'weak']) {
+    const r = rel[key];
+    if (!r) continue;
+    const ids = r.target_hero_id || [];
+    const heads = r.target_hero || [];
+    out[key] = ids.map((id, i) => {
+      if (!id) return null;
+      const st = heroByMlid?.get?.(String(id));
+      return { id: Number(id), name: st?.hero_name || '', head: heads[i]?.data?.head || st?.portrait || null };
+    }).filter(Boolean);
+  }
+  return out;
 }
 
 async function metaAdapter(days, size) {
@@ -414,7 +441,8 @@ async function countersAdapter(id, days) {
   if (!rec) throw new Error('کانتر پیدا نشد');
   const sd = await loadStatic();
   const c = normCounterRecord(rec, sd.heroByMlid);
-  c.counters = [...c.counters].filter((x) => x.delta != null).sort((a, b) => a.delta - b.delta);
+  // مرتب نزولی: بزرگ‌ترین افزایش وین‌ریت اول — یعنی قوی‌ترین کانترِ این هیرو اول می‌آید
+  c.counters = [...c.counters].filter((x) => x.delta != null).sort((a, b) => b.delta - a.delta);
   return { ok: true, counters: c };
 }
 
@@ -439,8 +467,9 @@ async function buildsAdapter(id, lane) {
 async function itemsAdapter(q) {
   q = (q || '').trim();
   const sd = await loadStatic();
+  await equipNameMap(); // عکس اصلی آیتم‌ها را هم لود می‌کند
   const list = q ? searchItems(sd.items, q, 50) : sd.items;
-  return { ok: true, source: 'static', revdate: sd.itemRevdate, items: list.map(itemPublic) };
+  return { ok: true, source: 'static', revdate: sd.itemRevdate, items: list.map((it) => { const p = itemPublic(it); p.icon = equipIconByName.get(normStr(p.name)) || null; return p; }) };
 }
 
 async function emblemsAdapter() {
@@ -677,11 +706,22 @@ async function openHero(id) {
         <span class="chip">پیک‌ریت <b>${pct(h.rank.pick)}</b></span>
       </div>` : '<p class="hint">آمار زندهٔ این هیرو فعلاً در دسترس نیست.</p>'}
       ${(h.skills || []).map((s) => `<div class="skill"><b>${esc(s.name)}</b> <span class="meta">${esc(s.type || '')}${s.cooldown && s.cooldown !== 'null' ? ' | کول‌داون: ' + faNum(s.cooldown) + ' ثانیه' : ''}</span><p>${esc(clean(s.description))}</p></div>`).join('')}
-      ${counters?.counters ? `<h2>⚔️ کانترها</h2>` + (counters.counters.counters || []).slice(0, 5).map((c) => `<div class="skill"><b>${esc(c.name)}</b> — تغییر وین‌ریت: ${pct(c.delta)}</div>`).join('') : ''}`;
+      ${counters?.counters ? `
+      <h2>✅ این هیرو این‌ها را کانتر می‌کند</h2>
+      ${(counters.counters.counters || []).slice(0, 5).map((c) => `<div class="skill hrow">${c.head ? `<img class="h-ic" src="${esc(c.head)}" alt="" loading="lazy" onerror="this.style.display='none'">` : ''}<div><b>${esc(c.name)}</b><br><span class="meta">وین‌ریت در برابر او: +${pct(c.delta)}</span></div></div>`).join('') || '<p class="hint">—</p>'}
+      <h2>⚔️ جلوی این هیروها کانتر می‌شود</h2>
+      ${(h.relation?.weak || []).map((w) => `<div class="skill hrow">${w.head ? `<img class="h-ic" src="${esc(w.head)}" alt="" loading="lazy" onerror="this.style.display='none'">` : ''}<div><b>${esc(w.name)}</b></div></div>`).join('') || '<p class="hint">—</p>'}` : ''}`;
     laneRow.innerHTML = '<span style="align-self:center">🛠️ بیلد برای لین:</span>' +
       [['exp', 'اکس‌پی'], ['mid', 'مید'], ['gold', 'گلد'], ['roam', 'روم'], ['jungle', 'جانگل']]
         .map(([v, fa]) => `<button data-lane="${v}">${fa}</button>`).join('');
     laneRow.querySelectorAll('button').forEach((b) => b.addEventListener('click', () => loadBuild(id, b.dataset.lane, b)));
+    // آیتم‌های پیشنهادی برای لین اصلی هیرو، خودکار در انتهای صفحه لود می‌شود
+    const laneMap = { 'gold lane': 'gold', 'exp lane': 'exp', 'mid lane': 'mid', 'roam': 'roam', 'jungle': 'jungle' };
+    const firstLane = (h.laning || []).flatMap((l) => String(l).split(',')).map((s) => laneMap[s.trim().toLowerCase()]).find(Boolean);
+    if (firstLane) {
+      const btn = laneRow.querySelector(`button[data-lane="${firstLane}"]`);
+      if (btn) loadBuild(id, firstLane, btn);
+    }
   } catch (e) { showError(box, e); }
 }
 document.getElementById('heroBack').addEventListener('click', () => showTab('heroes'));
@@ -693,10 +733,11 @@ async function loadBuild(id, lane, btn) {
   loading(box);
   try {
     const j = await api(`/api/builds/${encodeURIComponent(id)}?lane=${lane}`);
-    box.innerHTML = (j.builds || []).slice(0, 3).map((b, i) => `
+    const list = (j.builds || []).slice(0, 3);
+    box.innerHTML = list.length ? `<h2>🧰 آیتم‌های پیشنهادی</h2>` + list.map((b, i) => `
       <div class="build"><b>بیلد ${faNum(i + 1)}</b> — وین ${pct(b.win)} | پیک ${pct(b.pick)}
       ${b.spell ? `<br>🪄 اسپل: ${esc(b.spell)}` : ''}
-      <br>🧰 ${esc((b.equipNames || []).join(' ← ') || '—')}</div>`).join('') || '<p class="hint">بیلدی ثبت نشده است.</p>';
+      <div class="bitems">${(b.equipIds || []).map((eid, ix) => { const nm = (b.equipNames || [])[ix] || ''; const ic = (b.equipIcons || [])[ix]; return `<div class="bi">${ic ? `<img src="${esc(ic)}" alt="${esc(nm)}" loading="lazy" onerror="this.style.display='none'">` : ''}<div>${esc(nm)}</div></div>`; }).join('')}</div></div>`).join('') : '<p class="hint">بیلدی ثبت نشده است.</p>';
   } catch (e) { showError(box, e); }
 }
 
@@ -738,7 +779,7 @@ async function loadItems(q = '') {
     box.innerHTML = list.map((it) => {
       const mods = Object.entries(it.modifiers || {}).map(([k, v]) => `${esc(k)}: ${faNum(v)}`).join('، ');
       const ps = (it.passives || []).map((p) => `<b>${esc(p.name)}</b>: ${esc(clean(p.desc))}`).join('<br>');
-      return `<div class="item-card"><b>${esc(it.name)}</b> <span class="sub">${esc(it.category)} | تیر ${faNum(it.tier)}${it.cost ? ' | ' + faInt(it.cost) + ' طلا' : ''}</span>
+      return `<div class="item-card"><div class="it-row">${it.icon ? `<img src="${esc(it.icon)}" alt="${esc(it.name)}" loading="lazy" onerror="this.style.display='none'">` : ''}<div><b>${esc(it.name)}</b> <span class="sub">${esc(it.category)} | تیر ${faNum(it.tier)}${it.cost ? ' | ' + faInt(it.cost) + ' طلا' : ''}</span></div></div>
         ${mods ? `<br>${mods}` : ''}${ps ? `<br>${ps}` : ''}</div>`;
     }).join('');
   } catch (e) { showError(box, e); }
