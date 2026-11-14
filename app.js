@@ -7,7 +7,7 @@
 // ======= DATA LAYER START (standalone: Rone direct + static JSON) =======
 const RONE_BASE = 'https://arena.rone.dev/api';
 const STATIC_BASE = 'data/';
-const DATA_VERSION = '20261114-11'; // با هر انتشار، همراه با ?v= اسکریپت بالا می‌رود تا دیتا کهنه نماند
+const DATA_VERSION = '20261114-12'; // با هر انتشار، همراه با ?v= اسکریپت بالا می‌رود تا دیتا کهنه نماند
 const TTL_MS = 5 * 60 * 1000; // کش ۵ دقیقه‌ای، مثل سرور پراکسی
 const cache = new Map();
 
@@ -860,7 +860,12 @@ async function loadNews() {
     const ev = sd.events || [];
     const tl = sd.tierlist || {};
     const evStatusFa = { current: 'در حال اجرا', upcoming: 'به‌زودی', unknown: 'تاریخ مشخص نیست', ended: 'تمام‌شده' };
-    const thumb = (u) => u ? `<img class="news-thumb" src="${esc(u)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'">` : '';
+    // عکس‌های ویکی مستقیم در صفحه لود نمی‌شوند (هاست‌شان درخواست داخل صفحه را رد می‌کند؛ با curl و بازشدن مستقیم سالم‌اند) — پس از wsrv.nl رد می‌شوند، مثل آیکون آیتم‌ها
+const thumb = (u) => {
+  if (!u) return '';
+  const proxied = u.startsWith('https://static.wikia.nocookie.net/') ? 'https://wsrv.nl/?url=' + u.slice(8) : u;
+  return `<img class="news-thumb" src="${esc(proxied)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'">`;
+};
     const order = ['SS', 'S', 'A', 'B', 'C', 'D'];
     const nameToId = new Map((sd.heroes || []).map((h) => [normStr(h.hero_name), String(h.mlid)]));
     box.innerHTML =
