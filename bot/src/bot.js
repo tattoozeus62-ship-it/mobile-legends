@@ -359,8 +359,9 @@ function createBot() {
   // ---------- /news و /tier ----------
   bot.command('news', async (ctx) => {
     const { patchNotes, wikiRecent } = sd.news || {};
+    const disc = sd.discussions || [];
     let t = '📰 <b>اخبار و پچ‌نوت‌ها</b>';
-    if ((!patchNotes || !patchNotes.length) && (!wikiRecent || !wikiRecent.length)) {
+    if ((!patchNotes || !patchNotes.length) && (!wikiRecent || !wikiRecent.length) && !disc.length) {
       return ctx.replyWithHTML(t + '\\n\\n— فعلاً خبری نیست.' + FOOTER);
     }
     if (patchNotes && patchNotes.length) {
@@ -373,6 +374,12 @@ function createBot() {
       t += '\\n\\n<b>📚 تازه‌ها:</b>';
       wikiRecent.slice(0, 5).forEach((w) => {
         t += `\\n• <b>${esc(w.title)}</b>` + (dateFa(w.timestamp) ? ` — ${dateFa(w.timestamp)}` : '');
+      });
+    }
+    if (disc.length) {
+      t += '\\n\\n<b>💬 گفتگوها:</b>';
+      disc.slice(0, 5).forEach((d) => {
+        t += `\\n• <b>${esc(d.title)}</b>` + (d.category_fa ? ` — ${esc(d.category_fa)}` : '') + (dateFa(d.date_iso) ? ` — ${dateFa(d.date_iso)}` : '');
       });
     }
     t += FOOTER;
