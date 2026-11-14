@@ -474,7 +474,8 @@ function createBot(env, deps) {
     if (disc.length) {
       t += '\n\n<b>💬 گفتگوها:</b>';
       disc.slice(0, 5).forEach((d) => {
-        t += `\n• <b>${esc(d.title)}</b>` + (d.category_fa ? ` — ${esc(d.category_fa)}` : '') + (dateFa(d.date_iso) ? ` — ${dateFa(d.date_iso)}` : '');
+        const fd = ((sd.faContent || {}).discussions || {})[d.title] || {};
+        t += `\n• <b>${esc(fd.title_fa || d.title)}</b>` + (d.category_fa ? ` — ${esc(d.category_fa)}` : '') + (dateFa(d.date_iso) ? ` — ${dateFa(d.date_iso)}` : '');
       });
     }
     t += FOOTER;
