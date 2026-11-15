@@ -1,5 +1,5 @@
 {
- "fetched_at": "2026-11-15T05:55:24.293805+00:00",
+ "fetched_at": "2026-11-15T13:01:32.256346+00:00",
  "patch_notes": [
   {
    "title": "Patch Notes 2.2.16",
@@ -83,6 +83,20 @@
   }
  ],
  "wiki_recent": [
+  {
+   "title": "Roamer",
+   "timestamp": "2026-11-15T09:15:04Z",
+   "comment": "",
+   "url": "https://mobile-legends.fandom.com/wiki/Roamer",
+   "image_url": null
+  },
+  {
+   "title": "Jungler",
+   "timestamp": "2026-11-15T09:12:38Z",
+   "comment": "",
+   "url": "https://mobile-legends.fandom.com/wiki/Jungler",
+   "image_url": null
+  },
   {
    "title": "Harley",
    "timestamp": "2026-11-14T23:49:40Z",
@@ -173,20 +187,6 @@
    "comment": "",
    "url": "https://mobile-legends.fandom.com/wiki/Hirara",
    "image_url": "https://static.wikia.nocookie.net/mobile-legends/images/1/19/Hero1331-portrait.png/revision/latest?cb=20260618091411"
-  },
-  {
-   "title": "Zilong/Guide",
-   "timestamp": "2026-11-13T16:55:18Z",
-   "comment": "",
-   "url": "https://mobile-legends.fandom.com/wiki/Zilong/Guide",
-   "image_url": null
-  },
-  {
-   "title": "Zilong/Mastery Code",
-   "timestamp": "2026-11-13T16:55:10Z",
-   "comment": "",
-   "url": "https://mobile-legends.fandom.com/wiki/Zilong/Mastery_Code",
-   "image_url": null
   }
  ]
 }
